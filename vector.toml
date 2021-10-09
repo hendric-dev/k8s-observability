@@ -1,0 +1,26 @@
+[sources.docker]
+type = "docker_logs"
+
+[sources.host_metrics]
+type = "host_metrics"
+scrape_interval_secs = 15
+
+[sinks.loki]
+type = "loki"
+inputs = ["docker"]
+endpoint = "http://loki:3100"
+
+  [sinks.loki.labels]
+  "container" = "{{ container_name }}"
+
+  [sinks.loki.encoding]
+  codec = "json"
+  timestamp_format = "rfc3339"
+
+  [sinks.loki.healthcheck]
+  enabled = true
+
+[sinks.prometheus]
+type = "prometheus_exporter"
+inputs = ["host_metrics"]
+address = "0.0.0.0:9598"
