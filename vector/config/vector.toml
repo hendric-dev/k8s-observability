@@ -2,3 +2,8 @@ data_dir = '/vector-data-dir'
 
 [sources.kubernetes_logs]
 type = 'kubernetes_logs'
+
+[sinks.out]
+inputs = ["kubernetes_logs"]
+type = "console"
+encoding.codec = "text"
