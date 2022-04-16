@@ -1,0 +1,4 @@
+data_dir = '/vector-data-dir'
+
+[sources.kubernetes_logs]
+type = 'kubernetes_logs'
