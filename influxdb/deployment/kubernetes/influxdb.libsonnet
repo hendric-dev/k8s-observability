@@ -12,7 +12,7 @@
       pod: {},
       selector: {'app.kubernetes.io/name': this.name},
     },
-    name:: 'influxDB',
+    name:: 'influx-db',
     organisation:: 'observability',
     ports:: {
       external: 80,
