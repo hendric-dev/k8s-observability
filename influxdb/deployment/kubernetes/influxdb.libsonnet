@@ -27,5 +27,8 @@
       username: '<fill with InfluxDB username>',
       password: '<fill with InfluxDB password>',
     },
+    storage:: {
+      size: '10Gi',
+    },
   },
 }
