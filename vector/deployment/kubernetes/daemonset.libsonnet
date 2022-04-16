@@ -1,7 +1,6 @@
 (import 'vector.libsonnet') +
 {
   local container = $.core.v1.container,
-  local containerPort = $.core.v1.containerPort,
   local daemonSet = $.apps.v1.daemonSet,
   local envVar = $.core.v1.envVar,
   local toleration = $.core.v1.toleration,
