@@ -10,10 +10,12 @@
       + persistentVolume.spec.withAccessModes(['ReadWriteOnce'])
       + persistentVolume.spec.withCapacity({storage: this.storage.size})
       + persistentVolume.spec.withPersistentVolumeReclaimPolicy('Retain')
+      + persistentVolume.spec.withStorageClassName('observability-' + this.name)
       + persistentVolume.spec.hostPath.withPath('/opt/observability/influxdb'),
     persistentVolumeClaim: persistentVolumeClaim.new('observability-' + this.name)
       + persistentVolumeClaim.metadata.withLabels(this.labels.selector)
       + persistentVolumeClaim.spec.withAccessModes(['ReadWriteOnce'])
+      + persistentVolumeClaim.spec.withStorageClassName('observability-' + this.name)
       + persistentVolumeClaim.spec.resources.withRequests({storage: this.storage.size})
   },
 }
