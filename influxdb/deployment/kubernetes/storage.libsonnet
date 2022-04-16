@@ -1,6 +1,7 @@
 (import 'influxdb.libsonnet') +
 {
   local persistentVolume = $.core.v1.persistentVolume,
+  local persistentVolumeClaim = $.core.v1.persistentVolumeClaim,
 
   influxDB+: {
     local this = self,
