@@ -3,9 +3,11 @@
     local this = self,
     annotations:: {
       deployment: {},
+      ingress: {},
       pod: {},
     },
     bucket:: 'metrics',
+    host:: 'monitoring.db.my-server.com',
     image:: 'influxdb:2.2.0-alpine',
     labels:: {
       deployment: {},
@@ -14,6 +16,7 @@
     },
     name:: 'influx-db',
     organisation:: 'observability',
+    path:: '/',
     ports:: {
       external: 80,
       internal: 8086,
