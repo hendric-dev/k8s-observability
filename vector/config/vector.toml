@@ -1,9 +1,14 @@
 data_dir = '/vector-data-dir'
 
-[sources.kubernetes_logs]
-type = 'kubernetes_logs'
+[sources.host_metrics]
+type = "host_metrics"
+collectors = ["cgroups", "cpu", "disk", "load", "host", "memory", "network"]
+scrape_interval_secs = 15
 
-[sinks.out]
-inputs = ["kubernetes_logs"]
-type = "console"
-encoding.codec = "text"
+[sinks.monitoring_db]
+type = "influxdb_metrics"
+inputs = ["host_metrics"]
+bucket = "${INFLUXDB_BUCKET}"
+endpoint = "${INFLUXDB_ENDPOINT}"
+org = "${INFLUXDB_ORG}"
+token = "${INFLUXDB_TOKEN}"
