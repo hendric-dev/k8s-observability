@@ -2,7 +2,7 @@ apiVersion: 1
 
 providers:
   - name: Host Metrics
-    folder: Metrics
+    folder: Kubernetes
     type: file
     options:
       path: /var/lib/grafana/dashboards/host-metrics.json

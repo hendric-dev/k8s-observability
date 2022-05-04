@@ -4,7 +4,7 @@ datasources:
 -  access: 'proxy'
    editable: true
    is_default: true
-   name: Loki
-   type: 'loki'
-   url: 'http://loki:3100'
+   name: Metrics
+   type: 'influxdb'
+   url: 'http://influx-db'
    version: 1
