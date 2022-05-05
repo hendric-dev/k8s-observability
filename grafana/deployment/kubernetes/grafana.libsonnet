@@ -23,5 +23,11 @@
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '32Mi', limit: '128Mi'},
     },
+    secrets:: {
+      admin: {
+        username: '<fill with admin username>',
+        password: '<fill with admin password>',
+      }
+    }
   }
 }
