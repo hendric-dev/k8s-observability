@@ -9,7 +9,7 @@
   grafana+: {
     local this = self,
     container:: container.new(this.name, this.image)
-      + container.withPorts([containerPort.newNamed(this.port.internal, 'http')])
+      + container.withPorts([containerPort.newNamed(this.ports.internal, 'http')])
       + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
       + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([

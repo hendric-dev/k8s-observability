@@ -8,6 +8,11 @@
     },
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:8.5.1',
+    labels:: {
+      deployment: {},
+      pod: {},
+      selector: {'app.kubernetes.io/name': this.name},
+    },
     name:: 'grafana',
     path:: '/',
     ports:: {
