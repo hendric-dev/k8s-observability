@@ -3,6 +3,7 @@
   local container = $.core.v1.container,
   local containerPort = $.core.v1.containerPort,
   local deployment = $.apps.v1.deployment,
+  local envVar = $.core.v1.envVar,
   local volume = $.core.v1.volume,
   local volumeMount = $.core.v1.volumeMount,
 
@@ -10,6 +11,10 @@
     local this = self,
     container:: container.new(this.name, this.image)
       + container.withPorts([containerPort.newNamed(this.ports.internal, 'http')])
+      + container.withEnv([
+        envVar.fromSecretRef('GF_SECURITY_ADMIN_USER', this.name, 'admin_username'),
+        envVar.fromSecretRef('GF_SECURITY_ADMIN_PASSWORD', this.name, 'admin_password'),
+      ])
       + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
       + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
