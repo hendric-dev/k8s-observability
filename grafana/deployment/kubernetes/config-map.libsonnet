@@ -1,4 +1,4 @@
-(import 'grafana.jsonnet') +
+(import 'grafana.libsonnet') +
 {
   local configMap = $.core.v1.configMap,
 
