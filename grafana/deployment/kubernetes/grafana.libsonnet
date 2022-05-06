@@ -6,6 +6,15 @@
       ingress: {},
       pod: {},
     },
+    credentials:: {
+      admin: {
+        username: '<fill with admin username>',
+        password: '<fill with admin password>',
+      },
+      influxDB: {
+        token: '<fill with InfluxDB API token>',
+      }
+    },
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:8.5.1',
     labels:: {
@@ -23,14 +32,5 @@
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '32Mi', limit: '128Mi'},
     },
-    secrets+: {
-      admin:: {
-        username: '<fill with admin username>',
-        password: '<fill with admin password>',
-      },
-      influxDB:: {
-        token: '<fill with InfluxDB API token>',
-      }
-    }
   }
 }
