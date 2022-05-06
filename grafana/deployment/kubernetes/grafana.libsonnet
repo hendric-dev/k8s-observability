@@ -27,6 +27,9 @@
       admin: {
         username: '<fill with admin username>',
         password: '<fill with admin password>',
+      },
+      influxDB: {
+        token: '<fill with InfluxDB API token>',
       }
     }
   }

@@ -14,6 +14,7 @@
       + container.withEnv([
         envVar.fromSecretRef('GF_SECURITY_ADMIN_USER', this.name, 'admin_username'),
         envVar.fromSecretRef('GF_SECURITY_ADMIN_PASSWORD', this.name, 'admin_password'),
+        envVar.fromSecretRef('INFLUX_API_TOKEN', this.name + '-influxdb', 'token'),
       ])
       + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
       + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
