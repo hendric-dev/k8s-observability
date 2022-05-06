@@ -23,12 +23,12 @@
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '32Mi', limit: '128Mi'},
     },
-    secrets:: {
-      admin: {
+    secrets+: {
+      admin:: {
         username: '<fill with admin username>',
         password: '<fill with admin password>',
       },
-      influxDB: {
+      influxDB:: {
         token: '<fill with InfluxDB API token>',
       }
     }
