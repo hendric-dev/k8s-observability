@@ -3,12 +3,12 @@ apiVersion: 1
 datasources:
 -  access: proxy
    jsonData:
-     defaultBucket: metrics
-     organization: observability
+     defaultBucket: %(bucket)s
+     organization: %(organisation)s
      tlsSkipVerify: true
      version: Flux
    name: Metrics
    secureJsonData:
      token: $INFLUX_API_TOKEN
    type: influxdb
-   url: http://influx-db
+   url: http://%(name)s

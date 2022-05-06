@@ -6,7 +6,7 @@
     local this = self,
     configmap: {
       datasources: configMap.new(this.name + '-datasources', {
-        'datasources.yaml': (importstr '../../config/datasources.yaml'),
+        'datasources.yaml': (importstr '../../config/datasources.yaml') % $.influxDB,
       }) + configMap.metadata.withLabels($.grafana.labels.selector),
       dashboards: configMap.new(this.name + '-dashboards', {
         'dashboards.yaml': (importstr '../../config/dashboards.yaml'),
