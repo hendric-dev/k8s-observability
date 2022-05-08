@@ -12,3 +12,5 @@ bucket = "${INFLUXDB_BUCKET}"
 endpoint = "${INFLUXDB_ENDPOINT}"
 org = "${INFLUXDB_ORG}"
 token = "${INFLUXDB_TOKEN}"
+  [sinks.monitoring_db.tags]
+  node = "${VECTOR_SELF_NODE_NAME}"
