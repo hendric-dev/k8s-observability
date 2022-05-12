@@ -1,0 +1,51 @@
+[[tests]]
+name = "Host Metrics | should keep specific metrics"
+
+[[tests.inputs]]
+insert_at = "filter_unwanted_metrics"
+type = "metric"
+
+[tests.inputs.metric]
+name = "cpu_seconds_total"
+namespace = "host"
+timestamp = "2022-05-12T17:18:12.678580956Z"
+kind = "absolute"
+
+[tests.inputs.metric.counter]
+value = 260.48
+
+[tests.inputs.metric.tags]
+collector = "cpu"
+cpu = "2"
+host = "desktop"
+mode = "system"
+
+[[tests.outputs]]
+extract_from = "filter_unwanted_metrics"
+
+[[tests.outputs.conditions]]
+type = "vrl"
+source = """
+assert_eq!(.name, "cpu_seconds_total")
+"""
+
+[[tests]]
+name = "Host Metrics | should filter out undesired metrics"
+no_outputs_from = ["filter_unwanted_metrics"]
+
+[[tests.inputs]]
+insert_at = "filter_unwanted_metrics"
+type = "metric"
+
+[tests.inputs.metric]
+name = "memory_swap_free_bytes"
+namespace = "host"
+timestamp = "2022-05-12T17:18:12.682305795Z"
+kind = "absolute"
+
+[tests.inputs.metric.gauge]
+value = 4191480000.0
+
+[tests.inputs.metric.tags]
+collector = "memory"
+host = "desktop"

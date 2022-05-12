@@ -1,13 +1,18 @@
-data_dir = '/vector-data-dir'
+data_dir = "/vector-data-dir"
 
 [sources.host_metrics]
 type = "host_metrics"
 collectors = ["cgroups", "cpu", "disk", "load", "host", "memory", "network"]
 scrape_interval_secs = 15
 
+[transforms.filter_unwanted_metrics]
+type = "filter"
+inputs = ["host_metrics"]
+condition = { type = "vrl", source = '.name == "cpu_seconds_total"' }
+
 [sinks.monitoring_db]
 type = "influxdb_metrics"
-inputs = ["host_metrics"]
+inputs = ["filter_unwanted_metrics"]
 bucket = "${INFLUXDB_BUCKET}"
 endpoint = "${INFLUXDB_ENDPOINT}"
 org = "${INFLUXDB_ORG}"
