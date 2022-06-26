@@ -8,7 +8,20 @@ scrape_interval_secs = 15
 [transforms.filter_unwanted_metrics]
 type = "filter"
 inputs = ["host_metrics"]
-condition = { type = "vrl", source = 'includes(["cpu_seconds_total", "memory_total_bytes", "memory_used_bytes"], .name)' }
+  [transforms.filter_unwanted_metrics.condition]
+  type = "vrl"
+  source = '''
+    includes(
+      [
+        "cpu_seconds_total",
+        "filesystem_total_bytes",
+        "filesystem_used_bytes",
+        "memory_total_bytes",
+        "memory_used_bytes",
+      ],
+      .name,
+    )
+  '''
 
 [sinks.monitoring_db]
 type = "influxdb_metrics"
