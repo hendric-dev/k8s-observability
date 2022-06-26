@@ -4,7 +4,10 @@
       {
         "$$hashKey": "object:1058",
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,10 +23,10 @@
     ]
   },
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1629031222820,
+  "iteration": 1656241754201,
   "links": [
     {
       "icon": "external link",
@@ -40,13 +43,12 @@
       "url": "https://grafana.com/grafana/dashboards/1860"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
+      "datasource": {
+        "uid": "Prometheus"
       },
       "gridPos": {
         "h": 1,
@@ -56,19 +58,21 @@
       },
       "id": 261,
       "panels": [],
-      "repeat": null,
-      "title": "Quick CPU / Mem / Disk",
+      "title": "Node Resource Usage",
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
-      "description": "Busy state of all CPU cores together",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "Average CPU usage of the recent 2min ",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 2,
           "mappings": [
             {
               "options": {
@@ -91,11 +95,11 @@
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
-                "value": 85
+                "value": 80
               },
               {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 95
+                "value": 90
               }
             ]
           },
@@ -112,7 +116,7 @@
       "id": 20,
       "links": [],
       "options": {
-        "orientation": "horizontal",
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -124,23 +128,24 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
-          "expr": "(((count(count(host_cpu_seconds_total{instance=\"vector:9598\",job=\"vector\"}) by (cpu))) - avg(sum by (mode)(rate(host_cpu_seconds_total{mode='idle',instance=\"vector:9598\",job=\"vector\"}[$__rate_interval])))) * 100) / count(count(host_cpu_seconds_total{instance=\"vector:9598\",job=\"vector\"}) by (cpu))",
-          "hide": false,
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A",
-          "step": 240
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "cpu_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> drop(columns: [\"collector\", \"cpu\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"mode\"], valueColumn: \"_value\")\n  |> reduce(\n       fn: (r, accumulator) => ({_value: (r.idle + r.nice + r.system + r.user) / (r.nice + r.system + r.user)}),\n       identity: { _value: 0.0 }\n     )\n\nif \"${node}\" == \"all\"\nthen cpu_usage\n  |> group()\n  |> mean()\n  |> yield(name: \"cpu_usage_percent\")\nelse cpu_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> yield(name: \"cpu_usage_percent\")",
+          "refId": "A"
         }
       ],
-      "title": "CPU Busy",
+      "title": "CPU Usage",
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Busy state of all CPU cores together (5 min average)",
       "fieldConfig": {
         "defaults": {
@@ -202,7 +207,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "avg(host_load5{instance=\"vector:9598\",job=\"vector\"}) /  count(count(host_cpu_seconds_total{instance=\"vector:9598\",job=\"vector\"}) by (cpu)) * 100",
@@ -217,8 +222,9 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Busy state of all CPU cores together (15 min average)",
       "fieldConfig": {
         "defaults": {
@@ -280,7 +286,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "avg(host_load15{instance=\"vector:9598\",job=\"vector\"}) /  count(count(host_cpu_seconds_total{instance=\"vector:9598\",job=\"vector\"}) by (cpu)) * 100",
@@ -294,8 +300,9 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Non available RAM memory",
       "fieldConfig": {
         "defaults": {
@@ -349,7 +356,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "((host_memory_total_bytes{instance=\"vector:9598\",job=\"vector\"} - host_memory_free_bytes{instance=\"vector:9598\",job=\"vector\"}) / (host_memory_total_bytes{instance=\"vector:9598\",job=\"vector\"} )) * 100",
@@ -372,8 +379,9 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Used Swap",
       "fieldConfig": {
         "defaults": {
@@ -435,7 +443,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "((host_memory_swap_total_bytes{instance=\"vector:9598\",job=\"vector\"} - host_memory_swap_free_bytes{instance=\"vector:9598\",job=\"vector\"}) / (host_memory_swap_total_bytes{instance=\"vector:9598\",job=\"vector\"} )) * 100",
@@ -448,8 +456,9 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Used Root FS",
       "fieldConfig": {
         "defaults": {
@@ -511,7 +520,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "100 - ((host_filesystem_free_bytes{instance=\"vector:9598\",job=\"vector\",mountpoint=\"/\",fstype!=\"rootfs\"} * 100) / host_filesystem_total_bytes{instance=\"vector:9598\",job=\"vector\",mountpoint=\"/\",fstype!=\"rootfs\"})",
@@ -525,8 +534,9 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Total number of CPU cores",
       "fieldConfig": {
         "defaults": {
@@ -568,7 +578,6 @@
         "y": 1
       },
       "id": 14,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -586,7 +595,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "count(count(host_cpu_seconds_total{instance=\"vector:9598\",job=\"vector\"}) by (cpu))",
@@ -601,8 +610,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "System uptime",
       "fieldConfig": {
         "defaults": {
@@ -646,7 +656,6 @@
       },
       "hideTimeOverride": true,
       "id": 15,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -664,7 +673,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "host_uptime{instance=\"vector:9598\",job=\"vector\"}",
@@ -677,8 +686,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Total RootFS",
       "fieldConfig": {
         "defaults": {
@@ -725,7 +735,6 @@
         "y": 3
       },
       "id": 23,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -743,7 +752,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "host_filesystem_total_bytes{instance=\"vector:9598\",job=\"vector\",mountpoint=\"/\",fstype!=\"rootfs\"}",
@@ -758,8 +767,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Total RAM",
       "fieldConfig": {
         "defaults": {
@@ -802,7 +812,6 @@
         "y": 3
       },
       "id": 75,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -820,7 +829,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "host_memory_total_bytes{instance=\"vector:9598\",job=\"vector\"}",
@@ -833,8 +842,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Total SWAP",
       "fieldConfig": {
         "defaults": {
@@ -877,7 +887,6 @@
         "y": 3
       },
       "id": 18,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -895,7 +904,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "targets": [
         {
           "expr": "host_memory_swap_total_bytes{instance=\"vector:9598\",job=\"vector\"}",
@@ -909,10 +918,8 @@
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
+      "datasource": {
+        "uid": "Prometheus"
       },
       "gridPos": {
         "h": 1,
@@ -922,7 +929,6 @@
       },
       "id": 263,
       "panels": [],
-      "repeat": null,
       "title": "Basic CPU / Mem / Net / Disk",
       "type": "row"
     },
@@ -946,7 +952,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "decimals": 2,
       "description": "Basic CPU info",
       "fieldConfig": {
@@ -974,8 +982,6 @@
         "rightSide": false,
         "show": true,
         "sideWidth": 250,
-        "sort": null,
-        "sortDesc": null,
         "total": false,
         "values": false
       },
@@ -988,7 +994,7 @@
         "alertThreshold": true
       },
       "percentage": true,
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1070,9 +1076,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "CPU Basic",
       "tooltip": {
         "shared": true,
@@ -1081,9 +1085,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1100,16 +1102,12 @@
         {
           "$$hashKey": "object:124",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1137,7 +1135,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "decimals": 2,
       "description": "Basic memory usage",
       "fieldConfig": {
@@ -1177,7 +1177,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1251,9 +1251,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Memory Basic",
       "tooltip": {
         "shared": true,
@@ -1262,9 +1260,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1273,22 +1269,17 @@
           "format": "bytes",
           "label": "",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1320,7 +1311,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "description": "Basic network info per interface",
       "fieldConfig": {
         "defaults": {
@@ -1361,7 +1354,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1393,9 +1386,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Network Traffic Basic",
       "tooltip": {
         "shared": true,
@@ -1404,33 +1395,25 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "bps",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "pps",
           "label": "",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1438,7 +1421,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "uid": "Prometheus"
+      },
       "decimals": 3,
       "description": "Disk space used of all filesystems mounted",
       "fieldConfig": {
@@ -1480,7 +1465,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1499,9 +1484,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Disk Space Used Basic",
       "tooltip": {
         "shared": true,
@@ -1510,16 +1493,13 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "percent",
-          "label": null,
           "logBase": 1,
           "max": "100",
           "min": "0",
@@ -1527,21 +1507,17 @@
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 30,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "linux"
@@ -1549,116 +1525,35 @@
   "templating": {
     "list": [
       {
+        "allValue": "all",
         "current": {
-          "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
-        },
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": "datasource",
-        "multi": false,
-        "name": "DS_PROMETHEUS",
-        "options": [],
-        "query": "prometheus",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
           "selected": true,
-          "text": "None",
-          "value": ""
+          "text": "All",
+          "value": "$__all"
         },
-        "datasource": "Prometheus",
-        "definition": "",
-        "description": null,
-        "error": null,
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PA58DA793C7250F1B"
+        },
+        "definition": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> keep(columns: [\"node\"])\n  |> distinct(column: \"node\")\n  |> group()\n",
+        "description": "Name of the Kubernetes node",
         "hide": 0,
-        "includeAll": false,
-        "label": "Job",
-        "multi": false,
-        "name": "job",
-        "options": [],
-        "query": {
-          "query": "label_values(node_uname_info, job)",
-          "refId": "Prometheus-job-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "selected": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(node_uname_info{job=\"vector\"}, instance)",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": "Host:",
+        "includeAll": true,
+        "label": "Node:",
         "multi": false,
         "name": "node",
         "options": [],
-        "query": {
-          "query": "label_values(node_uname_info{job=\"vector\"}, instance)",
-          "refId": "Prometheus-node-Variable-Query"
-        },
+        "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> keep(columns: [\"node\"])\n  |> distinct(column: \"node\")\n  |> group()\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "[a-z]+|nvme[0-9]+n[0-9]+",
-          "value": "[a-z]+|nvme[0-9]+n[0-9]+"
-        },
-        "description": null,
-        "error": null,
-        "hide": 2,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "diskdevices",
-        "options": [
-          {
-            "selected": true,
-            "text": "[a-z]+|nvme[0-9]+n[0-9]+",
-            "value": "[a-z]+|nvme[0-9]+n[0-9]+"
-          }
-        ],
-        "query": "[a-z]+|nvme[0-9]+n[0-9]+",
-        "skipUrlSync": false,
-        "type": "custom"
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1689,5 +1584,6 @@
   "timezone": "browser",
   "title": "Host Metrics",
   "uid": "nesBbS77k",
-  "version": 1
+  "version": 1,
+  "weekStart": ""
 }
