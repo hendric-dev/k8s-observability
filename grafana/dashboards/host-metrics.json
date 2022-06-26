@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "iteration": 1656241754201,
+  "iteration": 1656274515151,
   "links": [
     {
       "icon": "external link",
@@ -301,20 +301,20 @@
     },
     {
       "datasource": {
-        "uid": "Prometheus"
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
       },
-      "description": "Non available RAM memory",
+      "description": "Average memory usage of the recent 2min",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 0,
+          "decimals": 2,
           "mappings": [],
-          "max": 100,
           "min": 0,
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "rgba(50, 172, 45, 0.97)",
@@ -330,7 +330,7 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -349,7 +349,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/^memory_used_bytes$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -359,23 +359,15 @@
       "pluginVersion": "8.5.1",
       "targets": [
         {
-          "expr": "((host_memory_total_bytes{instance=\"vector:9598\",job=\"vector\"} - host_memory_free_bytes{instance=\"vector:9598\",job=\"vector\"}) / (host_memory_total_bytes{instance=\"vector:9598\",job=\"vector\"} )) * 100",
-          "format": "time_series",
-          "hide": true,
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 240
-        },
-        {
-          "expr": "100 - ((host_memory_available_bytes{instance=\"vector:9598\",job=\"vector\"} * 100) / host_memory_total_bytes{instance=\"vector:9598\",job=\"vector\"})",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 1,
-          "refId": "B",
-          "step": 240
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "memory_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.memory_total_bytes\" or r._measurement == \"host.memory_used_bytes\")\n  |> drop(columns: [\"collector\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen memory_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        memory_total_bytes: r[\"host.memory_total_bytes\"] + accumulator.memory_total_bytes,\n        memory_used_bytes: r[\"host.memory_used_bytes\"] + accumulator.memory_used_bytes,\n      }),\n      identity: { memory_total_bytes: 0.0, memory_used_bytes: 0.0 }\n    )\n  |> yield(name: \"memory_usage_percent\")\nelse memory_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.memory_total_bytes\": \"memory_total_bytes\", \"host.memory_used_bytes\": \"memory_used_bytes\"})\n  |> keep(columns: [\"memory_total_bytes\", \"memory_used_bytes\"])\n  |> yield(name: \"memory_usage_percent\")\n  ",
+          "refId": "A"
         }
       ],
-      "title": "RAM Used",
+      "title": "Memory Usage",
       "type": "gauge"
     },
     {
