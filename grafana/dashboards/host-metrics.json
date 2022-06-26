@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "iteration": 1656274515151,
+  "iteration": 1656277214896,
   "links": [
     {
       "icon": "external link",
@@ -449,14 +449,16 @@
     },
     {
       "datasource": {
-        "uid": "Prometheus"
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
       },
-      "description": "Used Root FS",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 2,
           "mappings": [
             {
               "options": {
@@ -468,10 +470,9 @@
               "type": "special"
             }
           ],
-          "max": 100,
           "min": 0,
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "rgba(50, 172, 45, 0.97)",
@@ -487,7 +488,7 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -505,7 +506,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/^filesystem_used_bytes$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -515,14 +516,15 @@
       "pluginVersion": "8.5.1",
       "targets": [
         {
-          "expr": "100 - ((host_filesystem_free_bytes{instance=\"vector:9598\",job=\"vector\",mountpoint=\"/\",fstype!=\"rootfs\"} * 100) / host_filesystem_total_bytes{instance=\"vector:9598\",job=\"vector\",mountpoint=\"/\",fstype!=\"rootfs\"})",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 240
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "filesystem_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r.mountpoint == \"/\" and (r._measurement == \"host.filesystem_total_bytes\" or r._measurement == \"host.filesystem_used_bytes\"))\n  |> drop(columns: [\"collector\", \"device\", \"filesystem\", \"host\", \"metric_type\"])\n  |> last()\n  |> drop(columns: [\"mountpoint\"])\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen filesystem_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        filesystem_total_bytes: r[\"host.filesystem_total_bytes\"] + accumulator.filesystem_total_bytes,\n        filesystem_used_bytes: r[\"host.filesystem_used_bytes\"] + accumulator.filesystem_used_bytes,\n      }),\n      identity: { filesystem_total_bytes: 0.0, filesystem_used_bytes: 0.0 }\n    )\n  |> yield(name: \"memory_usage_percent\")\nelse filesystem_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.filesystem_total_bytes\": \"filesystem_total_bytes\", \"host.filesystem_used_bytes\": \"filesystem_used_bytes\"})\n  |> keep(columns: [\"filesystem_total_bytes\", \"filesystem_used_bytes\"])\n  |> yield(name: \"filesystem_usage\")",
+          "refId": "A"
         }
       ],
-      "title": "Root FS Used",
+      "title": "Filesystem Usage",
       "type": "gauge"
     },
     {
@@ -1508,7 +1510,7 @@
       }
     }
   ],
-  "refresh": "1m",
+  "refresh": "5m",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [
