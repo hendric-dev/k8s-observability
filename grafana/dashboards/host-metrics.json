@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "iteration": 1656277214896,
+  "iteration": 1656710809213,
   "links": [
     {
       "icon": "external link",
@@ -363,7 +363,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "memory_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.memory_total_bytes\" or r._measurement == \"host.memory_used_bytes\")\n  |> drop(columns: [\"collector\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen memory_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        memory_total_bytes: r[\"host.memory_total_bytes\"] + accumulator.memory_total_bytes,\n        memory_used_bytes: r[\"host.memory_used_bytes\"] + accumulator.memory_used_bytes,\n      }),\n      identity: { memory_total_bytes: 0.0, memory_used_bytes: 0.0 }\n    )\n  |> yield(name: \"memory_usage_percent\")\nelse memory_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.memory_total_bytes\": \"memory_total_bytes\", \"host.memory_used_bytes\": \"memory_used_bytes\"})\n  |> keep(columns: [\"memory_total_bytes\", \"memory_used_bytes\"])\n  |> yield(name: \"memory_usage_percent\")\n  ",
+          "query": "memory_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.memory_total_bytes\" or r._measurement == \"host.memory_used_bytes\")\n  |> drop(columns: [\"collector\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen memory_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        memory_total_bytes: r[\"host.memory_total_bytes\"] + accumulator.memory_total_bytes,\n        memory_used_bytes: r[\"host.memory_used_bytes\"] + accumulator.memory_used_bytes,\n      }),\n      identity: { memory_total_bytes: 0.0, memory_used_bytes: 0.0 }\n    )\n  |> yield(name: \"memory_usage\")\nelse memory_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.memory_total_bytes\": \"memory_total_bytes\", \"host.memory_used_bytes\": \"memory_used_bytes\"})\n  |> keep(columns: [\"memory_total_bytes\", \"memory_used_bytes\"])\n  |> yield(name: \"memory_usage\")\n  ",
           "refId": "A"
         }
       ],
@@ -520,7 +520,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "filesystem_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r.mountpoint == \"/\" and (r._measurement == \"host.filesystem_total_bytes\" or r._measurement == \"host.filesystem_used_bytes\"))\n  |> drop(columns: [\"collector\", \"device\", \"filesystem\", \"host\", \"metric_type\"])\n  |> last()\n  |> drop(columns: [\"mountpoint\"])\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen filesystem_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        filesystem_total_bytes: r[\"host.filesystem_total_bytes\"] + accumulator.filesystem_total_bytes,\n        filesystem_used_bytes: r[\"host.filesystem_used_bytes\"] + accumulator.filesystem_used_bytes,\n      }),\n      identity: { filesystem_total_bytes: 0.0, filesystem_used_bytes: 0.0 }\n    )\n  |> yield(name: \"memory_usage_percent\")\nelse filesystem_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.filesystem_total_bytes\": \"filesystem_total_bytes\", \"host.filesystem_used_bytes\": \"filesystem_used_bytes\"})\n  |> keep(columns: [\"filesystem_total_bytes\", \"filesystem_used_bytes\"])\n  |> yield(name: \"filesystem_usage\")",
+          "query": "filesystem_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r.mountpoint == \"/\" and (r._measurement == \"host.filesystem_total_bytes\" or r._measurement == \"host.filesystem_used_bytes\"))\n  |> last()\n  |> drop(columns: [\"collector\", \"device\", \"filesystem\", \"host\", \"metric_type\", \"mountpoint\"])\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen filesystem_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        filesystem_total_bytes: r[\"host.filesystem_total_bytes\"] + accumulator.filesystem_total_bytes,\n        filesystem_used_bytes: r[\"host.filesystem_used_bytes\"] + accumulator.filesystem_used_bytes,\n      }),\n      identity: { filesystem_total_bytes: 0.0, filesystem_used_bytes: 0.0 }\n    )\n  |> yield(name: \"filesystem_usage\")\nelse filesystem_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.filesystem_total_bytes\": \"filesystem_total_bytes\", \"host.filesystem_used_bytes\": \"filesystem_used_bytes\"})\n  |> keep(columns: [\"filesystem_total_bytes\", \"filesystem_used_bytes\"])\n  |> yield(name: \"filesystem_usage\")",
           "refId": "A"
         }
       ],
@@ -1510,7 +1510,7 @@
       }
     }
   ],
-  "refresh": "5m",
+  "refresh": "1m",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [
