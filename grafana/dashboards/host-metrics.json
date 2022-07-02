@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "iteration": 1656710809223,
+  "iteration": 1656756159340,
   "links": [
     {
       "icon": "external link",
@@ -84,7 +84,7 @@
               "type": "special"
             }
           ],
-          "max": 100,
+          "max": 1,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -103,13 +103,13 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percentunit"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
+        "w": 4,
         "x": 0,
         "y": 1
       },
@@ -135,7 +135,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "cpu_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> drop(columns: [\"collector\", \"cpu\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"mode\"], valueColumn: \"_value\")\n  |> reduce(\n       fn: (r, accumulator) => ({_value: (r.idle + r.nice + r.system + r.user) / (r.nice + r.system + r.user)}),\n       identity: { _value: 0.0 }\n     )\n\nif \"${node}\" == \"all\"\nthen cpu_usage\n  |> group()\n  |> mean()\n  |> yield(name: \"cpu_usage_percent\")\nelse cpu_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> yield(name: \"cpu_usage_percent\")",
+          "query": "cpu_usage_percent = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> drop(columns: [\"collector\", \"cpu\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"mode\"], valueColumn: \"_value\")\n  |> reduce(\n       fn: (r, accumulator) => ({_value: (r.nice + r.system + r.user) / (r.idle + r.nice + r.system + r.user)}),\n       identity: { _value: 0.0 }\n     )\n\nif \"${node}\" == \"all\"\nthen cpu_usage_percent\n  |> group()\n  |> mean()\n  |> yield(name: \"cpu_usage_percent\")\nelse cpu_usage_percent\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> yield(name: \"cpu_usage_percent\")",
           "refId": "A"
         }
       ],
@@ -155,6 +155,7 @@
           },
           "decimals": 2,
           "mappings": [],
+          "max": 1,
           "min": 0,
           "thresholds": {
             "mode": "percentage",
@@ -173,14 +174,14 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "percentunit"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 3,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "hideTimeOverride": false,
@@ -192,7 +193,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^memory_used_bytes$/",
+          "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
@@ -206,7 +207,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "memory_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.memory_total_bytes\" or r._measurement == \"host.memory_used_bytes\")\n  |> drop(columns: [\"collector\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen memory_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        memory_total_bytes: r[\"host.memory_total_bytes\"] + accumulator.memory_total_bytes,\n        memory_used_bytes: r[\"host.memory_used_bytes\"] + accumulator.memory_used_bytes,\n      }),\n      identity: { memory_total_bytes: 0.0, memory_used_bytes: 0.0 }\n    )\n  |> yield(name: \"memory_usage\")\nelse memory_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.memory_total_bytes\": \"memory_total_bytes\", \"host.memory_used_bytes\": \"memory_used_bytes\"})\n  |> keep(columns: [\"memory_total_bytes\", \"memory_used_bytes\"])\n  |> yield(name: \"memory_usage\")\n  ",
+          "query": "memory_usage_percent = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.memory_total_bytes\" or r._measurement == \"host.memory_used_bytes\")\n  |> drop(columns: [\"collector\", \"host\", \"metric_type\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n  |> reduce(\n       fn: (r, accumulator) => ({_value: r[\"host.memory_used_bytes\"] / r[\"host.memory_total_bytes\"]}),\n       identity: { _value: 0.0 }\n     )\n\nif \"${node}\" == \"all\"\nthen memory_usage_percent\n  |> group()\n  |> mean()\n  |> yield(name: \"memory_usage_percent\")\nelse memory_usage_percent\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> yield(name: \"memory_usage_percent\")",
           "refId": "A"
         }
       ],
@@ -236,6 +237,7 @@
               "type": "special"
             }
           ],
+          "max": 1,
           "min": 0,
           "thresholds": {
             "mode": "percentage",
@@ -254,14 +256,14 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "percentunit"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 6,
+        "w": 4,
+        "x": 8,
         "y": 1
       },
       "id": 154,
@@ -272,7 +274,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^filesystem_used_bytes$/",
+          "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
@@ -286,7 +288,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "filesystem_usage = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r.mountpoint == \"/\" and (r._measurement == \"host.filesystem_total_bytes\" or r._measurement == \"host.filesystem_used_bytes\"))\n  |> last()\n  |> drop(columns: [\"collector\", \"device\", \"filesystem\", \"host\", \"metric_type\", \"mountpoint\"])\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n\nif \"${node}\" == \"all\"\nthen filesystem_usage\n  |> group()\n  |> reduce(\n      fn: (r, accumulator) => ({\n        filesystem_total_bytes: r[\"host.filesystem_total_bytes\"] + accumulator.filesystem_total_bytes,\n        filesystem_used_bytes: r[\"host.filesystem_used_bytes\"] + accumulator.filesystem_used_bytes,\n      }),\n      identity: { filesystem_total_bytes: 0.0, filesystem_used_bytes: 0.0 }\n    )\n  |> yield(name: \"filesystem_usage\")\nelse filesystem_usage\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> rename(columns: {\"host.filesystem_total_bytes\": \"filesystem_total_bytes\", \"host.filesystem_used_bytes\": \"filesystem_used_bytes\"})\n  |> keep(columns: [\"filesystem_total_bytes\", \"filesystem_used_bytes\"])\n  |> yield(name: \"filesystem_usage\")",
+          "query": "filesystem_usage_percent = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r.mountpoint == \"/\" and (r._measurement == \"host.filesystem_total_bytes\" or r._measurement == \"host.filesystem_used_bytes\"))\n  |> last()\n  |> drop(columns: [\"collector\", \"device\", \"filesystem\", \"host\", \"metric_type\", \"mountpoint\"])\n  |> pivot(rowKey: [\"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n  |> reduce(\n       fn: (r, accumulator) => ({_value: r[\"host.filesystem_used_bytes\"] / r[\"host.filesystem_total_bytes\"]}),\n       identity: { _value: 0.0 }\n     )\n\nif \"${node}\" == \"all\"\nthen filesystem_usage_percent\n  |> group()\n  |> mean()\n  |> yield(name: \"filesystem_usage\")\nelse filesystem_usage_percent\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> yield(name: \"filesystem_usage\")",
           "refId": "A"
         }
       ],
@@ -297,7 +299,84 @@
       "datasource": {
         "uid": "Prometheus"
       },
-      "description": "Total number of CPU cores",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 12,
+        "y": 1
+      },
+      "hideTimeOverride": true,
+      "id": 15,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "expr": "host_uptime{instance=\"vector:9598\",job=\"vector\"}",
+          "intervalFactor": 2,
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "Uptime",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -327,15 +406,92 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "Cores"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 9,
-        "y": 1
+        "x": 0,
+        "y": 5
+      },
+      "id": 266,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "cpu_cores_total = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> last()\n  |> keep(columns: [\"cpu\", \"node\"])\n  |> group(columns: [\"node\"])\n  |> rename(columns: {\"cpu\": \"_value\"},)\n  |> toInt()\n  |> max()\n  |> map(fn: (r) => ({ r with _value: r._value + 1 }))\n  |> rename(columns: {\"_value\": \"cpu_cores_total\"})\n\ncpu_usage_percent = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> keep(columns: [\"_value\", \"node\", \"mode\"])\n  |> mean()\n  |> pivot(rowKey: [\"node\"], columnKey: [\"mode\"], valueColumn: \"_value\")\n  |> reduce(\n       fn: (r, accumulator) => ({_value: (r.nice + r.system + r.user) / (r.idle + r.nice + r.system + r.user)}),\n       identity: { _value: 0.0 }\n     )\n\ncpu_cores_used = join(tables: {key1: cpu_cores_total, key2: cpu_usage_percent}, on: [\"node\"], method: \"inner\")\n  |> map(fn: (r) => ({ r with _value: float(v: r.cpu_cores_total) * r._value }))\n  |> drop(columns: [\"cpu_cores_total\"])\n\nif \"${node}\" == \"all\"\nthen cpu_cores_used\n  |> group()\n  |> sum()\n  |> yield(name: \"cpu_cores_used\")\nelse cpu_cores_used\n  |> filter(fn: (r) => r.node == \"${node}\")\n  |> yield(name: \"cpu_cores_used\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Used",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Cores"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 2,
+        "y": 5
       },
       "id": 14,
       "links": [],
@@ -358,28 +514,111 @@
       "pluginVersion": "8.5.1",
       "targets": [
         {
-          "expr": "count(count(host_cpu_seconds_total{instance=\"vector:9598\",job=\"vector\"}) by (cpu))",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A",
-          "step": 240
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "cpu_cores_total = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.cpu_seconds_total\")\n  |> last()\n  |> keep(columns: [\"cpu\", \"node\"])\n  |> group(columns: [\"node\"])\n  |> rename(columns: {\"cpu\": \"_value\"},)\n  |> toInt()\n  |> max()\n  |> map(fn: (r) => ({ r with _value: r._value + 1 }))\n\nif \"${node}\" == \"all\"\n  then cpu_cores_total\n    |> group()\n    |> sum()\n    |> yield(name: \"cpu_cores_total\")\n  else cpu_cores_total\n    |> filter(fn: (r) => r.node == \"${node}\")\n    |> yield(name: \"cpu_cores_total\")",
+          "refId": "A"
         }
       ],
-      "title": "CPU Cores",
+      "title": "Total",
       "type": "stat"
     },
     {
       "datasource": {
-        "uid": "Prometheus"
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
       },
-      "description": "Total RAM",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 0,
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 70
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 4,
+        "y": 5
+      },
+      "id": 264,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "memory_used_bytes = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.memory_used_bytes\")\n  |> last()\n  |> keep(columns: [\"_value\", \"node\"])\n\nif \"${node}\" == \"all\"\n  then memory_used_bytes\n    |> group()\n    |> sum()\n    |> yield(name: \"memory_used_bytes\")\n  else memory_used_bytes\n    |> filter(fn: (r) => r.node == \"${node}\")\n    |> yield(name: \"memory_used_bytes\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Used",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
           "mappings": [
             {
               "options": {
@@ -404,15 +643,15 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "decbytes"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 11,
-        "y": 1
+        "x": 6,
+        "y": 5
       },
       "id": 75,
       "links": [],
@@ -435,13 +674,93 @@
       "pluginVersion": "8.5.1",
       "targets": [
         {
-          "expr": "host_memory_total_bytes{instance=\"vector:9598\",job=\"vector\"}",
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 240
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "memory_total_bytes = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.memory_total_bytes\")\n  |> last()\n  |> keep(columns: [\"_value\", \"node\"])\n\nif \"${node}\" == \"all\"\n  then memory_total_bytes\n    |> group()\n    |> sum()\n    |> yield(name: \"memory_total_bytes\")\n  else memory_total_bytes\n    |> filter(fn: (r) => r.node == \"${node}\")\n    |> yield(name: \"memory_total_bytes\")",
+          "refId": "A"
         }
       ],
-      "title": "RAM Total",
+      "title": "Total",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 8,
+        "y": 5
+      },
+      "id": 265,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "filesystem_used_bytes = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r.mountpoint == \"/\" and r._measurement == \"host.filesystem_used_bytes\")\n  |> last()\n  |> keep(columns: [\"node\", \"_value\"])\n\nif \"${node}\" == \"all\"\n  then filesystem_used_bytes\n    |> group()\n    |> sum()\n    |> yield(name: \"filesystem_used_bytes\")\n  else filesystem_used_bytes\n    |> filter(fn: (r) => r.node == \"${node}\")\n    |> yield(name: \"filesystem_used_bytes\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Used",
       "type": "stat"
     },
     {
@@ -491,8 +810,8 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 9,
-        "y": 3
+        "x": 10,
+        "y": 5
       },
       "id": 23,
       "links": [],
@@ -523,83 +842,7 @@
           "refId": "A"
         }
       ],
-      "title": "Filesystem Size",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "uid": "Prometheus"
-      },
-      "description": "System uptime",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 11,
-        "y": 3
-      },
-      "hideTimeOverride": true,
-      "id": 15,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.5.1",
-      "targets": [
-        {
-          "expr": "host_uptime{instance=\"vector:9598\",job=\"vector\"}",
-          "intervalFactor": 2,
-          "refId": "A",
-          "step": 240
-        }
-      ],
-      "title": "Uptime",
+      "title": "Total",
       "type": "stat"
     },
     {
@@ -611,7 +854,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 7
       },
       "id": 263,
       "panels": [],
@@ -655,7 +898,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 77,
@@ -838,7 +1081,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 78,
@@ -1013,7 +1256,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 13
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 74,
@@ -1124,7 +1367,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 15
       },
       "height": "",
       "hiddenSeries": false,
@@ -1202,7 +1445,7 @@
       }
     }
   ],
-  "refresh": "1m",
+  "refresh": "5m",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [
