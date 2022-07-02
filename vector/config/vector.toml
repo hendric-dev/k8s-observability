@@ -18,6 +18,9 @@ inputs = ["host_metrics"]
         "filesystem_used_bytes",
         "memory_total_bytes",
         "memory_used_bytes",
+        "network_receive_bytes_total",
+        "network_transmit_bytes_total",
+        "uptime",
       ],
       .name,
     )
