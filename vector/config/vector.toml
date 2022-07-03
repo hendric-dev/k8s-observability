@@ -2,7 +2,7 @@ data_dir = "/vector-data-dir"
 
 [sources.host_metrics]
 type = "host_metrics"
-collectors = ["cpu", "filesystem", "memory"]
+collectors = ["cpu", "filesystem", "host", "memory", "network"]
 scrape_interval_secs = 15
 
 [transforms.filter_unwanted_metrics]
