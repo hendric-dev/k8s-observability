@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "iteration": 1656756159340,
+  "iteration": 1656843215007,
   "links": [
     {
       "icon": "external link",
@@ -297,7 +297,8 @@
     },
     {
       "datasource": {
-        "uid": "Prometheus"
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
       },
       "description": "",
       "fieldConfig": {
@@ -305,7 +306,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 1,
+          "decimals": 0,
           "mappings": [
             {
               "options": {
@@ -335,7 +336,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 4,
         "w": 3,
         "x": 12,
         "y": 1
@@ -362,10 +363,12 @@
       "pluginVersion": "8.5.1",
       "targets": [
         {
-          "expr": "host_uptime{instance=\"vector:9598\",job=\"vector\"}",
-          "intervalFactor": 2,
-          "refId": "A",
-          "step": 240
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "uptime = from(bucket: \"metrics\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r._measurement == \"host.uptime\")\n  |> last()\n  |> keep(columns: [\"_value\", \"node\"])\n\nif \"${node}\" == \"all\"\n  then uptime\n    |> group()\n    |> max()\n    |> yield(name: \"uptime\")\n  else uptime\n    |> filter(fn: (r) => r.node == \"${node}\")\n    |> yield(name: \"uptime\")",
+          "refId": "A"
         }
       ],
       "title": "Uptime",
@@ -1445,7 +1448,7 @@
       }
     }
   ],
-  "refresh": "5m",
+  "refresh": "1m",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [
