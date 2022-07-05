@@ -22,7 +22,7 @@
       internal: 8086,
     },
     resources:: {
-      cpu: {request: '100m', limit: '300m'},
+      cpu: {request: '100m', limit: '4'},
       memory: {request: '128Mi', limit: '512Mi'},
     },
     retention:: '1w',
