@@ -1,0 +1,6 @@
+[transforms.filter_unwanted_filesystem_host_metrics]
+type = "filter"
+inputs = ["host_metrics_routing.filesystem"]
+  [transforms.filter_unwanted_filesystem_host_metrics.condition]
+  type = "vrl"
+  source = 'includes(["filesystem_total_bytes", "filesystem_used_bytes"], .name)'

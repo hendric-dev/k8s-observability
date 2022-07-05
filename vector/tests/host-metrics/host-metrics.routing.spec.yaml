@@ -1,0 +1,96 @@
+tests:
+  - name: Host Metrics | Routing | should route metrics by CPU collector
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: cpu_seconds_total
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 260.48
+          tags:
+            collector: cpu
+    outputs:
+      - extract_from: host_metrics_routing.cpu
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.tags.collector, "cpu")
+  - name: Host Metrics | Routing | should route metrics by filesystem collector
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: filesystem_total_bytes
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 564812305
+          tags:
+            collector: filesystem
+    outputs:
+      - extract_from: host_metrics_routing.filesystem
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.tags.collector, "filesystem")
+  - name: Host Metrics | Routing | should route metrics by host collector
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: uptime
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 5618971
+          tags:
+            collector: host
+    outputs:
+      - extract_from: host_metrics_routing.host
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.tags.collector, "host")
+  - name: Host Metrics | Routing | should route metrics by memory collector
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: memory_total_bytes
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 56189741
+          tags:
+            collector: memory
+    outputs:
+      - extract_from: host_metrics_routing.memory
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.tags.collector, "memory")
+  - name: Host Metrics | Routing | should route metrics by network collector
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: network_receive_bytes_total
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 5897
+          tags:
+            collector: network
+    outputs:
+      - extract_from: host_metrics_routing.network
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.tags.collector, "network")

@@ -1,0 +1,6 @@
+[transforms.filter_unwanted_network_host_metrics]
+type = "filter"
+inputs = ["host_metrics_routing.network"]
+  [transforms.filter_unwanted_network_host_metrics.condition]
+  type = "vrl"
+  source = 'includes(["network_receive_bytes_total", "network_transmit_bytes_total"], .name)'

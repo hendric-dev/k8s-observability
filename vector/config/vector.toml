@@ -1,34 +1,14 @@
 data_dir = "/vector-data-dir"
 
-[sources.host_metrics]
-type = "host_metrics"
-collectors = ["cpu", "filesystem", "host", "memory", "network"]
-scrape_interval_secs = 15
-
-[transforms.filter_unwanted_metrics]
-type = "filter"
-inputs = ["host_metrics"]
-  [transforms.filter_unwanted_metrics.condition]
-  type = "vrl"
-  source = '''
-    includes(
-      [
-        "cpu_seconds_total",
-        "filesystem_total_bytes",
-        "filesystem_used_bytes",
-        "memory_total_bytes",
-        "memory_used_bytes",
-        "network_receive_bytes_total",
-        "network_transmit_bytes_total",
-        "uptime",
-      ],
-      .name,
-    )
-  '''
-
 [sinks.monitoring_db]
 type = "influxdb_metrics"
-inputs = ["filter_unwanted_metrics"]
+inputs = [
+  "filter_unwanted_cpu_host_metrics",
+  "filter_unwanted_filesystem_host_metrics",
+  "filter_unwanted_host_metrics",
+  "filter_unwanted_memory_host_metrics",
+  "filter_unwanted_network_host_metrics",
+]
 bucket = "${INFLUXDB_BUCKET}"
 endpoint = "${INFLUXDB_ENDPOINT}"
 org = "${INFLUXDB_ORG}"

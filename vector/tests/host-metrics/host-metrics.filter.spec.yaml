@@ -1,0 +1,36 @@
+tests:
+  - name: Host Metrics | Filter | should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_host_metrics
+        type: metric
+        metric:
+          name: uptime
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            collector: host
+    outputs:
+      - extract_from: filter_unwanted_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "uptime")
+  - name: Host Metrics | Filter | should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_host_metrics
+        type: metric
+        metric:
+          name: load
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.682305795Z'
+          kind: absolute
+          gauge:
+            value: 4191480000
+          tags:
+            collector: host
+            host: desktop
+    no_outputs_from:
+      - filter_unwanted_host_metrics

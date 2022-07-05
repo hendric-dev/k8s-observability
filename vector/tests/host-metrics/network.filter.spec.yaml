@@ -1,0 +1,35 @@
+tests:
+  - name: Host Metrics | Network | Filter | should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_network_host_metrics
+        type: metric
+        metric:
+          name: network_receive_bytes_total
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            collector: network
+    outputs:
+      - extract_from: filter_unwanted_network_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "network_receive_bytes_total")
+  - name: Host Metrics | Network | Filter | should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_network_host_metrics
+        type: metric
+        metric:
+          name: network_receive_packets_total
+          namespace: host
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            collector: network
+    no_outputs_from:
+      - filter_unwanted_network_host_metrics

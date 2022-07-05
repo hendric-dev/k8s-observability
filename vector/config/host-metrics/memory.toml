@@ -1,0 +1,6 @@
+[transforms.filter_unwanted_memory_host_metrics]
+type = "filter"
+inputs = ["host_metrics_routing.memory"]
+  [transforms.filter_unwanted_memory_host_metrics.condition]
+  type = "vrl"
+  source = 'includes(["memory_total_bytes", "memory_used_bytes"], .name)'
