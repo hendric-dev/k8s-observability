@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "iteration": 1656869152337,
+  "iteration": 1656880164424,
   "links": [
     {
       "icon": "external link",
@@ -1153,8 +1153,9 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMax": 50000,
+            "axisSoftMin": -50000,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 40,
@@ -1191,7 +1192,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "Bps"
         },
         "overrides": []
       },
@@ -1221,7 +1222,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r._measurement == \"host.network_receive_bytes_total\")\n  |> keep(columns: [\"_time\", \"_value\", \"node\"])\n",
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => (r._measurement == \"host.network_receive_bytes_total\" or r._measurement == \"host.network_transmit_bytes_total\") and r.device != \"lo\")\n  |> map(fn: (r) => ({\n      r with _value: if r._measurement == \"host.network_receive_bytes_total\" then r._value else -r._value,\n             _measurement: if r._measurement == \"host.network_receive_bytes_total\" then \"received\" else \"transmitted\",\n    }))\n  |> keep(columns: [\"_measurement\", \"_time\", \"_value\", \"node\"])\n",
           "refId": "A"
         }
       ],
@@ -1240,7 +1241,7 @@
       {
         "allValue": "all",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
