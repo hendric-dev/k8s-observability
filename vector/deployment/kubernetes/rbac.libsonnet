@@ -14,8 +14,8 @@ local tk = import 'tk';
       + clusterRole.metadata.withLabels(this.labels.selector)
       + clusterRole.withRules([
         resourceRule.withApiGroups('')
-        + resourceRule.withResources(['pods', 'namespaces'])
-        + resourceRule.withVerbs(['watch']),
+        + resourceRule.withResources(['pods', 'namespaces', 'nodes/proxy'])
+        + resourceRule.withVerbs(['get', 'list', 'watch']),
       ]),
     clusterRoleBinding: clusterRoleBinding.new(this.name)
       + clusterRoleBinding.metadata.withLabels(this.labels.selector)
@@ -29,6 +29,6 @@ local tk = import 'tk';
       ),
     serviceAccount: serviceAccount.new(this.name)
       + serviceAccount.metadata.withLabels(this.labels.selector)
-      + serviceAccount.withAutomountServiceAccountToken(true),
+      + serviceAccount.withAutomountServiceAccountToken(false),
   },
 }

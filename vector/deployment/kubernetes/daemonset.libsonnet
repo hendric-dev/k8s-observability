@@ -15,6 +15,7 @@
         envVar.fromFieldPath('VECTOR_SELF_POD_NAME', 'metadata.name'),
         envVar.fromFieldPath('VECTOR_SELF_POD_NAMESPACE', 'metadata.namespace'),
         envVar.fromSecretRef('INFLUXDB_TOKEN', 'vector-influx-db-token', 'token'),
+        envVar.fromSecretRef('KUBERNETES_API_TOKEN', 'vector-service-account-token', 'token'),
         envVar.new('INFLUXDB_BUCKET', this.monitoring.influxDB.bucket),
         envVar.new('INFLUXDB_ENDPOINT', this.monitoring.influxDB.endpoint),
         envVar.new('INFLUXDB_ORG', this.monitoring.influxDB.org),
@@ -29,6 +30,7 @@
         volumeMount.new('config', '/etc/vector', true),
         volumeMount.new('data-dir', '/vector-data-dir'),
         volumeMount.new('procfs', '/host/proc', true),
+        volumeMount.new('service-account-token', '/var/run/secrets/kubernetes.io/serviceaccount/', true),
         volumeMount.new('sysfs', '/host/sys', true),
         volumeMount.new('var-lib', '/var/lib', true),
         volumeMount.new('var-log', '/var/log', true),
@@ -51,6 +53,7 @@
         volume.fromHostPath('sysfs', '/sys'),
         volume.fromHostPath('var-lib', '/var/lib'),
         volume.fromHostPath('var-log', '/var/log'),
+        volume.fromSecret('service-account-token', 'vector-service-account-token'),
       ]),
   },
 }
