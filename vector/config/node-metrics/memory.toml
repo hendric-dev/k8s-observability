@@ -4,3 +4,14 @@ inputs = ["node_metrics_routing.memory"]
   [transforms.filter_unwanted_memory_node_metrics.condition]
   type = "vrl"
   source = 'includes(["container_memory_usage_bytes", "machine_memory_bytes"], .name)'
+
+[transforms.remove_memory_node_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_memory_node_metrics"]
+source = """
+  .del(.tags.boot_id)
+  .del(.tags.id)
+  .del(.tags.image)
+  .del(.tags.metric_type)
+  .del(.tags.name)
+"""

@@ -4,3 +4,14 @@ inputs = ["node_metrics_routing.network"]
   [transforms.filter_unwanted_network_node_metrics.condition]
   type = "vrl"
   source = 'includes(["container_network_receive_bytes_total", "container_network_transmit_bytes_total"], .name)'
+
+[transforms.remove_network_node_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_network_node_metrics"]
+source = """
+  .del(.tags.id)
+  .del(.tags.image)
+  .del(.tags.interface)
+  .del(.tags.metric_type)
+  .del(.tags.name)
+"""

@@ -4,3 +4,14 @@ inputs = ["node_metrics_routing.cpu"]
   [transforms.filter_unwanted_cpu_node_metrics.condition]
   type = "vrl"
   source = 'includes(["container_cpu_usage_seconds_total", "machine_cpu_cores"], .name)'
+
+[transforms.remove_cpu_node_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_cpu_node_metrics"]
+source = """
+  .del(.tags.boot_id)
+  .del(.tags.id)
+  .del(.tags.image)
+  .del(.tags.metric_type)
+  .del(.tags.name)
+"""
