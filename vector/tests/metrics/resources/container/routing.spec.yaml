@@ -1,7 +1,7 @@
 tests:
-  - name: Node Metrics | Routing | should route CPU metrics
+  - name: Metrics > Resources > Container > Routing > should route CPU metrics
     inputs:
-      - insert_at: node_metrics_routing
+      - insert_at: container_metrics_routing
         type: metric
         metric:
           name: cpu_seconds_total
@@ -10,16 +10,16 @@ tests:
           counter:
             value: 12345
     outputs:
-      - extract_from: node_metrics_routing.cpu
+      - extract_from: container_metrics_routing.cpu
         conditions:
           - type: vrl
             source: |
               assert_eq!(.name, "cpu_seconds_total")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
-  - name: Node Metrics | Routing | should route memory metrics
+  - name: Metrics > Resources > Container > Routing > should route memory metrics
     inputs:
-      - insert_at: node_metrics_routing
+      - insert_at: container_metrics_routing
         type: metric
         metric:
           name: memory_bytes_used
@@ -28,16 +28,16 @@ tests:
           counter:
             value: 1024
     outputs:
-      - extract_from: node_metrics_routing.memory
+      - extract_from: container_metrics_routing.memory
         conditions:
           - type: vrl
             source: |
               assert_eq!(.name, "memory_bytes_used")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
-  - name: Node Metrics | Routing | should route network metrics
+  - name: Metrics > Resources > Container > Routing > should route network metrics
     inputs:
-      - insert_at: node_metrics_routing
+      - insert_at: container_metrics_routing
         type: metric
         metric:
           name: network_receive_bytes
@@ -46,16 +46,16 @@ tests:
           counter:
             value: 500
     outputs:
-      - extract_from: node_metrics_routing.network
+      - extract_from: container_metrics_routing.network
         conditions:
           - type: vrl
             source: |
               assert_eq!(.name, "network_receive_bytes")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
-  - name: Node Metrics | Routing | should drop unknown metrics
+  - name: Metrics > Resources > Container > Routing > should drop unknown metrics
     inputs:
-      - insert_at: node_metrics_routing
+      - insert_at: container_metrics_routing
         type: metric
         metric:
           name: unknown_metric
@@ -64,6 +64,6 @@ tests:
           counter:
             value: 8888
     no_outputs_from:
-      - node_metrics_routing.cpu
-      - node_metrics_routing.memory
-      - node_metrics_routing.network
+      - container_metrics_routing.cpu
+      - container_metrics_routing.memory
+      - container_metrics_routing.network

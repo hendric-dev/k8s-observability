@@ -1,7 +1,7 @@
 tests:
-  - name: Node Metrics | Network | Filter | should keep specific metrics
+  - name: Metrics > Resources > Container > Network > Filter > should keep specific metrics
     inputs:
-      - insert_at: filter_unwanted_network_node_metrics
+      - insert_at: filter_unwanted_network_container_metrics
         type: metric
         metric:
           name: container_network_receive_bytes_total
@@ -11,7 +11,7 @@ tests:
             value: 6000
           tags:
             pod: vector-abcxy
-      - insert_at: filter_unwanted_network_node_metrics
+      - insert_at: filter_unwanted_network_container_metrics
         type: metric
         metric:
           name: container_network_transmit_bytes_total
@@ -22,7 +22,7 @@ tests:
           tags:
             pod: vector-abcxy
     outputs:
-      - extract_from: filter_unwanted_network_node_metrics
+      - extract_from: filter_unwanted_network_container_metrics
         conditions:
           - type: vrl
             source: |
@@ -30,7 +30,7 @@ tests:
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
               assert_eq!(.tags.pod, "vector-abcxy")
-      - extract_from: filter_unwanted_network_node_metrics
+      - extract_from: filter_unwanted_network_container_metrics
         conditions:
           - type: vrl
             source: |
@@ -38,9 +38,9 @@ tests:
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
               assert_eq!(.tags.pod, "vector-abcxy")
-  - name: Node Metrics | Network | Filter | should filter out undesired metrics
+  - name: Metrics > Resources > Container > Network > Filter > should filter out undesired metrics
     inputs:
-      - insert_at: filter_unwanted_network_node_metrics
+      - insert_at: filter_unwanted_network_container_metrics
         type: metric
         metric:
           name: network_used_lan_cables
@@ -51,10 +51,10 @@ tests:
           tags:
             pod: vector-abcxy
     no_outputs_from:
-      - filter_unwanted_network_node_metrics
-  - name: Node Metrics | Network | Filter | should filter out metrics with empty pod field
+      - filter_unwanted_network_container_metrics
+  - name: Metrics > Resources > Container > Network > Filter > should filter out metrics with empty pod field
     inputs:
-      - insert_at: filter_unwanted_network_node_metrics
+      - insert_at: filter_unwanted_network_container_metrics
         type: metric
         metric:
           name: container_network_transmit_bytes_total
@@ -65,4 +65,4 @@ tests:
           tags:
             pod: ''
     no_outputs_from:
-      - filter_unwanted_network_node_metrics
+      - filter_unwanted_network_container_metrics

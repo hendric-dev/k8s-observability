@@ -1,0 +1,13 @@
+[sources.host_metrics]
+type = "host_metrics"
+collectors = ["filesystem", "host", "load", "memory"]
+scrape_interval_secs = 15
+
+[transforms.host_metrics_routing]
+type = "route"
+inputs = ["host_metrics"]
+  [transforms.host_metrics_routing.route]
+  filesystem = '.tags.collector == "filesystem"'
+  host = '.tags.collector == "host"'
+  load = '.tags.collector == "load"'
+  memory = '.tags.collector == "memory"'

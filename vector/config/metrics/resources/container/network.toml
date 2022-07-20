@@ -1,0 +1,18 @@
+[transforms.filter_unwanted_network_container_metrics]
+type = "filter"
+inputs = ["container_metrics_routing.network"]
+  [transforms.filter_unwanted_network_container_metrics.condition]
+  type = "vrl"
+  source = """
+    includes(["container_network_receive_bytes_total", "container_network_transmit_bytes_total"], .name) &&
+    !is_nullish(.tags.pod)
+  """
+
+[transforms.remove_network_container_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_network_container_metrics"]
+source = """
+  del(.tags.id)
+  del(.tags.image)
+  del(.tags.name)
+"""

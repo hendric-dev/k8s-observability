@@ -7,10 +7,11 @@
     configMap: configMap.new(this.name,
       {
         'vector.toml': (importstr '../../config/vector.toml')
-          + (importstr '../../config/node-metrics/cpu.toml')
-          + (importstr '../../config/node-metrics/index.toml')
-          + (importstr '../../config/node-metrics/memory.toml')
-          + (importstr '../../config/node-metrics/network.toml'),
+          + (importstr '../../config/metrics/resources/container/cpu.toml')
+          + (importstr '../../config/metrics/resources/container/index.toml')
+          + (importstr '../../config/metrics/resources/container/memory.toml')
+          + (importstr '../../config/metrics/resources/container/network.toml')
+          + (importstr '../../config/metrics/resources/host/index.toml'),
       })
       + configMap.metadata.withLabels(this.labels.selector),
   },

@@ -1,28 +1,30 @@
 tests:
-  - name: Node Metrics | Network | Remove Fields | should remove unnecessary fields
+  - name: Metrics > Resources > Container > Memory > Remove Fields > should remove unnecessary fields
     inputs:
-      - insert_at: remove_network_node_metrics_fields
+      - insert_at: remove_memory_container_metrics_fields
         type: metric
         metric:
-          name: container_network_receive_bytes_total
+          name: container_memory_usage_bytes
           timestamp: '2022-05-12T17:18:12.678580956Z'
           kind: absolute
           counter:
-            value: 6000
+            value: 123456789
           tags:
+            container: vector
             id: abcd1234
             image: vector:0.23.0-alpine
             name: vector
             pod: vector-abcxy
     outputs:
-      - extract_from: remove_network_node_metrics_fields
+      - extract_from: remove_memory_container_metrics_fields
         conditions:
           - type: vrl
             source: |
-              assert_eq!(.name, "container_network_receive_bytes_total")
+              assert_eq!(.name, "container_memory_usage_bytes")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
               assert_eq!(.tags.pod, "vector-abcxy")
+              assert!(!exists(.tags.container))
               assert!(!exists(.tags.id))
               assert!(!exists(.tags.image))
               assert!(!exists(.tags.name))
