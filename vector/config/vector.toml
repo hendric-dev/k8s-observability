@@ -3,11 +3,9 @@ data_dir = "/vector-data-dir"
 [sinks.monitoring_db]
 type = "influxdb_metrics"
 inputs = [
-  "filter_unwanted_cpu_host_metrics",
-  "filter_unwanted_filesystem_host_metrics",
-  "filter_unwanted_host_metrics",
-  "filter_unwanted_memory_host_metrics",
-  "filter_unwanted_network_host_metrics",
+  "filter_unwanted_cpu_node_metrics",
+  "filter_unwanted_memory_node_metrics",
+  "filter_unwanted_network_node_metrics",
 ]
 bucket = "${INFLUXDB_BUCKET}"
 endpoint = "${INFLUXDB_ENDPOINT}"

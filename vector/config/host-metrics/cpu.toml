@@ -1,6 +1,0 @@
-[transforms.filter_unwanted_cpu_host_metrics]
-type = "filter"
-inputs = ["host_metrics_routing.cpu"]
-  [transforms.filter_unwanted_cpu_host_metrics.condition]
-  type = "vrl"
-  source = 'includes(["cpu_seconds_total"], .name)'

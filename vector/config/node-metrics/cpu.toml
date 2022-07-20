@@ -1,0 +1,6 @@
+[transforms.filter_unwanted_cpu_node_metrics]
+type = "filter"
+inputs = ["node_metrics_routing.cpu"]
+  [transforms.filter_unwanted_cpu_node_metrics.condition]
+  type = "vrl"
+  source = 'includes(["container_cpu_usage_seconds_total", "machine_cpu_cores"], .name)'
