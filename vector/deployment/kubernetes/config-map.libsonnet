@@ -8,6 +8,7 @@
       {
         'vector.toml': (importstr '../../config/vector.toml')
           + (importstr '../../config/node-metrics/cpu.toml')
+          + (importstr '../../config/node-metrics/index.toml')
           + (importstr '../../config/node-metrics/memory.toml')
           + (importstr '../../config/node-metrics/network.toml'),
       })
