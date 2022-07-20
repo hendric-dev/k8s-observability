@@ -6,7 +6,6 @@ scrape_interval_secs = 15
   strategy = "bearer"
   token = "${KUBERNETES_API_TOKEN}"
   [sources.node_metrics.tls]
-  enabled = true
   ca_file = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 
 [transforms.node_metrics_routing]

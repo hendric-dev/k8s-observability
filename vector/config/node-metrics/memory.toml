@@ -12,6 +12,5 @@ source = """
   del(.tags.boot_id)
   del(.tags.id)
   del(.tags.image)
-  del(.tags.metric_type)
   del(.tags.name)
 """

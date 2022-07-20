@@ -1,0 +1,46 @@
+tests:
+  - name: Node Metrics | Memory | Filter | should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_memory_node_metrics
+        type: metric
+        metric:
+          name: container_memory_usage_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 1073741824
+      - insert_at: filter_unwanted_memory_node_metrics
+        type: metric
+        metric:
+          name: machine_memory_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 8589934592
+    outputs:
+      - extract_from: filter_unwanted_memory_node_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "container_memory_usage_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+      - extract_from: filter_unwanted_memory_node_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "machine_memory_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+  - name: Node Metrics | Memory | Filter | should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_memory_node_metrics
+        type: metric
+        metric:
+          name: memory_used_guinea_pigs
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 5
+    no_outputs_from:
+      - filter_unwanted_memory_node_metrics

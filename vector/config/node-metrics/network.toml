@@ -2,9 +2,10 @@
 type = "filter"
 inputs = ["node_metrics_routing.network"]
   [transforms.filter_unwanted_network_node_metrics.condition]
-  condition = """
+  type = "vrl"
+  source = """
     includes(["container_network_receive_bytes_total", "container_network_transmit_bytes_total"], .name) &&
-    !is_empty(.tags.pod)
+    !is_nullish(.tags.pod)
   """
 
 [transforms.remove_network_node_metrics_fields]
