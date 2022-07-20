@@ -9,7 +9,7 @@
         'vector.toml': (importstr '../../config/vector.toml')
           + (importstr '../../config/host-metrics/cpu.toml')
           + (importstr '../../config/host-metrics/filesystem.toml')
-          + (importstr '../../config/host-metrics/host_metrics.toml')
+          + (importstr '../../config/host-metrics/host-metrics.toml')
           + (importstr '../../config/host-metrics/memory.toml')
           + (importstr '../../config/host-metrics/network.toml'),
       })
