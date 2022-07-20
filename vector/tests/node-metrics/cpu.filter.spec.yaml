@@ -9,6 +9,9 @@ tests:
           kind: absolute
           counter:
             value: 6515618
+          tags:
+            container: vector
+            pod: vector-abcxy
       - insert_at: filter_unwanted_cpu_node_metrics
         type: metric
         metric:
@@ -17,6 +20,9 @@ tests:
           kind: absolute
           counter:
             value: 4
+          tags:
+            container: vector
+            pod: vector-abcxy
     outputs:
       - extract_from: filter_unwanted_cpu_node_metrics
         conditions:
@@ -25,6 +31,8 @@ tests:
               assert_eq!(.name, "container_cpu_usage_seconds_total")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.container, "vector")
+              assert_eq!(.tags.pod, "vector-abcxy")
       - extract_from: filter_unwanted_cpu_node_metrics
         conditions:
           - type: vrl
@@ -32,6 +40,8 @@ tests:
               assert_eq!(.name, "machine_cpu_cores")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.container, "vector")
+              assert_eq!(.tags.pod, "vector-abcxy")
   - name: Node Metrics | CPU | Filter | should filter out undesired metrics
     inputs:
       - insert_at: filter_unwanted_cpu_node_metrics
@@ -42,5 +52,34 @@ tests:
           kind: absolute
           counter:
             value: 6515618
+          tags:
+            container: vector
+            pod: vector-abcxy
+    no_outputs_from:
+      - filter_unwanted_cpu_node_metrics
+  - name: Node Metrics | CPU | Filter | should filter out metrics with empty pod or container field
+    inputs:
+      - insert_at: filter_unwanted_cpu_node_metrics
+        type: metric
+        metric:
+          name: container_cpu_usage_seconds_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            container: vector
+            pod: ''
+      - insert_at: filter_unwanted_cpu_node_metrics
+        type: metric
+        metric:
+          name: container_cpu_usage_seconds_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            container: ''
+            pod: vector-abcxy
     no_outputs_from:
       - filter_unwanted_cpu_node_metrics

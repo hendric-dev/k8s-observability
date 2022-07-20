@@ -11,6 +11,7 @@ tests:
             value: 123456789
           tags:
             boot_id: '15'
+            container: vector
             id: abcd1234
             image: vector:0.23.0-alpine
             name: vector
@@ -25,6 +26,7 @@ tests:
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
               assert_eq!(.tags.pod, "vector-abcxy")
               assert!(!exists(.tags.boot_id))
+              assert!(!exists(.tags.container))
               assert!(!exists(.tags.id))
               assert!(!exists(.tags.image))
               assert!(!exists(.tags.name))

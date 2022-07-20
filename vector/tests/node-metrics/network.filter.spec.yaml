@@ -63,6 +63,6 @@ tests:
           counter:
             value: 500
           tags:
-            pod: ""
+            pod: ''
     no_outputs_from:
       - filter_unwanted_network_node_metrics

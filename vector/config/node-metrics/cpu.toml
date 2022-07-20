@@ -3,7 +3,11 @@ type = "filter"
 inputs = ["node_metrics_routing.cpu"]
   [transforms.filter_unwanted_cpu_node_metrics.condition]
   type = "vrl"
-  source = 'includes(["container_cpu_usage_seconds_total", "machine_cpu_cores"], .name)'
+  source = '''
+    includes(["container_cpu_usage_seconds_total", "machine_cpu_cores"], .name) &&
+    !is_nullish(.tags.container) &&
+    !is_nullish(.tags.pod)
+  '''
 
 [transforms.remove_cpu_node_metrics_fields]
 type = "remap"

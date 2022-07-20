@@ -3,13 +3,17 @@ type = "filter"
 inputs = ["node_metrics_routing.memory"]
   [transforms.filter_unwanted_memory_node_metrics.condition]
   type = "vrl"
-  source = 'includes(["container_memory_usage_bytes", "machine_memory_bytes"], .name)'
+  source = '''
+    includes(["container_memory_usage_bytes", "machine_memory_bytes"], .name) &&
+    !is_nullish(.tags.pod)
+  '''
 
 [transforms.remove_memory_node_metrics_fields]
 type = "remap"
 inputs = ["filter_unwanted_memory_node_metrics"]
 source = """
   del(.tags.boot_id)
+  del(.tags.container)
   del(.tags.id)
   del(.tags.image)
   del(.tags.name)
