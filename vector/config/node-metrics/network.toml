@@ -9,9 +9,9 @@ inputs = ["node_metrics_routing.network"]
 type = "remap"
 inputs = ["filter_unwanted_network_node_metrics"]
 source = """
-  .del(.tags.id)
-  .del(.tags.image)
-  .del(.tags.interface)
-  .del(.tags.metric_type)
-  .del(.tags.name)
+  del(.tags.id)
+  del(.tags.image)
+  del(.tags.interface)
+  del(.tags.metric_type)
+  del(.tags.name)
 """

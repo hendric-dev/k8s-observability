@@ -9,9 +9,9 @@ inputs = ["node_metrics_routing.memory"]
 type = "remap"
 inputs = ["filter_unwanted_memory_node_metrics"]
 source = """
-  .del(.tags.boot_id)
-  .del(.tags.id)
-  .del(.tags.image)
-  .del(.tags.metric_type)
-  .del(.tags.name)
+  del(.tags.boot_id)
+  del(.tags.id)
+  del(.tags.image)
+  del(.tags.metric_type)
+  del(.tags.name)
 """
