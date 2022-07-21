@@ -4,7 +4,7 @@ tests:
       - insert_at: remove_load_host_metrics_fields
         type: metric
         metric:
-          name: load15
+          name: load5
           timestamp: '2022-05-12T17:18:12.678580956Z'
           kind: absolute
           counter:
@@ -19,7 +19,7 @@ tests:
         conditions:
           - type: vrl
             source: |
-              assert_eq!(.name, "load15")
+              assert_eq!(.name, "load5")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
               assert_eq!(.tags.container, "vector")

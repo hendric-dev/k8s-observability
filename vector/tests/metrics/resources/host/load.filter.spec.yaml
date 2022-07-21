@@ -4,7 +4,7 @@ tests:
       - insert_at: filter_unwanted_load_host_metrics
         type: metric
         metric:
-          name: load15
+          name: load5
           timestamp: '2022-05-12T17:18:12.678580956Z'
           kind: absolute
           gauge:
@@ -14,7 +14,7 @@ tests:
         conditions:
           - type: vrl
             source: |
-              assert_eq!(.name, "load15")
+              assert_eq!(.name, "load5")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
   - name: Metrics > Resources > Host > Load > Filter > should filter out undesired metrics

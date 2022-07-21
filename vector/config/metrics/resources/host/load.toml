@@ -3,7 +3,7 @@ type = "filter"
 inputs = ["host_metrics_routing.load"]
   [transforms.filter_unwanted_load_host_metrics.condition]
   type = "vrl"
-  source = '.name == "load15"'
+  source = '.name == "load5"'
 
 [transforms.remove_load_host_metrics_fields]
 type = "remap"
