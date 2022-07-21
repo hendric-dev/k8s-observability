@@ -15,7 +15,7 @@ tests:
             host: worker-01
             pod: vector-abcxy
     outputs:
-      - extract_from: remove_filesystem_host_metrics_fields
+      - extract_from: remove_host_metrics_fields
         conditions:
           - type: vrl
             source: |

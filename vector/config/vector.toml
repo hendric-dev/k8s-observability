@@ -4,7 +4,11 @@ data_dir = "/vector-data-dir"
 type = "influxdb_metrics"
 inputs = [
   "remove_cpu_container_metrics_fields",
+  "remove_filesystem_host_metrics_fields",
+  "remove_host_metrics_fields",
+  "remove_load_host_metrics_fields",
   "remove_memory_container_metrics_fields",
+  "remove_memory_host_metrics_fields",
   "remove_network_container_metrics_fields",
 ]
 bucket = "${INFLUXDB_BUCKET}"

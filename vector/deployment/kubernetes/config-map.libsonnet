@@ -11,7 +11,11 @@
           + (importstr '../../config/metrics/resources/container/index.toml')
           + (importstr '../../config/metrics/resources/container/memory.toml')
           + (importstr '../../config/metrics/resources/container/network.toml')
-          + (importstr '../../config/metrics/resources/host/index.toml'),
+          + (importstr '../../config/metrics/resources/host/filesystem.toml')
+          + (importstr '../../config/metrics/resources/host/host.toml')
+          + (importstr '../../config/metrics/resources/host/index.toml')
+          + (importstr '../../config/metrics/resources/host/load.toml')
+          + (importstr '../../config/metrics/resources/host/memory.toml'),
       })
       + configMap.metadata.withLabels(this.labels.selector),
   },
