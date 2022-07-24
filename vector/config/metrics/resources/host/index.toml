@@ -1,7 +1,10 @@
 [sources.host_metrics]
 type = "host_metrics"
 collectors = ["filesystem", "host", "load", "memory"]
+namespace = ""
 scrape_interval_secs = 15
+  [sources.host_metrics.filesystem.mountpoints]
+  include = ["/"]
 
 [transforms.host_metrics_routing]
 type = "route"
