@@ -1,6 +1,6 @@
 [sources.host_metrics]
 type = "host_metrics"
-collectors = ["filesystem", "host", "load", "memory"]
+collectors = ["filesystem", "host", "load", "memory", "network"]
 namespace = ""
 scrape_interval_secs = 15
   [sources.host_metrics.filesystem.mountpoints]
@@ -14,3 +14,4 @@ inputs = ["host_metrics"]
   host = '.tags.collector == "host"'
   load = '.tags.collector == "load"'
   memory = '.tags.collector == "memory"'
+  network = '.tags.collector == "network"'

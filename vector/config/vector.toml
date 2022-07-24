@@ -10,6 +10,7 @@ inputs = [
   "remove_memory_container_metrics_fields",
   "remove_memory_host_metrics_fields",
   "remove_network_container_metrics_fields",
+  "remove_network_host_metrics_fields",
 ]
 bucket = "${INFLUXDB_BUCKET}"
 endpoint = "${INFLUXDB_ENDPOINT}"
