@@ -3,8 +3,10 @@ type = "host_metrics"
 collectors = ["filesystem", "host", "load", "memory", "network"]
 namespace = ""
 scrape_interval_secs = 15
+  [sources.host_metrics.filesystem.devices]
+  exclused = ["tmpfs"]
   [sources.host_metrics.filesystem.mountpoints]
-  include = ["/"]
+  includes = ["/"]
 
 [transforms.host_metrics_routing]
 type = "route"
