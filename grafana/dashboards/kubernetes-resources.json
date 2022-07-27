@@ -91,7 +91,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -175,7 +175,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -268,7 +268,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -362,7 +362,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -456,7 +456,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -551,7 +551,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -646,7 +646,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -741,7 +741,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -836,7 +836,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.0.5",
       "targets": [
         {
           "datasource": {
@@ -1271,6 +1271,133 @@
         }
       ],
       "title": "Filesystem",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "network_receive_bytes_total"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "In: ${__field.labels.node}"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "network_transmit_bytes_total"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Out: ${__field.labels.node}"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 285,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => (r._measurement == \"network_receive_bytes_total\" or r._measurement == \"network_transmit_bytes_total\") and r.device != \"lo\")\n  |> derivative(unit: 1s, nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({r with network_transmit_bytes_total: -r.network_transmit_bytes_total}))\n  |> keep(columns: [\"_time\", \"network_receive_bytes_total\", \"network_transmit_bytes_total\", \"node\"])\n",
+          "refId": "Network Usage"
+        }
+      ],
+      "title": "Network",
+      "transformations": [],
       "type": "timeseries"
     }
   ],
