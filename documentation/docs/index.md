@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: -> Get Started
-      link: /introduction/getting-started
+      link: /getting-started/prerequisites
     - theme: alt
       text: View on Gitlab
       link: https://gitlab.com/hendric-eckelt/observability
