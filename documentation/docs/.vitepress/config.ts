@@ -14,6 +14,14 @@ export default defineConfig({
           {text: '4. Deployment', link: '/getting-started/deployment'},
         ],
       },
+      {
+        text: 'Configuration Reference',
+        items: [
+          {text: 'Grafana', link: '/configuration-reference/grafana'},
+          {text: 'Influx DB', link: '/configuration-reference/influx-db'},
+          {text: 'Vector', link: '/configuration-reference/vector'},
+        ]
+      },
     ],
   },
   title: 'K8S Observability',

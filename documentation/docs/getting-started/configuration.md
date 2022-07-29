@@ -86,4 +86,8 @@ The deployment is already preconfigured with lots of default that make sense. It
 
 Note that the InfluxDB API token is generated and can be obtained after the pod was deployed.
 
-TODO: Configuration Reference
+See the configuration references for all available options:
+
+* [Grafana](/configuration-reference/grafana)
+* [Influx DB](/configuration-reference/influx-db)
+* [Vector](/configuration-reference/vector)
