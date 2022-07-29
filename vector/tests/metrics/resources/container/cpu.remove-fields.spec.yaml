@@ -1,0 +1,30 @@
+tests:
+  - name: Metrics > Resources > Container > CPU > Remove Fields > should remove unnecessary fields
+    inputs:
+      - insert_at: remove_cpu_container_metrics_fields
+        type: metric
+        metric:
+          name: container_cpu_usage_seconds_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 123456789
+          tags:
+            boot_id: '15'
+            id: abcd1234
+            image: vector:0.23.0-alpine
+            name: vector
+            pod: vector-abcxy
+    outputs:
+      - extract_from: remove_cpu_container_metrics_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "container_cpu_usage_seconds_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.pod, "vector-abcxy")
+              assert!(!exists(.tags.boot_id))
+              assert!(!exists(.tags.id))
+              assert!(!exists(.tags.image))
+              assert!(!exists(.tags.name))

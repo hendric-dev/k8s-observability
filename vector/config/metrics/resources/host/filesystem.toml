@@ -1,0 +1,17 @@
+[transforms.filter_unwanted_filesystem_host_metrics]
+type = "filter"
+inputs = ["host_metrics_routing.filesystem"]
+  [transforms.filter_unwanted_filesystem_host_metrics.condition]
+  type = "vrl"
+  source = 'includes(["filesystem_total_bytes", "filesystem_used_bytes", "filesystem_used_ratio"], .name)'
+
+[transforms.remove_filesystem_host_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_filesystem_host_metrics"]
+source = """
+  del(.tags.collector)
+  del(.tags.device)
+  del(.tags.filesystem)
+  del(.tags.host)
+  del(.tags.mountpoint)
+"""

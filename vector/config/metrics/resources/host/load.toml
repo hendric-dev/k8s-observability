@@ -1,0 +1,14 @@
+[transforms.filter_unwanted_load_host_metrics]
+type = "filter"
+inputs = ["host_metrics_routing.load"]
+  [transforms.filter_unwanted_load_host_metrics.condition]
+  type = "vrl"
+  source = '.name == "load5"'
+
+[transforms.remove_load_host_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_load_host_metrics"]
+source = """
+  del(.tags.collector)
+  del(.tags.host)
+"""

@@ -4,3 +4,11 @@ inputs = ["host_metrics_routing.network"]
   [transforms.filter_unwanted_network_host_metrics.condition]
   type = "vrl"
   source = 'includes(["network_receive_bytes_total", "network_transmit_bytes_total"], .name)'
+
+[transforms.remove_network_host_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_network_host_metrics"]
+source = """
+  del(.tags.collector)
+  del(.tags.host)
+"""

@@ -1,0 +1,30 @@
+tests:
+  - name: Metrics > Resources > Host > Network > Remove Fields > should remove unnecessary fields
+    inputs:
+      - insert_at: remove_network_host_metrics_fields
+        type: metric
+        metric:
+          name: network_receive_bytes_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 1024
+          tags:
+            collector: network
+            container: vector
+            device: eth0
+            host: worker-01
+            pod: vector-abcxy
+    outputs:
+      - extract_from: remove_network_host_metrics_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "network_receive_bytes_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.container, "vector")
+              assert_eq!(.tags.device, "eth0")
+              assert_eq!(.tags.pod, "vector-abcxy")
+              assert!(!exists(.tags.collector))
+              assert!(!exists(.tags.host))

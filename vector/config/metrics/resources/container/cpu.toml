@@ -1,0 +1,19 @@
+[transforms.filter_unwanted_cpu_container_metrics]
+type = "filter"
+inputs = ["container_metrics_routing.cpu"]
+  [transforms.filter_unwanted_cpu_container_metrics.condition]
+  type = "vrl"
+  source = '''
+    .name == "machine_cpu_cores" ||
+    (.name == "container_cpu_usage_seconds_total" && !is_nullish(.tags.container) && !is_nullish(.tags.pod))
+  '''
+
+[transforms.remove_cpu_container_metrics_fields]
+type = "remap"
+inputs = ["filter_unwanted_cpu_container_metrics"]
+source = """
+  del(.tags.boot_id)
+  del(.tags.id)
+  del(.tags.image)
+  del(.tags.name)
+"""

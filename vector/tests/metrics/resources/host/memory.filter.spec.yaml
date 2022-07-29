@@ -1,0 +1,46 @@
+tests:
+  - name: Metrics > Resources > Host > Memory > Filter > should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_memory_host_metrics
+        type: metric
+        metric:
+          name: memory_total_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          gauge:
+            value: 8373741824
+      - insert_at: filter_unwanted_memory_host_metrics
+        type: metric
+        metric:
+          name: memory_used_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          gauge:
+            value: 1073741824
+    outputs:
+      - extract_from: filter_unwanted_memory_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "memory_total_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+      - extract_from: filter_unwanted_memory_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "memory_used_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+  - name: Metrics > Resources > Host > Memory > Filter > should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_memory_host_metrics
+        type: metric
+        metric:
+          name: memory_broken_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 1024
+    no_outputs_from:
+      - filter_unwanted_memory_host_metrics

@@ -1,0 +1,28 @@
+tests:
+  - name: Metrics > Resources > Host > Remove Fields > should remove unnecessary fields
+    inputs:
+      - insert_at: remove_host_metrics_fields
+        type: metric
+        metric:
+          name: uptime
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 123456789
+          tags:
+            collector: host
+            container: vector
+            host: worker-01
+            pod: vector-abcxy
+    outputs:
+      - extract_from: remove_host_metrics_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "uptime")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.container, "vector")
+              assert_eq!(.tags.pod, "vector-abcxy")
+              assert!(!exists(.tags.collector))
+              assert!(!exists(.tags.host))

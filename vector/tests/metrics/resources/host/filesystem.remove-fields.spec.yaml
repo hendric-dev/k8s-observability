@@ -1,0 +1,34 @@
+tests:
+  - name: Metrics > Resources > Host > Filesystem > Remove Fields > should remove unnecessary fields
+    inputs:
+      - insert_at: remove_filesystem_host_metrics_fields
+        type: metric
+        metric:
+          name: filesystem_total_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 123456789
+          tags:
+            collector: filesystem
+            container: vector
+            device: overlay
+            filesystem: overlay
+            host: worker-01
+            mountpoint: /
+            pod: vector-abcxy
+    outputs:
+      - extract_from: remove_filesystem_host_metrics_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "filesystem_total_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.container, "vector")
+              assert_eq!(.tags.pod, "vector-abcxy")
+              assert!(!exists(.tags.collector))
+              assert!(!exists(.tags.device))
+              assert!(!exists(.tags.filesystem))
+              assert!(!exists(.tags.host))
+              assert!(!exists(.tags.mountpoint))

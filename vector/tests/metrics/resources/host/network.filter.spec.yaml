@@ -1,0 +1,46 @@
+tests:
+  - name: Metrics > Resources > Host > Network > Filter > should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_network_host_metrics
+        type: metric
+        metric:
+          name: network_receive_bytes_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          gauge:
+            value: 1024
+      - insert_at: filter_unwanted_network_host_metrics
+        type: metric
+        metric:
+          name: network_transmit_bytes_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          gauge:
+            value: 500
+    outputs:
+      - extract_from: filter_unwanted_network_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "network_receive_bytes_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+      - extract_from: filter_unwanted_network_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "network_transmit_bytes_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+  - name: Metrics > Resources > Host > Network > Filter > should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_network_host_metrics
+        type: metric
+        metric:
+          name: network_used_lan_cables
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 4
+    no_outputs_from:
+      - filter_unwanted_network_host_metrics
