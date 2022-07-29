@@ -16,7 +16,7 @@
       }
     },
     host:: 'grafana.my-server.com',
-    image:: 'grafana/grafana:8.5.1',
+    image:: 'grafana/grafana:9.0.5',
     labels:: {
       deployment: {},
       pod: {},

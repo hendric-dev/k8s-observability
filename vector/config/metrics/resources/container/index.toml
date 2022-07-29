@@ -1,0 +1,17 @@
+[sources.container_metrics]
+type = "prometheus_scrape"
+endpoints = ["https://kubernetes.default/api/v1/nodes/${VECTOR_SELF_NODE_NAME}/proxy/metrics/cadvisor"]
+scrape_interval_secs = 15
+  [sources.container_metrics.auth]
+  strategy = "bearer"
+  token = "${KUBERNETES_API_TOKEN}"
+  [sources.container_metrics.tls]
+  ca_file = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+
+[transforms.container_metrics_routing]
+type = "route"
+inputs = ["container_metrics"]
+  [transforms.container_metrics_routing.route]
+  cpu = 'contains!(.name, "cpu")'
+  memory = 'contains!(.name, "memory")'
+  network = 'contains!(.name, "network")'

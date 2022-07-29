@@ -1,0 +1,102 @@
+tests:
+  - name: Metrics > Resources > Host > Routing > should route filesystem metrics
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: filesystem_used_bytes
+          kind: absolute
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          counter:
+            value: 12345
+          tags:
+            collector: filesystem
+    outputs:
+      - extract_from: host_metrics_routing.filesystem
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "filesystem_used_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.collector, "filesystem")
+  - name: Metrics > Resources > Host > Routing > should route host metrics
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: uptime
+          kind: absolute
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          counter:
+            value: 1024
+          tags:
+            collector: host
+    outputs:
+      - extract_from: host_metrics_routing.host
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "uptime")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.collector, "host")
+  - name: Metrics > Resources > Host > Routing > should route load metrics
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: load15
+          kind: absolute
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          counter:
+            value: 1024
+          tags:
+            collector: load
+    outputs:
+      - extract_from: host_metrics_routing.load
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "load15")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.collector, "load")
+  - name: Metrics > Resources > Host > Routing > should route memory metrics
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: memory_used_bytes
+          kind: absolute
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          counter:
+            value: 1024
+          tags:
+            collector: memory
+    outputs:
+      - extract_from: host_metrics_routing.memory
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "memory_used_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.collector, "memory")
+  - name: Metrics > Resources > Host > Routing > should drop unknown metrics
+    inputs:
+      - insert_at: host_metrics_routing
+        type: metric
+        metric:
+          name: unknown_metric
+          kind: absolute
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          counter:
+            value: 8888
+          tags:
+            collector: unknown
+    no_outputs_from:
+      - host_metrics_routing.filesystem
+      - host_metrics_routing.host
+      - host_metrics_routing.load
+      - host_metrics_routing.memory

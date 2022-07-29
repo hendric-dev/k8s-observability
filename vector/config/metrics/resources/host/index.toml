@@ -1,21 +1,19 @@
 [sources.host_metrics]
 type = "host_metrics"
-collectors = ["cpu", "filesystem", "host", "memory", "network"]
+collectors = ["filesystem", "host", "load", "memory", "network"]
+namespace = ""
 scrape_interval_secs = 15
+  [sources.host_metrics.filesystem.devices]
+  exclused = ["tmpfs"]
+  [sources.host_metrics.filesystem.mountpoints]
+  includes = ["/"]
 
 [transforms.host_metrics_routing]
 type = "route"
 inputs = ["host_metrics"]
   [transforms.host_metrics_routing.route]
-  cpu = '.tags.collector == "cpu"'
   filesystem = '.tags.collector == "filesystem"'
   host = '.tags.collector == "host"'
+  load = '.tags.collector == "load"'
   memory = '.tags.collector == "memory"'
   network = '.tags.collector == "network"'
-
-[transforms.filter_unwanted_host_metrics]
-type = "filter"
-inputs = ["host_metrics_routing.host"]
-  [transforms.filter_unwanted_host_metrics.condition]
-  type = "vrl"
-  source = 'includes(["uptime"], .name)'

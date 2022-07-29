@@ -1,0 +1,72 @@
+tests:
+  - name: Metrics > Resources > Host > Filesystem > Filter > should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_filesystem_host_metrics
+        type: metric
+        metric:
+          name: filesystem_total_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          gauge:
+            value: 8373741824
+          tags:
+            mountpoint: /
+      - insert_at: filter_unwanted_filesystem_host_metrics
+        type: metric
+        metric:
+          name: filesystem_used_bytes
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          gauge:
+            value: 1073741824
+          tags:
+            mountpoint: /
+      - insert_at: filter_unwanted_filesystem_host_metrics
+        type: metric
+        metric:
+          name: filesystem_used_ratio
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          gauge:
+            value: 0.45
+          tags:
+            mountpoint: /
+    outputs:
+      - extract_from: filter_unwanted_filesystem_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "filesystem_total_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.mountpoint, "/")
+      - extract_from: filter_unwanted_filesystem_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "filesystem_used_bytes")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.mountpoint, "/")
+      - extract_from: filter_unwanted_filesystem_host_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "filesystem_used_ratio")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.mountpoint, "/")
+  - name: Metrics > Resources > Host > Filesystem > Filter > should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_filesystem_host_metrics
+        type: metric
+        metric:
+          name: filesystem_used_floppy_disks
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 18
+          tags:
+            mountpoint: /
+    no_outputs_from:
+      - filter_unwanted_filesystem_host_metrics

@@ -1,0 +1,80 @@
+tests:
+  - name: Metrics > Resources > Container > CPU > Filter > should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_cpu_container_metrics
+        type: metric
+        metric:
+          name: container_cpu_usage_seconds_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            container: vector
+            pod: vector-abcxy
+      - insert_at: filter_unwanted_cpu_container_metrics
+        type: metric
+        metric:
+          name: machine_cpu_cores
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 4
+    outputs:
+      - extract_from: filter_unwanted_cpu_container_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "container_cpu_usage_seconds_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.container, "vector")
+              assert_eq!(.tags.pod, "vector-abcxy")
+      - extract_from: filter_unwanted_cpu_container_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "machine_cpu_cores")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+  - name: Metrics > Resources > Container > CPU > Filter > should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_cpu_container_metrics
+        type: metric
+        metric:
+          name: cpu_minutes_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            container: vector
+            pod: vector-abcxy
+    no_outputs_from:
+      - filter_unwanted_cpu_container_metrics
+  - name: Metrics > Resources > Container > CPU > Filter > should filter out metrics with empty pod or container field
+    inputs:
+      - insert_at: filter_unwanted_cpu_container_metrics
+        type: metric
+        metric:
+          name: container_cpu_usage_seconds_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            container: vector
+            pod: ''
+      - insert_at: filter_unwanted_cpu_container_metrics
+        type: metric
+        metric:
+          name: container_cpu_usage_seconds_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            container: ''
+            pod: vector-abcxy
+    no_outputs_from:
+      - filter_unwanted_cpu_container_metrics
