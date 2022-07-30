@@ -1,6 +1,6 @@
 include:
   - template: Pages/HTML.gitlab-ci.yml
-  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml # TODO: Remove
 
 #workflow:
 #  rules:
@@ -30,5 +30,7 @@ stages:
 pages:
   dependencies:
     - "🔧 Build"
+  rules: # TODO: Remove
+    - when: always
   script:
     - mv $WORKDIR/dist public
