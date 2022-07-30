@@ -1,10 +1,9 @@
 include:
   - template: Pages/HTML.gitlab-ci.yml
-  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml # TODO: Remove
 
-#workflow:
-#  rules:
-#    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 variables:
   FORCE_COLOR: 'true'
@@ -31,7 +30,5 @@ stages:
 pages:
   dependencies:
     - "🔧 Build"
-  rules: # TODO: Remove
-    - when: always
   script:
     - mv $WORKDIR/dist public
