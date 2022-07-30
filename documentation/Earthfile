@@ -8,4 +8,4 @@ build:
   RUN yarn install --frozen-lockfile
   COPY . .
   RUN yarn build
-  SAVE ARTIFACT .vitepress/dist /dist AS LOCAL ./dist
+  SAVE ARTIFACT docs/.vitepress/dist /dist AS LOCAL ./dist
