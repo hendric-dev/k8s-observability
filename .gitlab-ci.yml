@@ -1,0 +1,16 @@
+include:
+  template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+
+stages:
+  - trigger
+
+📚 Documentation:
+  stage: trigger
+  rules:
+    - changes: ["documentation/**"]
+    #- if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    #  changes:
+    #    - documentation/**
+  trigger:
+    include: documentation/.gitlab-ci.yml
+    strategy: depend
