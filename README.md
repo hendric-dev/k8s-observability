@@ -1,4 +1,4 @@
-# Monitoring
+# 🔍 K8S Observability Stack
 
 This repository contains a monitoring stack working on an ARM based device. \
 The stack consists of the following parts:

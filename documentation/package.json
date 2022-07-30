@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "vitepress build docs",
-    "dev": "vitepress dev docs",
-    "serve": "vitepress serve docs"
+    "build": "vitepress build .",
+    "dev": "vitepress dev .",
+    "serve": "vitepress serve ."
   },
   "devDependencies": {
     "vitepress": "1.0.0-alpha.4",
