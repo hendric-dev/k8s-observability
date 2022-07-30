@@ -28,3 +28,21 @@ yarn dev
 ```
 
 The server will be available at http://localhost:3000
+
+## Docker
+
+Only have Docker installed? No problem, just mount the folder into a Node.js container:
+
+```sh
+docker run --rm -it --entrypoint bash \
+  -p 3000:3000
+  -v $PWD:/documentation \
+  -w /documentation \
+  node:18
+```
+
+You find yourself inside the container and can run all `yarn` commands.
+
+> **Warning** \
+> Start all yarn commands with `--host` flag to expose the network \
+> (e.g. `yarn dev --host`)
