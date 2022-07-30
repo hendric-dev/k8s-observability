@@ -1,8 +1,9 @@
 import {defineConfig} from 'vitepress'
 
 export default defineConfig({
-  srcExclude: ['README.md'],
+  base: '/observability/',
   lang: 'en-US',
+  srcExclude: ['README.md'],
   themeConfig: {
     sidebar: [
       {items: [{text: 'Introduction', link: '/introduction'}]},
