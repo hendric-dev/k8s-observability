@@ -1,9 +1,6 @@
 # 🔍 K8S Observability Stack
 
-This repository contains a monitoring stack working on an ARM based device. \
-The stack consists of the following parts:
+This repository aims to provide an easy to deploy observability stack for Kubernetes clusters. \
+It helps to setup logging, monitoring and tracing by providing a preconfigured variant of various open source tools.
 
-- [Vector](https://vector.dev): Log & Metric processor and forwarder
-- [Loki](https://grafana.com/oss/loki/): Log aggregation system
-- [Prometheus](https://prometheus.io/): Metric aggregation system
-- [Grafana](https://grafana.com/grafana/): Dashboard for logs and system metrics
+Check out the [📚 Documentation](https://hendric-eckelt.gitlab.io/observability/) to learn more.
