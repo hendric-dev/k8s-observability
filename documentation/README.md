@@ -1,4 +1,4 @@
-# K8S Observability Documentation
+# 📚 K8S Observability Documentation
 
 This documentation is created using [Vitepress](https://vitepress.vuejs.org/) and published automatically on the repositories pages.
 
