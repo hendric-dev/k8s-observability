@@ -39,6 +39,7 @@ All InfluxDB config is stored under the **influxDB** object in the config.
     secrets:: {
       username: '<fill with InfluxDB username>',
       password: '<fill with InfluxDB password>',
+      token: '<fill with API token>',
     },
     storage:: {
       size: '10Gi',
@@ -47,7 +48,7 @@ All InfluxDB config is stored under the **influxDB** object in the config.
 }
 ```
 
-| Field | Description |
+| Field | Description / Default |
 | --- | --- |
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.ingress` | Annotations added to the ingress. <br> `{}` |
@@ -70,4 +71,5 @@ All InfluxDB config is stored under the **influxDB** object in the config.
 | `retention` | Retention policy used for the metrics bucket. <br> `1w` |
 | `secrets.username` | Username for the InfluxDB. <br> `<fill with InfluxDB username>` |
 | `secrets.password` | Password for the InfluxDB. <br> `<fill with InfluxDB password>` |
+| `secrets.token` | Token that can be used to access the InfluxDB API. <br> `<fill with API token>` |
 | `storage.size` | Amount of storage to allocate for the database. <br> `10Gi` |

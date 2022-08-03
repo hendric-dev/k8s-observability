@@ -6,7 +6,7 @@
     local this = self,
     secret+: {
       influxDBToken: secret.new('vector-influx-db-token', {
-        token: std.base64(this.secrets.monitoring.influxDBToken),
+        token: std.base64($.influxDB.secrets.token),
       })
       + secret.metadata.withLabels(this.labels.selector),
       serviceAccountToken: secret.new('vector-service-account-token', {}, 'kubernetes.io/service-account-token')
