@@ -16,6 +16,7 @@
         envVar.new('DOCKER_INFLUXDB_INIT_MODE', 'setup'),
         envVar.new('DOCKER_INFLUXDB_INIT_ORG', this.organisation),
         envVar.new('DOCKER_INFLUXDB_INIT_RETENTION', this.retention),
+        envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_ADMIN_TOKEN', this.name, 'token'),
         envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_USERNAME', this.name, 'username'),
         envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_PASSWORD', this.name, 'password'),
       ])

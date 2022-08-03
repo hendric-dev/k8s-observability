@@ -11,9 +11,6 @@
         username: '<fill with admin username>',
         password: '<fill with admin password>',
       },
-      influxDB: {
-        token: '<fill with InfluxDB API token>',
-      }
     },
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.0.5',

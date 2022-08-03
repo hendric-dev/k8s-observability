@@ -23,10 +23,5 @@
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '128Mi', limit: '256Mi'},
     },
-    secrets:: {
-      monitoring: {
-        influxDBToken: "<fill with Influx DB API token>",
-      }
-    }
   },
 }

@@ -11,7 +11,7 @@
       })
       + secret.metadata.withLabels(this.labels.selector),
       influxDB: secret.new(this.name + '-influx-db-token', {
-        token: std.base64(this.credentials.influxDB.token),
+        token: std.base64($.influxDB.secrets.token),
       })
       + secret.metadata.withLabels(this.labels.selector),
     }

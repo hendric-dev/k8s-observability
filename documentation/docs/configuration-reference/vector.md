@@ -33,16 +33,11 @@ All Vector config is stored under the **vector** object in the config.
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '128Mi', limit: '256Mi'},
     },
-    secrets:: {
-      monitoring: {
-        influxDBToken: "<fill with Influx DB API token>",
-      }
-    }
   },
 }
 ```
 
-| Field | Description |
+| Field | Description / Default |
 | --- | --- |
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
@@ -58,4 +53,3 @@ All Vector config is stored under the **vector** object in the config.
 | `resources.cpu.limit` | Max. allowed amount of CPU time. <br> `200m` |
 | `resources.memory.request` | Min. requested amount of memory. <br> `128Mi` |
 | `resources.memory.limit` | Max. allowed amount of memory. <br> `256Mi` |
-| `secrets.monitoring.influxDBToken` | Token used to acces the InfluxDB. <br> `<fill with Influx DB API token>` |

@@ -29,6 +29,7 @@
     secrets:: {
       username: '<fill with InfluxDB username>',
       password: '<fill with InfluxDB password>',
+      token: '<fill with API token>',
     },
     storage:: {
       size: '10Gi',
