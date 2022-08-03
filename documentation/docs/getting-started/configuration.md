@@ -63,28 +63,17 @@ The deployment is already preconfigured with lots of default that make sense. It
         username: '<fill with admin username>',
         password: '<fill with admin password>',
       },
-      influxDB: {
-        token: '<fill with InfluxDB API token>',
-      }
     },
   },
   influxDB+: {
     secrets+:: {
       username: '<fill with InfluxDB username>',
       password: '<fill with InfluxDB password>',
+      token: '<fill with API token>',
     },
   },
-  vector+: {
-    secrets+: {
-      monitoring+: {
-        influxDBToken: '<fill with Influx DB API token>',
-      }
-    }
-  }
 }
 ```
-
-Note that the InfluxDB API token is generated and can be obtained after the pod was deployed.
 
 See the configuration references for all available options:
 

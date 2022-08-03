@@ -21,9 +21,6 @@ All Grafana config is stored under the **grafana** object in the config.
         username: '<fill with admin username>',
         password: '<fill with admin password>',
       },
-      influxDB: {
-        token: '<fill with InfluxDB API token>',
-      }
     },
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.0.5',
@@ -46,14 +43,13 @@ All Grafana config is stored under the **grafana** object in the config.
 }
 ```
 
-| Field | Description |
+| Field | Description / Default |
 | --- | --- |
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.ingress` | Annotations added to the ingress. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
 | `credentials.admin.username` | Admin username for Grafana. <br> `<fill with admin username>` |
 | `credentials.admin.password` | Admin password for Grafana. <br> `<fill with admin password>` |
-| `credentials.influxDB.token` | Token used to acces the InfluxDB. <br> `<fill with InfluxDB API token>` |
 | `host` | Hostname where the UI is exposed. <br> `grafana.my-server.com` |
 | `image` | Docker image that gets deployed. <br> `grafana/grafana:9.0.5` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
