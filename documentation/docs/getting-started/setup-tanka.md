@@ -37,7 +37,7 @@ tk init
 Use `jb` to install the k8s-observability libs:
 
 ```sh
-jb install https://gitlab.com/hendric-eckelt/observability.git/grafana@main &&
-jb install https://gitlab.com/hendric-eckelt/observability.git/influxdb@main &&
-jb install https://gitlab.com/hendric-eckelt/observability.git/vector@main
+jb install https://github.com/hendric-dev/k8s-observability.git/grafana@main &&
+jb install https://github.com/hendric-dev/k8s-observability.git/influxdb@main &&
+jb install https://github.com/hendric-dev/k8s-observability.git/vector@main
 ```

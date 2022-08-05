@@ -11,6 +11,6 @@ hero:
       text: -> Get Started
       link: /getting-started/prerequisites
     - theme: alt
-      text: View on Gitlab
-      link: https://gitlab.com/hendric-eckelt/observability
+      text: View on Github
+      link: https://github.com/hendric-dev/k8s-observability
 ---
