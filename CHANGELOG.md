@@ -15,4 +15,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Grafana username/password was moved to secrets in the config | [#14](https://gitlab.com/hendric-eckelt/observability/-/issues/14)
 
 [Unreleased]: https://gitlab.com/hendric-eckelt/observability/-/compare/0.1.0...main
-[0.1.0]: https://gitlab.com/hendric-eckelt/observability/-/tags/0.1.0
+[0.1.0]: https://gitlab.com/hendric-eckelt/observability/-/milestones/1
