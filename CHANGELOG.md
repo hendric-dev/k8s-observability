@@ -15,4 +15,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Grafana username/password was moved to secrets in the config
 
 [Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.1.0...main
-[0.1.0]: https://github.com/hendric-dev/k8s-observability/tags/0.1.0
+[0.1.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.1.0
