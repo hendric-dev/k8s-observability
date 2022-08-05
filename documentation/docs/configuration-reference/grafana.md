@@ -16,12 +16,6 @@ All Grafana config is stored under the **grafana** object in the config.
       ingress: {},
       pod: {},
     },
-    credentials:: {
-      admin: {
-        username: '<fill with admin username>',
-        password: '<fill with admin password>',
-      },
-    },
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.0.5',
     labels:: {
@@ -39,6 +33,12 @@ All Grafana config is stored under the **grafana** object in the config.
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '32Mi', limit: '128Mi'},
     },
+    secrets:: {
+      admin: {
+        username: '<fill with admin username>',
+        password: '<fill with admin password>',
+      },
+    },
   }
 }
 ```
@@ -48,8 +48,6 @@ All Grafana config is stored under the **grafana** object in the config.
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.ingress` | Annotations added to the ingress. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
-| `credentials.admin.username` | Admin username for Grafana. <br> `<fill with admin username>` |
-| `credentials.admin.password` | Admin password for Grafana. <br> `<fill with admin password>` |
 | `host` | Hostname where the UI is exposed. <br> `grafana.my-server.com` |
 | `image` | Docker image that gets deployed. <br> `grafana/grafana:9.0.5` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
@@ -63,3 +61,5 @@ All Grafana config is stored under the **grafana** object in the config.
 | `resources.cpu.limit` | Max. allowed amount of CPU time. <br> `200m` |
 | `resources.memory.request` | Min. requested amount of memory. <br> `32Mi` |
 | `resources.memory.limit` | Max. allowed amount of memory. <br> `128Mi` |
+| `secrets.admin.username` | Admin username for Grafana. <br> `<fill with admin username>` |
+| `secrets.admin.password` | Admin password for Grafana. <br> `<fill with admin password>` |
