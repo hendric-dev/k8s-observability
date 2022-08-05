@@ -6,12 +6,6 @@
       ingress: {},
       pod: {},
     },
-    credentials:: {
-      admin: {
-        username: '<fill with admin username>',
-        password: '<fill with admin password>',
-      },
-    },
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.0.5',
     labels:: {
@@ -28,6 +22,12 @@
     resources:: {
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '32Mi', limit: '128Mi'},
+    },
+    secrets:: {
+      admin: {
+        username: '<fill with admin username>',
+        password: '<fill with admin password>',
+      },
     },
   }
 }

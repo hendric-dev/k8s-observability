@@ -58,7 +58,7 @@ The deployment is already preconfigured with lots of default that make sense. It
 ```js
 {
   grafana+: {
-    credentials:: {
+    secrets:: {
       admin: {
         username: '<fill with admin username>',
         password: '<fill with admin password>',

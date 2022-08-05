@@ -6,8 +6,8 @@
     local this = self,
     secrets: {
       grafana: secret.new(this.name, {
-        admin_username: std.base64(this.credentials.admin.username),
-        admin_password: std.base64(this.credentials.admin.password),
+        admin_username: std.base64(this.secrets.admin.username),
+        admin_password: std.base64(this.secrets.admin.password),
       })
       + secret.metadata.withLabels(this.labels.selector),
       influxDB: secret.new(this.name + '-influx-db-token', {
