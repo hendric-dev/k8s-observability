@@ -1,7 +1,7 @@
 import {defineConfig} from 'vitepress'
 
 export default defineConfig({
-  base: '/observability/',
+  base: '/k8s-observability/',
   lang: 'en-US',
   srcExclude: ['README.md'],
   themeConfig: {

@@ -1,0 +1,31 @@
+name: 📚 Documentation
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  documentation:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-22.04
+    env:
+      FORCE_COLOR: 'true'
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 🔧 Build
+        working-directory: ./documentation
+        run: |
+          sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.21/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'
+          earthly --version
+          earthly +build
+
+      - name: 🚀 Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: documentation/dist
