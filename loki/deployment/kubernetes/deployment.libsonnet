@@ -17,10 +17,11 @@
         volumeMount.new(this.name, '/loki'),
       ]),
     initContainer:: container.new(this.name + '-setup-permissions', this.image)
-      + container.withCommand(["/bin/chown", "-R", "$(id -u):$(id -g)", "/loki"])
+      + container.withCommand(["chown", "-R", "loki:loki", "/loki"])
       + container.withVolumeMounts([
         volumeMount.new(this.name, '/loki'),
-      ]),
+      ])
+      + container.securityContext.withRunAsUser(0),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
       + deployment.metadata.withAnnotations(this.annotations.deployment)
       + deployment.metadata.withLabels(this.labels.deployment)
