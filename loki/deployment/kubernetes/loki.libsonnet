@@ -22,10 +22,6 @@
       memory: {request: '128Mi', limit: '512Mi'},
     },
     retention:: '4w',
-    secrets:: {
-      username: '<fill with InfluxDB username>',
-      password: '<fill with InfluxDB password>',
-    },
     storage:: {
       size: '10Gi',
     },
