@@ -1,0 +1,4 @@
+access: proxy
+name: Logs
+type: loki
+url: <filled from Jsonnet config>

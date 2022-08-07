@@ -1,0 +1,11 @@
+access: proxy
+jsonData:
+  defaultBucket: <filled from Jsonnet config>
+  organization: <filled from Jsonnet config>
+  tlsSkipVerify: true
+  version: Flux
+name: Metrics
+secureJsonData:
+  token: $INFLUX_API_TOKEN
+type: influxdb
+url: <filled from Jsonnet config>
