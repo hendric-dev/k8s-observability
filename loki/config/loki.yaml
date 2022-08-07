@@ -12,8 +12,8 @@ common:
       store: inmemory
 
 compactor:
-  working_directory: /data/retention
-  shared_store: gcs
+  working_directory: /loki/retention
+  shared_store: filesystem
   compaction_interval: 10m
   retention_enabled: true
   retention_delete_delay: 2h
