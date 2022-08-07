@@ -10,7 +10,7 @@
         retention_period: this.retention,
       },
       server+: {
-        http_listen_post: this.ports.internal,
+        http_listen_port: this.ports.internal,
       },
     },
 
