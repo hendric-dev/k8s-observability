@@ -21,7 +21,7 @@
       cpu: {request: '100m', limit: '1'},
       memory: {request: '128Mi', limit: '512Mi'},
     },
-    retention:: '4w',
+    retention:: '672h',
     storage:: {
       size: '10Gi',
     },

@@ -20,7 +20,7 @@ compactor:
   retention_delete_worker_count: 150
 
 limits_config:
-  retention_period: 672h
+  retention_period: <filled from Loki Jsonnet config>
 
 ruler:
   alertmanager_url: http://localhost:9093
