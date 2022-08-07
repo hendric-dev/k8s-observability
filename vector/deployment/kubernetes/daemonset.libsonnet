@@ -20,7 +20,7 @@
         envVar.new('INFLUXDB_ENDPOINT', this.monitoring.influxDB.endpoint),
         envVar.new('INFLUXDB_ORG', this.monitoring.influxDB.org),
         envVar.new('LOG', 'info'),
-        envVar.new('LOKI_ENDPOINT', 'http://%(name)s:%(ports.external)s' % $.loki),
+        envVar.new('LOKI_ENDPOINT', 'http://' + $.loki.name + ':' + $.loki.ports.external),
         envVar.new('PROCFS_ROOT', '/host/proc'),
         envVar.new('SYSFS_ROOT', '/host/sys'),
         envVar.new('VECTOR_CONFIG_DIR', '/etc/vector'),
