@@ -1,5 +1,17 @@
 data_dir = "/vector-data-dir"
 
+[sinks.log_db]
+type = 'loki'
+inputs = ['kubernetes_logs']
+endpoint = '${LOKI_ENDPOINT}'
+out_of_order_action = 'accept'
+  [sinks.log_db.encoding]
+  codec = 'json'
+  [sinks.log_db.labels]
+  container = '{{ kubernetes.container_name }}'
+  namespace = '{{ kubernetes.pod_namespace }}'
+  pod = '{{ kubernetes.pod_name }}'
+
 [sinks.monitoring_db]
 type = "influxdb_metrics"
 inputs = [

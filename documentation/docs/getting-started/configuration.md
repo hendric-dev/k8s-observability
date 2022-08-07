@@ -45,6 +45,7 @@ All components, aswell as the k8s lib and the custom config need to be imported 
 (import 'k.libsonnet') +
 (import 'grafana/deployment/kubernetes/index.libsonnet') +
 (import 'influxdb/deployment/kubernetes/index.libsonnet') +
+(import 'loki/deployment/kubernetes/index.libsonnet') +
 (import 'vector/deployment/kubernetes/index.libsonnet') +
 (import 'config.jsonnet')
 ```
@@ -79,4 +80,5 @@ See the configuration references for all available options:
 
 * [Grafana](/configuration-reference/grafana)
 * [Influx DB](/configuration-reference/influx-db)
+* [Loki](/configuration-reference/loki)
 * [Vector](/configuration-reference/vector)
