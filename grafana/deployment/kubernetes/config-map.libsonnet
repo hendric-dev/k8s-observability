@@ -12,7 +12,7 @@
       metrics: std.parseYaml(importstr '../../config/datasources/metrics.yaml') + {
         jsonData+: {
           defaultBucket: $.influxDB.bucket,
-          organisation: $.influxDB.organisation,
+          organization: $.influxDB.organisation,
         },
         url: 'http://' + $.influxDB.name + ':' + $.influxDB.ports.external,
       },
