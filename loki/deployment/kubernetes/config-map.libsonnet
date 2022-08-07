@@ -5,7 +5,7 @@
   loki+: {
     local this = self,
 
-    local config = std.parseYaml(importstr '../../config.loki.yaml') + {
+    local config = std.parseYaml(importstr '../../config/loki.yaml') + {
       limits_config+: {
         retention_period: this.retention,
       },
