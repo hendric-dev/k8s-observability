@@ -8,7 +8,10 @@
     local config = std.parseYaml(importstr '../../config.loki.yaml') + {
       limits_config+: {
         retention_period: this.retention,
-      }
+      },
+      server+: {
+        http_listen_post: this.ports.internal,
+      },
     },
 
     configMap: configMap.new(this.name, {'local-config.yaml': std.manifestYamlDoc(config)})
