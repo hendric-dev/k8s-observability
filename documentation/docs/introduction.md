@@ -22,6 +22,7 @@ The observability solution combines the following open source tools to provide t
 
 * [Grafana](https://github.com/grafana/grafana) - UI to visualize logs and metrics
 * [InfluxDB](https://github.com/influxdata/influxdb) - Database made for time series
+* [Loki](https://github.com/grafana/loki) - Log aggregation system inspired by Prometheus
 * [Vector](https://github.com/vectordotdev/vector) - Aggregates and transforms logs and metrics
 
 The tools were evaluated with regard to finding the best one for each task. \

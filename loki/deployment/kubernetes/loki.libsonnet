@@ -3,7 +3,6 @@
     local this = self,
     annotations:: {
       deployment: {},
-      ingress: {},
       pod: {},
     },
     image:: 'grafana/loki:2.6.1',
