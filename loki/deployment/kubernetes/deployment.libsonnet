@@ -16,12 +16,18 @@
         volumeMount.new('config', '/etc/loki', true),
         volumeMount.new(this.name, '/loki'),
       ]),
+    initContainer:: container.new(this.name + '-setup-permissions', this.image)
+      + container.withCommand(["/bin/chown", "-R", "$(id -u):$(id -g)", "/loki"])
+      + container.withVolumeMounts([
+        volumeMount.new(this.name, '/loki'),
+      ]),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
       + deployment.metadata.withAnnotations(this.annotations.deployment)
       + deployment.metadata.withLabels(this.labels.deployment)
       + deployment.spec.selector.withMatchLabels(this.labels.selector)
       + deployment.spec.template.metadata.withAnnotations(this.annotations.pod)
       + deployment.spec.template.metadata.withLabels(this.labels.pod + this.labels.selector)
+      + deployment.spec.template.spec.withInitContainers([this.initContainer])
       + deployment.spec.template.spec.withServiceAccount(this.name)
       + deployment.spec.template.spec.withTerminationGracePeriodSeconds(60)
       + deployment.spec.template.spec.withVolumes([
