@@ -1,7 +1,4 @@
-auth_enabled: false
-
-server:
-  http_listen_port: 3100
+auth_enabled: true
 
 common:
   path_prefix: /loki
@@ -14,6 +11,20 @@ common:
     kvstore:
       store: inmemory
 
+compactor:
+  working_directory: /data/retention
+  shared_store: gcs
+  compaction_interval: 10m
+  retention_enabled: true
+  retention_delete_delay: 2h
+  retention_delete_worker_count: 150
+
+limits_config:
+  retention_period: 672h
+
+ruler:
+  alertmanager_url: http://localhost:9093
+
 schema_config:
   configs:
     - from: 2020-10-24
@@ -24,5 +35,5 @@ schema_config:
         prefix: index_
         period: 24h
 
-ruler:
-  alertmanager_url: http://localhost:9093
+server:
+  http_listen_port: 3100
