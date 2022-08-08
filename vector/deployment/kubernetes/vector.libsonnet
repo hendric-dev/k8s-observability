@@ -11,6 +11,11 @@
       pod: {},
       selector: {'app.kubernetes.io/name': this.name},
     },
+    logging:: {
+      kubernetes: {
+        transformations: [importstr '../../config/logs/kubernetes/aggregator.toml'],
+      }
+    },
     monitoring:: {
       influxDB: {
         bucket: "metrics",

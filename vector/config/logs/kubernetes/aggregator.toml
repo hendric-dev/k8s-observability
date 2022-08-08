@@ -1,0 +1,4 @@
+[transforms.kubernetes_log_output]
+type = "filter"
+inputs = ["kubernetes_logs"]
+condition = "true"

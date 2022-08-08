@@ -2,7 +2,7 @@ data_dir = "/vector-data-dir"
 
 [sinks.log_db]
 type = 'loki'
-inputs = ['kubernetes_logs']
+inputs = ['kubernetes_log_output']
 endpoint = '${LOKI_ENDPOINT}'
 out_of_order_action = 'accept'
   [sinks.log_db.encoding]

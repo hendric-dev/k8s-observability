@@ -25,6 +25,12 @@ export default defineConfig({
           {text: 'Vector', link: '/configuration-reference/vector'},
         ]
       },
+      {
+        text: 'Advanced',
+        items: [
+          {text: 'Custom Log Transformations', link: '/advanced/custom-log-transformations'},
+        ]
+      },
     ],
   },
   title: 'K8S Observability',
