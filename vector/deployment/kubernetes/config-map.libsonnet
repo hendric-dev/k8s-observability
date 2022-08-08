@@ -7,7 +7,8 @@
     configMap: configMap.new(this.name,
       {
         'vector.toml': (importstr '../../config/vector.toml')
-          + (importstr '../../config/logs/kubernetes.toml')
+          + (importstr '../../config/logs/kubernetes/aggregator.toml')
+          + (importstr '../../config/logs/kubernetes/index.toml')
           + (importstr '../../config/metrics/resources/container/cpu.toml')
           + (importstr '../../config/metrics/resources/container/index.toml')
           + (importstr '../../config/metrics/resources/container/memory.toml')
