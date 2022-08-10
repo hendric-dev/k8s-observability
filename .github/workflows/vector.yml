@@ -1,0 +1,28 @@
+name: Vector
+
+on:
+  pull_requests:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    paths:
+      - 'vector/config/**/*'
+      - 'vector/tests/**/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    env:
+      FORCE_COLOR: 'true'
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 🧪 Test
+        working-directory: ./vector
+        run: |
+          sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.21/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'
+          earthly --version
+          earthly +test

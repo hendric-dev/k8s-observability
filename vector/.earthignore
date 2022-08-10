@@ -1,0 +1,6 @@
+# Directories
+deployment
+
+# Files
+.earthignore
+Earthfile
