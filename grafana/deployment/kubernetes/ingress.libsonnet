@@ -3,6 +3,7 @@
   local httpIngressPath = $.networking.v1.httpIngressPath,
   local ingress = $.networking.v1.ingress,
   local ingressRule = $.networking.v1.ingressRule,
+  local ingressTLS = $.networking.v1.ingressTLS,
 
   grafana+: {
     local this = self,
@@ -17,6 +18,13 @@
                 + httpIngressPath.backend.service.withName(this.name)
                 + httpIngressPath.backend.service.port.withNumber(this.ports.external),
               ])
-        ]),
+        ])
+      + (
+        if this.security.tls.enabled
+        then ingress.spec.withTls(
+          ingressTLS.withHost(this.host) + ingressTLS.withSecretName(this.name + '-certificate'),
+        )
+        else {}
+      ),
   },
 }

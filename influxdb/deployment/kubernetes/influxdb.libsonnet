@@ -31,6 +31,12 @@
       password: '<fill with InfluxDB password>',
       token: '<fill with API token>',
     },
+    security:: {
+      tls: {
+        enabled: true,
+        issuer: '<fill with certificate issuer>',
+      },
+    },
     storage:: {
       size: '10Gi',
     },
