@@ -17,7 +17,7 @@
           envVar.fromSecretRef('GF_SECURITY_ADMIN_PASSWORD', this.name, 'admin_password'),
           envVar.fromSecretRef('INFLUX_API_TOKEN', this.name + '-influx-db-token', 'token'),
         ]
-        + [envVar.new(name, this.env[name]) for name in std.objectFields(this.env)],
+        + [envVar.new(name, std.toString(this.env[name])) for name in std.objectFields(this.env)],
       )
       + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
       + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
