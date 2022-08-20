@@ -54,7 +54,7 @@ All components, aswell as the k8s lib and the custom config need to be imported 
 
 This file can be used to override any configuration from the k8s-observability stack.
 
-The deployment is already preconfigured with lots of default that make sense. It is necessary to add some secrets though:
+The deployment is already preconfigured with lots of defaults that make sense. It is necessary to add some secrets though:
 
 ```js
 {

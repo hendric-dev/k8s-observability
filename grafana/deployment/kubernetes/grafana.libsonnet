@@ -30,5 +30,11 @@
         password: '<fill with admin password>',
       },
     },
+    security:: {
+      tls: {
+        enabled: false,
+        issuer: '<fill with certificate issuer>',
+      },
+    },
   }
 }

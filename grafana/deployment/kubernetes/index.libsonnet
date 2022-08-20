@@ -1,3 +1,4 @@
+(import 'certificate.libsonnet') +
 (import 'config-map.libsonnet') +
 (import 'deployment.libsonnet') +
 (import 'ingress.libsonnet') +

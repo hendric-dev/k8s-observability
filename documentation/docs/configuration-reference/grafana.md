@@ -40,6 +40,12 @@ All Grafana config is stored under the **grafana** object in the config.
         password: '<fill with admin password>',
       },
     },
+    security:: {
+      tls: {
+        enabled: false,
+        issuer: '<fill with certificate issuer>',
+      },
+    },
   }
 }
 ```
@@ -65,6 +71,8 @@ All Grafana config is stored under the **grafana** object in the config.
 | `resources.memory.limit` | Max. allowed amount of memory. <br> `128Mi` |
 | `secrets.admin.username` | Admin username for Grafana. <br> `<fill with admin username>` |
 | `secrets.admin.password` | Admin password for Grafana. <br> `<fill with admin password>` |
+| `security.tls.enabled` | Enables TLS, creating a certificate to access Grafana over HTTPS. <br> `false` |
+| `security.tls.issuer` | Issuer or ClusterIssuer where the certificate is requested. See [cert-manager documentation](https://cert-manager.io/docs/concepts/issuer/) on how to set one up.  <br> `<fill with certificate issuer>` |
 
 ## Customize Grafana
 
