@@ -22,7 +22,7 @@
       + (
         if this.security.tls.enabled
         then ingress.spec.withTls(
-          ingressTLS.withHost(this.host) + ingressTLS.withSecretName(this.name + '-certificate'),
+          ingressTLS.withHosts(this.host) + ingressTLS.withSecretName(this.name + '-certificate'),
         )
         else {}
       ),
