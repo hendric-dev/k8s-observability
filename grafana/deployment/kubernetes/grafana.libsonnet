@@ -32,7 +32,7 @@
     },
     security:: {
       tls: {
-        enabled: true,
+        enabled: false,
         issuer: '<fill with certificate issuer>',
       },
     },
