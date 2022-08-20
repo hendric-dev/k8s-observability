@@ -11,7 +11,7 @@
           labels: {
             'app.kubernetes.io/name': this.name,
           },
-          name: this.name + '-certificate',
+          name: this.name,
         },
         spec: {
           secretName: this.name + '-certificate',
