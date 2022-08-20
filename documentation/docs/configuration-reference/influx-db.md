@@ -41,6 +41,12 @@ All InfluxDB config is stored under the **influxDB** object in the config.
       password: '<fill with InfluxDB password>',
       token: '<fill with API token>',
     },
+    security:: {
+      tls: {
+        enabled: false,
+        issuer: '<fill with certificate issuer>',
+      },
+    },
     storage:: {
       size: '10Gi',
     },
@@ -73,3 +79,5 @@ All InfluxDB config is stored under the **influxDB** object in the config.
 | `secrets.password` | Password for the InfluxDB. <br> `<fill with InfluxDB password>` |
 | `secrets.token` | Token that can be used to access the InfluxDB API. <br> `<fill with API token>` |
 | `storage.size` | Amount of storage to allocate for the database. <br> `10Gi` |
+| `security.tls.enabled` | Enables TLS, creating a certificate to access the Influx UI over HTTPS. <br> `false` |
+| `security.tls.issuer` | Issuer or ClusterIssuer where the certificate is requested. See [cert-manager documentation](https://cert-manager.io/docs/concepts/issuer/) on how to set one up.  <br> `<fill with certificate issuer>` |
