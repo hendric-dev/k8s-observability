@@ -6,6 +6,7 @@
       ingress: {},
       pod: {},
     },
+    env:: {},
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.0.5',
     labels:: {

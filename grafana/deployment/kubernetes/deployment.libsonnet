@@ -11,11 +11,14 @@
     local this = self,
     container:: container.new(this.name, this.image)
       + container.withPorts([containerPort.newNamed(this.ports.internal, 'http')])
-      + container.withEnv([
-        envVar.fromSecretRef('GF_SECURITY_ADMIN_USER', this.name, 'admin_username'),
-        envVar.fromSecretRef('GF_SECURITY_ADMIN_PASSWORD', this.name, 'admin_password'),
-        envVar.fromSecretRef('INFLUX_API_TOKEN', this.name + '-influx-db-token', 'token'),
-      ])
+      + container.withEnv(
+        [
+          envVar.fromSecretRef('GF_SECURITY_ADMIN_USER', this.name, 'admin_username'),
+          envVar.fromSecretRef('GF_SECURITY_ADMIN_PASSWORD', this.name, 'admin_password'),
+          envVar.fromSecretRef('INFLUX_API_TOKEN', this.name + '-influx-db-token', 'token'),
+        ]
+        + [envVar.new(name, std.toString(this.env[name])) for name in std.objectFields(this.env)],
+      )
       + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
       + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
