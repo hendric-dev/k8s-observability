@@ -8,7 +8,14 @@
   grafana+: {
     local this = self,
     ingress: ingress.new(this.name)
-      + ingress.metadata.withAnnotations(this.annotations.ingress)
+      + ingress.metadata.withAnnotations(
+        this.annotations.ingress
+        + (
+          if this.security.tls.enabled
+          then {'cert-manager.io/issuer': this.security.tls.issuer}
+          else {}
+        ),
+      )
       + ingress.metadata.withLabels(this.labels.selector)
       + ingress.spec.withRules([
           ingressRule.withHost(this.host)
