@@ -1,8 +1,13 @@
 apiVersion: 1
 
 providers:
-  - name: Resources
+  - name: Node Resources
     folder: Kubernetes
     type: file
     options:
-      path: /var/lib/grafana/dashboards/kubernetes-resources.json
+      path: /var/lib/grafana/dashboards/kubernetes-node-resources.json
+  - name: Pod Resources
+    folder: Kubernetes
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards/kubernetes-pod-resources.json
