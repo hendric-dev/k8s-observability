@@ -38,6 +38,169 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.0.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "from(bucket: \"metrics\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\" and r.namespace =~ /${namespace}/)\r\n  |> last()\r\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Seconds Top 3",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": [
+              {
+                "fieldName": "pod",
+                "handlerKey": "field.name"
+              },
+              {
+                "fieldName": "_value",
+                "handlerKey": "field.value"
+              },
+              {
+                "fieldName": "_time",
+                "handlerKey": "__ignore"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.0.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "from(bucket: \"metrics\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"container_memory_usage_bytes\" and r.namespace =~ /${namespace}/)\r\n  |> last()\r\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory Top 3",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": [
+              {
+                "fieldName": "pod",
+                "handlerKey": "field.name"
+              },
+              {
+                "fieldName": "_value",
+                "handlerKey": "field.value"
+              },
+              {
+                "fieldName": "_time",
+                "handlerKey": "__ignore"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -86,10 +249,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
-        "w": 12,
+        "h": 7,
+        "w": 24,
         "x": 0,
-        "y": 0
+        "y": 8
       },
       "id": 2,
       "options": {
@@ -100,7 +263,7 @@
             "mean"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "right"
         },
         "tooltip": {
           "mode": "single",
@@ -113,7 +276,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\" and r.namespace =~ /${namespace}/)\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\n  |> map(fn: (r) => ({ r with pod: r.namespace + \" > \" + r.pod }))\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\n",
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\" and r.namespace =~ /${namespace}/)\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\n",
           "refId": "CPU Usage"
         }
       ],
@@ -177,10 +340,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
-        "w": 12,
-        "x": 12,
-        "y": 0
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 15
       },
       "id": 3,
       "options": {
@@ -191,7 +354,7 @@
             "mean"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "right"
         },
         "tooltip": {
           "mode": "single",
@@ -204,7 +367,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"container_memory_usage_bytes\" and r.namespace =~ /${namespace}/)\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\n  |> map(fn: (r) => ({ r with pod: r.namespace + \" > \" + r.pod }))\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\n",
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"container_memory_usage_bytes\" and r.namespace =~ /${namespace}/)\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\n",
           "refId": "Memory Usage"
         }
       ],
@@ -253,6 +416,6 @@
   "timezone": "",
   "title": "Pod Resources",
   "uid": "gZ_LCZWVk",
-  "version": 3,
+  "version": 4,
   "weekStart": ""
 }
