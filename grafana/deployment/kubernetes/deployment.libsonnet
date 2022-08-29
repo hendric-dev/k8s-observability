@@ -27,17 +27,26 @@
         volumeMount.new('dashboards', '/etc/grafana/provisioning/dashboards/dashboards.yaml', true)
         + volumeMount.withSubPath('dashboards.yaml'),
         volumeMount.new('datasources', '/etc/grafana/provisioning/datasources', true),
+        volumeMount.new(this.name, '/var/lib/grafana'),
       ]),
+    initContainer:: container.new(this.name + '-setup-permissions', this.image)
+      + container.withCommand(["chown", "-R", "grafana:root", "/grafana"])
+      + container.withVolumeMounts([
+        volumeMount.new(this.name, '/grafana'),
+      ])
+      + container.securityContext.withRunAsUser(0),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
       + deployment.metadata.withAnnotations(this.annotations.deployment)
       + deployment.metadata.withLabels(this.labels.deployment)
       + deployment.spec.selector.withMatchLabels(this.labels.selector)
       + deployment.spec.template.metadata.withAnnotations(this.annotations.pod)
       + deployment.spec.template.metadata.withLabels(this.labels.pod + this.labels.selector)
+      + deployment.spec.template.spec.withInitContainers([this.initContainer])
       + deployment.spec.template.spec.withVolumes([
         volume.fromConfigMap('config', this.name),
         volume.fromConfigMap('dashboards', this.name + '-dashboards'),
         volume.fromConfigMap('datasources', this.name + '-datasources'),
+        volume.fromPersistentVolumeClaim(this.name, 'observability-' + this.name),
       ]),
   },
 }
