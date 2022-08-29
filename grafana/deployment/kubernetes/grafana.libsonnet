@@ -36,5 +36,8 @@
         issuer: '<fill with certificate issuer>',
       },
     },
+    storage:: {
+      size: '10Gi',
+    },
   }
 }

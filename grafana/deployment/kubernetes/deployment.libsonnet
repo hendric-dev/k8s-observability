@@ -27,6 +27,7 @@
         volumeMount.new('dashboards', '/etc/grafana/provisioning/dashboards/dashboards.yaml', true)
         + volumeMount.withSubPath('dashboards.yaml'),
         volumeMount.new('datasources', '/etc/grafana/provisioning/datasources', true),
+        volumeMount.new(this.name, '/var/lib/grafana'),
       ]),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
       + deployment.metadata.withAnnotations(this.annotations.deployment)
@@ -38,6 +39,7 @@
         volume.fromConfigMap('config', this.name),
         volume.fromConfigMap('dashboards', this.name + '-dashboards'),
         volume.fromConfigMap('datasources', this.name + '-datasources'),
+        volume.fromPersistentVolumeClaim(this.name, 'observability-' + this.name),
       ]),
   },
 }
