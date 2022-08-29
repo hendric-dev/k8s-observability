@@ -5,10 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
-- Makes it possible to [customize Grafana](https://hendric-dev.github.io/k8s-observability/configuration-reference/grafana.html#customize-grafana) further, using environment varaibles.
+- Makes it possible to [customize Grafana](https://hendric-dev.github.io/k8s-observability/configuration-reference/grafana.html#customize-grafana) further, using environment variables
 | [#11](https://github.com/hendric-dev/k8s-observability/issues/11)
-- Improve security by support TLS for the Influx and Grafana UIs. | [#15](https://github.com/hendric-dev/k8s-observability/issues/15)
-- Get an overview of CPU & memory usage with the new pod dashboards. | [#5](https://github.com/hendric-dev/k8s-observability/issues/5)
+- Improve security by support TLS for the Influx and Grafana UIs | [#15](https://github.com/hendric-dev/k8s-observability/issues/15)
+- Get an overview of CPU & memory usage with the new pod dashboards | [#5](https://github.com/hendric-dev/k8s-observability/issues/5)
 - Grafana settings are now persisted over restarts | [#14](https://github.com/hendric-dev/k8s-observability/issues/14)
 
 ## [0.2.0] - 2022-08-15
