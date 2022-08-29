@@ -83,7 +83,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\" and r.namespace =~ /${namespace}/)\r\n  |> last()\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])",
+          "query": "from(bucket: \"metrics\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\" and r.namespace =~ /${namespace}/)\r\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\r\n  |> last()\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\r\n  ",
           "refId": "A"
         }
       ],
@@ -166,7 +166,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"container_memory_usage_bytes\" and r.namespace =~ /${namespace}/)\r\n  |> last()\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])",
+          "query": "from(bucket: \"metrics\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r._measurement == \"container_memory_usage_bytes\" and r.namespace =~ /${namespace}/)\r\n  |> aggregateWindow(every: 1m, fn: max, createEmpty: false)\r\n  |> last()\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])",
           "refId": "A"
         }
       ],
