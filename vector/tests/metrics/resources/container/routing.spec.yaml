@@ -35,24 +35,6 @@ tests:
               assert_eq!(.name, "memory_bytes_used")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
-  - name: Metrics > Resources > Container > Routing > should route network metrics
-    inputs:
-      - insert_at: container_metrics_routing
-        type: metric
-        metric:
-          name: network_receive_bytes
-          kind: absolute
-          timestamp: '2022-05-12T17:18:12.678580956Z'
-          counter:
-            value: 500
-    outputs:
-      - extract_from: container_metrics_routing.network
-        conditions:
-          - type: vrl
-            source: |
-              assert_eq!(.name, "network_receive_bytes")
-              assert_eq!(.kind, "absolute")
-              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
   - name: Metrics > Resources > Container > Routing > should drop unknown metrics
     inputs:
       - insert_at: container_metrics_routing
@@ -66,4 +48,3 @@ tests:
     no_outputs_from:
       - container_metrics_routing.cpu
       - container_metrics_routing.memory
-      - container_metrics_routing.network
