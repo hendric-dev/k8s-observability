@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Get an overview of CPU & memory usage with the new pod dashboards | [#5](https://github.com/hendric-dev/k8s-observability/issues/5)
 - Grafana settings are now persisted over restarts | [#14](https://github.com/hendric-dev/k8s-observability/issues/14)
 
+### Changed
+- Changed the default Grafana home dashboard to the Kubernetes node resources | [#12](https://github.com/hendric-dev/k8s-observability/issues/12)
+
 ## [0.2.0] - 2022-08-15
 ### Added
 - Loki was added to the stack to process Kubernetes logs | [#1](https://github.com/hendric-dev/k8s-observability/issues/1)
