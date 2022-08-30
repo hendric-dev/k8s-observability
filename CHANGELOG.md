@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.3.0] - 2022-08-30
 ### Added
 - Makes it possible to [customize Grafana](https://hendric-dev.github.io/k8s-observability/configuration-reference/grafana.html#customize-grafana) further, using environment variables
 | [#11](https://github.com/hendric-dev/k8s-observability/issues/11)
@@ -29,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.2.0...main
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.3.0...main
+[0.3.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.3.0
 [0.2.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.2.0
 [0.1.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.1.0
