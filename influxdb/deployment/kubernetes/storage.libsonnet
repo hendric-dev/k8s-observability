@@ -11,7 +11,13 @@
       + persistentVolume.spec.withCapacity({storage: this.storage.size})
       + persistentVolume.spec.withPersistentVolumeReclaimPolicy('Retain')
       + persistentVolume.spec.withStorageClassName('observability-' + this.name)
-      + persistentVolume.spec.hostPath.withPath('/opt/observability/influxdb'),
+      + (
+        if std.objectHasAll(this.storage, 'nfs') && std.objectHasAll(this.storage.nfs, 'server')
+        then persistentVolume.spec.nfs.withServer(this.storage.nfs.server)
+          + persistentVolume.spec.nfs.withPath(this.storage.path)
+          + persistentVolume.spec.nfs.withReadOnly(false)
+        else persistentVolume.spec.hostPath.withPath(this.storage.path)
+      ),
     persistentVolumeClaim: persistentVolumeClaim.new('observability-' + this.name)
       + persistentVolumeClaim.metadata.withLabels(this.labels.selector)
       + persistentVolumeClaim.spec.withAccessModes(['ReadWriteOnce'])
