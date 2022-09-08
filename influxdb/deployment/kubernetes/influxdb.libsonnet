@@ -38,6 +38,7 @@
       },
     },
     storage:: {
+      path: '/opt/observability/' + this.name,
       size: '10Gi',
     },
   },
