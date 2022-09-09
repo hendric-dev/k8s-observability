@@ -7,7 +7,7 @@
 
     local dashboards = [
       {
-        name: dashboard.name,
+        name: dashboard.title,
         folder: dashboard.folder,
         type: 'file',
         options: {
