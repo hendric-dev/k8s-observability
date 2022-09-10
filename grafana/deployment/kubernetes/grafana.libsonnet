@@ -6,6 +6,20 @@
       ingress: {},
       pod: {},
     },
+    dashboards:: [
+      {
+        definition: importstr '../../dashboards/kubernetes-node-resources.json',
+        file: 'kubernetes-node-resources.json',
+        folder: 'Kubernetes',
+        title: 'Node Resources',
+      },
+      {
+        definition: importstr '../../dashboards/kubernetes-pod-resources.json',
+        file: 'kubernetes-pod-resources.json',
+        folder: 'Kubernetes',
+        title: 'Pod Resources',
+      },
+    ],
     env:: {},
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.0.5',

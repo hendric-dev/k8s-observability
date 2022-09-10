@@ -28,6 +28,7 @@ export default defineConfig({
       {
         text: 'Advanced',
         items: [
+          {text: 'Custom Dashboards', link: '/advanced/custom-dashboards'},
           {text: 'Custom Log Transformations', link: '/advanced/custom-log-transformations'},
         ]
       },

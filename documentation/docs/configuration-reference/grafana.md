@@ -16,6 +16,20 @@ All Grafana config is stored under the **grafana** object in the config.
       ingress: {},
       pod: {},
     },
+    dashboards:: [
+      {
+        definition: importstr '../../dashboards/kubernetes-node-resources.json',
+        file: 'kubernetes-node-resources.json',
+        folder: 'Kubernetes',
+        title: 'Node Resources',
+      },
+      {
+        definition: importstr '../../dashboards/kubernetes-pod-resources.json',
+        file: 'kubernetes-pod-resources.json',
+        folder: 'Kubernetes',
+        title: 'Pod Resources',
+      },
+    ],
     env:: {},
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.0.5',
@@ -59,6 +73,7 @@ All Grafana config is stored under the **grafana** object in the config.
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.ingress` | Annotations added to the ingress. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
+| `dashboards` | Array of dashboard definitions that are provisioned. <br> See [Custom Dashboards](../advanced/custom-dashboards.md). <br> `[ /* various default dashboards */ ]` |
 | `env` | Environment variables that are added to the Grafana container. See [Customize Grafana](#customize-grafana) <br> `{}` |
 | `host` | Hostname where the UI is exposed. <br> `grafana.my-server.com` |
 | `image` | Docker image that gets deployed. <br> `grafana/grafana:9.0.5` |
