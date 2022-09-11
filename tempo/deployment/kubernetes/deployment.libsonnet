@@ -9,7 +9,7 @@
   tempo+: {
     local this = self,
     container:: container.new(this.name, this.image)
-      + container.withCommands(['-config.file=/etc/tempo/tempo.yaml'])
+      + container.withCommand(['-config.file=/etc/tempo/tempo.yaml'])
       + container.withPorts([
         containerPort.newNamed(this.ports[port].internal, port) for port in std.objectFieldsAll(this.ports)
       ])
