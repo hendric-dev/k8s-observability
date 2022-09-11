@@ -35,7 +35,10 @@
 
     configMap: {
       datasources: configMap.new(this.name + '-datasources', {
-        'datasources.yaml': std.manifestYamlDoc({apiVersion: 1, datasources: [datasources.logs, datasources.metrics]}),
+        'datasources.yaml': std.manifestYamlDoc({
+          apiVersion: 1,
+          datasources: [datasource for datasource in std.objectFields(datasources)],
+        }),
       }) + configMap.metadata.withLabels($.grafana.labels.selector),
       dashboards: configMap.new(this.name + '-dashboards',
         {'dashboards.yaml': std.manifestYamlDoc({apiVersion: 1, providers: dashboards})}
