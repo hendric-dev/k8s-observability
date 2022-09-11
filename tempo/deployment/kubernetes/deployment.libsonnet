@@ -9,14 +9,14 @@
   tempo+: {
     local this = self,
     container:: container.new(this.name, this.image)
-      + container.withCommand(['-config.file=/etc/tempo.yaml'])
+      + container.withArgs(['-config.file=/etc/tempo/tempo.yaml'])
       + container.withPorts([
         containerPort.newNamed(this.ports[port].internal, port) for port in std.objectFieldsAll(this.ports)
       ])
       + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
       + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
-        volumeMount.new('config', '/etc/tempo.yaml', true) + volumeMount.withSubPath('tempo.yaml'),
+        volumeMount.new('config', '/etc/tempo', true),
         volumeMount.new(this.name, '/tmp/tempo'),
       ]),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
