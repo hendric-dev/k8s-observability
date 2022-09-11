@@ -19,7 +19,7 @@ All Vector config is stored under the **vector** object in the config.
     labels:: {
       deployment: {},
       pod: {},
-      selector: {'app.kubernetes.io/name': this.name},
+      selector: {'app.kubernetes.io/name': 'vector'},
     },
     logging:: {
       kubernetes: {

@@ -1,0 +1,4 @@
+access: proxy
+name: Traces
+type: tempo
+url: <filled from Jsonnet config>

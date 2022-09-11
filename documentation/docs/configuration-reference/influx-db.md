@@ -22,7 +22,7 @@ All InfluxDB config is stored under the **influxDB** object in the config.
     labels:: {
       deployment: {},
       pod: {},
-      selector: {'app.kubernetes.io/name': this.name},
+      selector: {'app.kubernetes.io/name': 'influx-db'},
     },
     name:: 'influx-db',
     organisation:: 'observability',

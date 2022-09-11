@@ -28,11 +28,17 @@
         },
         url: 'http://' + $.influxDB.name + ':' + $.influxDB.ports.external,
       },
+      traces: std.parseYaml(importstr '../../config/datasources/traces.yaml') + {
+        url: 'http://' + $.tempo.name + ':' + $.tempo.ports.tempo.external,
+      },
     },
 
     configMap: {
       datasources: configMap.new(this.name + '-datasources', {
-        'datasources.yaml': std.manifestYamlDoc({apiVersion: 1, datasources: [datasources.logs, datasources.metrics]}),
+        'datasources.yaml': std.manifestYamlDoc({
+          apiVersion: 1,
+          datasources: [datasource for datasource in std.objectValues(datasources)],
+        }),
       }) + configMap.metadata.withLabels($.grafana.labels.selector),
       dashboards: configMap.new(this.name + '-dashboards',
         {'dashboards.yaml': std.manifestYamlDoc({apiVersion: 1, providers: dashboards})}

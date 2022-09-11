@@ -36,7 +36,7 @@ All Grafana config is stored under the **grafana** object in the config.
     labels:: {
       deployment: {},
       pod: {},
-      selector: {'app.kubernetes.io/name': this.name},
+      selector: {'app.kubernetes.io/name': 'grafana'},
     },
     name:: 'grafana',
     path:: '/',

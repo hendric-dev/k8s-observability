@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
+- [Tempo](https://github.com/grafana/tempo) is now part of the stack allowing to trace requests | [#24](https://github.com/hendric-dev/k8s-observability/issues/24)
 - Allow to use an external NFS to store Grafana, Loki and InfluxDB data | [#23](https://github.com/hendric-dev/k8s-observability/issues/23)
 - Custom dashboards can now be provisioned | [#25](https://github.com/hendric-dev/k8s-observability/issues/25)
 

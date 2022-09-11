@@ -1,0 +1,43 @@
+# https://grafana.com/docs/tempo/latest/configuration/
+
+compactor:
+  compaction:
+    block_retention: 1h
+    compacted_block_retention: 10m
+    compaction_window: 1h
+    max_block_bytes: 100_000_000
+
+distributor:
+  receivers:
+    jaeger:
+      protocols:
+        grpc:
+        thrift_binary:
+        thrift_compact:
+        thrift_http:
+    opencensus:
+    zipkin:
+
+ingester:
+  max_block_bytes: 1_000_000
+  max_block_duration: 5m
+  trace_idle_period: 10s
+
+server:
+  http_listen_port: 3200
+
+storage:
+  trace:
+    backend: local
+    block:
+      bloom_filter_false_positive: .05
+      encoding: zstd
+      index_downsample_bytes: 1000
+    local:
+      path: /tmp/tempo/blocks
+    pool:
+      max_workers: 100
+      queue_depth: 10000
+    wal:
+      encoding: snappy
+      path: /tmp/tempo/wal

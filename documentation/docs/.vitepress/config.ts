@@ -22,6 +22,7 @@ export default defineConfig({
           {text: 'Grafana', link: '/configuration-reference/grafana'},
           {text: 'Influx DB', link: '/configuration-reference/influx-db'},
           {text: 'Loki', link: '/configuration-reference/loki'},
+          {text: 'Tempo', link: '/configuration-reference/tempo'},
           {text: 'Vector', link: '/configuration-reference/vector'},
         ]
       },
