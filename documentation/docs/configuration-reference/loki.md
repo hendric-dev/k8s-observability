@@ -19,7 +19,7 @@ All Loki config is stored under the **loki** object in the config.
     labels:: {
       deployment: {},
       pod: {},
-      selector: {'app.kubernetes.io/name': this.name},
+      selector: {'app.kubernetes.io/name': 'loki'},
     },
     name:: 'loki',
     ports:: {

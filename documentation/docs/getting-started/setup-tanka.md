@@ -40,5 +40,6 @@ Use `jb` to install the k8s-observability libs:
 jb install https://github.com/hendric-dev/k8s-observability.git/grafana@main &&
 jb install https://github.com/hendric-dev/k8s-observability.git/influxdb@main &&
 jb install https://github.com/hendric-dev/k8s-observability.git/loki@main &&
+jb install https://github.com/hendric-dev/k8s-observability.git/tempo@main &&
 jb install https://github.com/hendric-dev/k8s-observability.git/vector@main
 ```
