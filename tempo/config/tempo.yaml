@@ -15,12 +15,7 @@ distributor:
         thrift_binary:
         thrift_compact:
         thrift_http:
-    kafka:
     opencensus:
-    otlp:
-      protocols:
-        grpc:
-        http:
     zipkin:
 
 ingester:
