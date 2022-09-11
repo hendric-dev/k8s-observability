@@ -42,6 +42,7 @@
       + deployment.spec.template.metadata.withAnnotations(this.annotations.pod)
       + deployment.spec.template.metadata.withLabels(this.labels.pod + this.labels.selector)
       + deployment.spec.template.spec.withInitContainers([this.initContainer])
+      + deployment.spec.template.spec.withServiceAccount(this.name)
       + deployment.spec.template.spec.withVolumes([
         volume.fromConfigMap('config', this.name),
         volume.fromConfigMap('dashboards', this.name + '-dashboards'),
