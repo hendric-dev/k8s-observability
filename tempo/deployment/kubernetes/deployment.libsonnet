@@ -16,7 +16,7 @@
       + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
       + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
-        volumeMount.new('config', '/etc', true),
+        volumeMount.new('config', '/etc/tempo.yaml', true) + volumeMount.withSubPath('tempo.yaml'),
         volumeMount.new(this.name, '/tmp/tempo'),
       ]),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
