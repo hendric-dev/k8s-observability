@@ -34,10 +34,9 @@
         internal: 9411,
       },
     },
-    # TODO: Verify
     resources:: {
       cpu: {request: '50m', limit: '200m'},
-      memory: {request: '128Mi', limit: '256Mi'}
+      memory: {request: '32Mi', limit: '256Mi'}
     },
     storage:: {
       path: '/opt/observability/' + this.name,

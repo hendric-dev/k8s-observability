@@ -46,7 +46,7 @@ All Tempo config is stored under the **tempo** object in the config.
     },
     resources:: {
       cpu: {request: '50m', limit: '200m'},
-      memory: {request: '128Mi', limit: '256Mi'}
+      memory: {request: '32Mi', limit: '256Mi'}
     },
     storage:: {
       path: '/opt/observability/tempo',
@@ -77,7 +77,7 @@ All Tempo config is stored under the **tempo** object in the config.
 | `ports.zipkin.internal` | Internal port for the Zipkin receiver. <br> `9411` |
 | `resources.cpu.request` | Min. requested amount of CPU time. <br> `50m` |
 | `resources.cpu.limit` | Max. allowed amount of CPU time. <br> `200m` |
-| `resources.memory.request` | Min. requested amount of memory. <br> `128Mi` |
+| `resources.memory.request` | Min. requested amount of memory. <br> `32Mi` |
 | `resources.memory.limit` | Max. allowed amount of memory. <br> `256Mi` |
 | `storage.nfs.server` | Address to an NFS which is used instead of the host. <br> `undefined` |
 | `storage.path` | Path on the host or NFS where the data is stored. <br> `/opt/observability/tempo` |
