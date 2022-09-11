@@ -28,6 +28,9 @@
         },
         url: 'http://' + $.influxDB.name + ':' + $.influxDB.ports.external,
       },
+      traces: std.parseYaml(importstr '../../config/datasources/traces.yaml') + {
+        url: 'http://' + $.tempo.name + ':' + $.tempo.ports.tempo.external,
+      },
     },
 
     configMap: {
