@@ -26,7 +26,7 @@
         envVar.new('PROCFS_ROOT', '/host/proc'),
         envVar.new('SYSFS_ROOT', '/host/sys'),
         envVar.new('VECTOR_CONFIG_DIR', '/etc/vector'),
-        envVar.new('VECTOR_INTERNAL_PORT', this.ports.internal),
+        envVar.new('VECTOR_INTERNAL_PORT', std.toString(this.ports.internal)),
       ])
       + container.withVolumeMounts([
         volumeMount.new('config', '/etc/vector', true),
