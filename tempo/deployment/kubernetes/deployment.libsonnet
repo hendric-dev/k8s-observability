@@ -13,12 +13,21 @@
       + container.withPorts([
         containerPort.newNamed(this.ports[port].internal, port) for port in std.objectFieldsAll(this.ports)
       ])
-      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
         volumeMount.new('config', '/etc/tempo', true),
         volumeMount.new(this.name, '/tmp/tempo'),
-      ]),
+      ])
+      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
+      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+      + container.livenessProbe.withPeriodSeconds(60)
+      + container.livenessProbe.httpGet.withPath('/ready')
+      + container.livenessProbe.httpGet.withPort(this.ports.tempo.internal)
+      + container.readinessProbe.httpGet.withPath('/ready')
+      + container.readinessProbe.httpGet.withPort(this.ports.tempo.internal)
+      + container.startupProbe.httpGet.withPath('/ready')
+      + container.startupProbe.httpGet.withPort(this.ports.tempo.internal)
+      + container.startupProbe.withFailureThreshold(30)
+      + container.startupProbe.withPeriodSeconds(10),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
       + deployment.metadata.withAnnotations(this.annotations.deployment)
       + deployment.metadata.withLabels(this.labels.deployment)

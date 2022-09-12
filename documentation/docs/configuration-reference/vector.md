@@ -36,6 +36,10 @@ All Vector config is stored under the **vector** object in the config.
       }
     },
     name:: 'vector',
+    ports:: {
+      external: 8686,
+      internal: 8686,
+    },
     resources:: {
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '128Mi', limit: '256Mi'},
@@ -57,6 +61,8 @@ All Vector config is stored under the **vector** object in the config.
 | `monitoring.influxDB.endpoint` | Endpoint of the Influx DB. <br> `http://influx-db/` |
 | `monitoring.influxDB.org` | Organisation name of the Influx DB. <br> `observability` |
 | `name` | Name used for the k8s resources. <br> `vector` |
+| `ports.external` | External port of the Vector API. <br> `8686` |
+| `ports.internal` | Internal port of the Vector API. <br> `8686` |
 | `resources.cpu.request` | Min. requested amount of CPU time. <br> `50m` |
 | `resources.cpu.limit` | Max. allowed amount of CPU time. <br> `200m` |
 | `resources.memory.request` | Min. requested amount of memory. <br> `128Mi` |

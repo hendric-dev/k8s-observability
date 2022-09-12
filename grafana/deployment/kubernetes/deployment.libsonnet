@@ -19,8 +19,6 @@
         ]
         + [envVar.new(name, std.toString(this.env[name])) for name in std.objectFields(this.env)],
       )
-      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
         volumeMount.new('config', '/etc/grafana/grafana.ini', true) + volumeMount.withSubPath('grafana.ini'),
         volumeMount.new('dashboards', '/var/lib/grafana/dashboards', true),
@@ -28,7 +26,18 @@
         + volumeMount.withSubPath('dashboards.yaml'),
         volumeMount.new('datasources', '/etc/grafana/provisioning/datasources', true),
         volumeMount.new(this.name, '/var/lib/grafana'),
-      ]),
+      ])
+      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
+      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+      + container.livenessProbe.withPeriodSeconds(60)
+      + container.livenessProbe.httpGet.withPath('/api/health')
+      + container.livenessProbe.httpGet.withPort(this.ports.internal)
+      + container.readinessProbe.httpGet.withPath('/api/health')
+      + container.readinessProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.httpGet.withPath('/api/health')
+      + container.startupProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.withFailureThreshold(30)
+      + container.startupProbe.withPeriodSeconds(10),
     initContainer:: container.new(this.name + '-setup-permissions', this.image)
       + container.withCommand(["chown", "-R", "grafana:root", "/grafana"])
       + container.withVolumeMounts([

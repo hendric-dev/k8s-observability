@@ -20,11 +20,20 @@
         envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_USERNAME', this.name, 'username'),
         envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_PASSWORD', this.name, 'password'),
       ])
-      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
         volumeMount.new(this.name, '/var/lib/influxdb2'),
-      ]),
+      ])
+      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
+      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+      + container.livenessProbe.withPeriodSeconds(60)
+      + container.livenessProbe.httpGet.withPath('/health')
+      + container.livenessProbe.httpGet.withPort(this.ports.internal)
+      + container.readinessProbe.httpGet.withPath('/health')
+      + container.readinessProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.httpGet.withPath('/health')
+      + container.startupProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.withFailureThreshold(30)
+      + container.startupProbe.withPeriodSeconds(10),
     deployment: deployment.new(name = this.name, containers = [this.container], replicas = 1)
       + deployment.metadata.withAnnotations(this.annotations.deployment)
       + deployment.metadata.withLabels(this.labels.deployment)

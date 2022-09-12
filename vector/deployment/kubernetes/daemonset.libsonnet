@@ -1,6 +1,7 @@
 (import 'vector.libsonnet') +
 {
   local container = $.core.v1.container,
+  local containerPort = $.core.v1.containerPort,
   local daemonSet = $.apps.v1.daemonSet,
   local envVar = $.core.v1.envVar,
   local toleration = $.core.v1.toleration,
@@ -10,6 +11,7 @@
   vector+: {
     local this = self,
     container:: container.new(this.name, this.image)
+      + container.withPorts([containerPort.newNamed(this.ports.internal, 'http')])
       + container.withEnv([
         envVar.fromFieldPath('VECTOR_SELF_NODE_NAME', 'spec.nodeName'),
         envVar.fromFieldPath('VECTOR_SELF_POD_NAME', 'metadata.name'),
@@ -24,9 +26,8 @@
         envVar.new('PROCFS_ROOT', '/host/proc'),
         envVar.new('SYSFS_ROOT', '/host/sys'),
         envVar.new('VECTOR_CONFIG_DIR', '/etc/vector'),
+        envVar.new('VECTOR_INTERNAL_PORT', std.toString(this.ports.internal)),
       ])
-      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
         volumeMount.new('config', '/etc/vector', true),
         volumeMount.new('data-dir', '/vector-data-dir'),
@@ -35,7 +36,18 @@
         volumeMount.new('sysfs', '/host/sys', true),
         volumeMount.new('var-lib', '/var/lib', true),
         volumeMount.new('var-log', '/var/log', true),
-      ]),
+      ])
+      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
+      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+      + container.livenessProbe.withPeriodSeconds(60)
+      + container.livenessProbe.httpGet.withPath('/health')
+      + container.livenessProbe.httpGet.withPort(this.ports.internal)
+      + container.readinessProbe.httpGet.withPath('/health')
+      + container.readinessProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.httpGet.withPath('/health')
+      + container.startupProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.withFailureThreshold(30)
+      + container.startupProbe.withPeriodSeconds(10),
     daemonSet: daemonSet.new(name = this.name, containers = [this.container])
       + daemonSet.metadata.withAnnotations(this.annotations.deployment)
       + daemonSet.metadata.withLabels(this.labels.deployment)

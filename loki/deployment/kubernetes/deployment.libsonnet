@@ -10,12 +10,21 @@
     local this = self,
     container:: container.new(this.name, this.image)
       + container.withPorts(containerPort.newNamed(this.ports.internal, 'http'))
-      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
       + container.withVolumeMounts([
         volumeMount.new('config', '/etc/loki', true),
         volumeMount.new(this.name, '/loki'),
-      ]),
+      ])
+      + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
+      + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+      + container.livenessProbe.withPeriodSeconds(60)
+      + container.livenessProbe.httpGet.withPath('/ready')
+      + container.livenessProbe.httpGet.withPort(this.ports.internal)
+      + container.readinessProbe.httpGet.withPath('/ready')
+      + container.readinessProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.httpGet.withPath('/ready')
+      + container.startupProbe.httpGet.withPort(this.ports.internal)
+      + container.startupProbe.withFailureThreshold(30)
+      + container.startupProbe.withPeriodSeconds(10),
     initContainer:: container.new(this.name + '-setup-permissions', this.image)
       + container.withCommand(["chown", "-R", "loki:loki", "/loki"])
       + container.withVolumeMounts([
