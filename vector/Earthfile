@@ -1,6 +1,6 @@
 VERSION 0.6
 
-FROM timberio/vector:0.23.0-alpine
+FROM timberio/vector:0.24.1-alpine
 WORKDIR /vector
 
 ENV LOKI_ENDPOINT=https://loki

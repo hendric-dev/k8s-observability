@@ -8,7 +8,7 @@
     },
     bucket:: 'metrics',
     host:: 'monitoring.db.my-server.com',
-    image:: 'influxdb:2.2.0-alpine',
+    image:: 'influxdb:2.4.0-alpine',
     labels:: {
       deployment: {},
       pod: {},

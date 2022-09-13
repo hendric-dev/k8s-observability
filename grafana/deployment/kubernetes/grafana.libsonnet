@@ -22,7 +22,7 @@
     ],
     env:: {},
     host:: 'grafana.my-server.com',
-    image:: 'grafana/grafana:9.0.5',
+    image:: 'grafana/grafana:9.1.5',
     labels:: {
       deployment: {},
       pod: {},

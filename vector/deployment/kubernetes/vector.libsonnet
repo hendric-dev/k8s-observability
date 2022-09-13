@@ -5,7 +5,7 @@
       deployment: {},
       pod: {},
     },
-    image:: 'timberio/vector:0.21.0-alpine',
+    image:: 'timberio/vector:0.24.1-alpine',
     labels:: {
       deployment: {},
       pod: {},
