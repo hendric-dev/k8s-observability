@@ -14,7 +14,7 @@ local tk = import 'tk';
       + clusterRole.metadata.withLabels(this.labels.selector)
       + clusterRole.withRules([
         resourceRule.withApiGroups('')
-        + resourceRule.withResources(['pods', 'namespaces', 'nodes/proxy'])
+        + resourceRule.withResources(['pods', 'namespaces', 'nodes', 'nodes/proxy'])
         + resourceRule.withVerbs(['get', 'list', 'watch']),
       ]),
     clusterRoleBinding: clusterRoleBinding.new(this.name)

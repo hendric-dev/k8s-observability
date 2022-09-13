@@ -4,10 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.4.0] - 2022-09-13
 ### Added
 - [Tempo](https://github.com/grafana/tempo) is now part of the stack allowing to trace requests | [#24](https://github.com/hendric-dev/k8s-observability/issues/24)
 - Allow to use an external NFS to store Grafana, Loki and InfluxDB data | [#23](https://github.com/hendric-dev/k8s-observability/issues/23)
 - Custom dashboards can now be provisioned | [#25](https://github.com/hendric-dev/k8s-observability/issues/25)
+
+### Changed
+- Updated dependencies to the latest versions
+  - Grafana: `9.0.5` -> `9.1.5`
+  - InfluxDB: `2.2.0-alpine` -> `2.4.0-alpine`
+  - Vector: `0.21.0-alpine` -> `0.24.1-alpine`
 
 ## [0.3.0] - 2022-08-30
 ### Added
@@ -35,7 +43,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.3.0...main
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.4.0...main
+[0.4.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.4.0
 [0.3.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.3.0
 [0.2.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.2.0
 [0.1.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.1.0
