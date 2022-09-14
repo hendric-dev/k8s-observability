@@ -39,6 +39,9 @@
       memory: {request: '32Mi', limit: '256Mi'}
     },
     storage:: {
+      class: {
+        name: 'observability-' + this.name,
+      },
       path: '/opt/observability/' + this.name,
       size: '10Gi',
     },

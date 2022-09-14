@@ -38,6 +38,9 @@
       },
     },
     storage:: {
+      class: {
+        name: 'observability-' + this.name,
+      },
       path: '/opt/observability/' + this.name,
       size: '10Gi',
     },
