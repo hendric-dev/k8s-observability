@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Storage classes can now be configured and will be added to the deployment | [#33](https://github.com/hendric-dev/k8s-observability/issues/33)
 
 ## [0.4.0] - 2022-09-13
 ### Added

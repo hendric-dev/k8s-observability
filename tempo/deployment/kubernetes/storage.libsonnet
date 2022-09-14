@@ -2,6 +2,7 @@
 {
   local persistentVolume = $.core.v1.persistentVolume,
   local persistentVolumeClaim = $.core.v1.persistentVolumeClaim,
+  local storageClass = $.storage.v1.storageClass,
 
   tempo+: {
     local this = self,
@@ -22,6 +23,18 @@
       + persistentVolumeClaim.metadata.withLabels(this.labels.selector)
       + persistentVolumeClaim.spec.withAccessModes(['ReadWriteOnce'])
       + persistentVolumeClaim.spec.withStorageClassName('observability-' + this.name)
-      + persistentVolumeClaim.spec.resources.withRequests({storage: this.storage.size})
+      + persistentVolumeClaim.spec.resources.withRequests({storage: this.storage.size}),
+    storageClass: (
+      if std.objectHasAll(this.storage.class, 'name') && std.objectHasAll(this.storage.class, 'provisioner')
+      then storageClass.new(this.storage.class.name)
+        + storageClass.withParameters(
+            if std.objectHasAll(this.storage.class, 'parameters')
+            then this.storage.class.parameters
+            else {}
+          )
+        + storageClass.withProvisioner(this.storage.class.provisioner)
+        + storageClass.withReclaimPolicy('Retain')
+      else {}
+    ),
   },
 }
