@@ -32,7 +32,7 @@ All Grafana config is stored under the **grafana** object in the config.
     ],
     env:: {},
     host:: 'grafana.my-server.com',
-    image:: 'grafana/grafana:9.0.5',
+    image:: 'grafana/grafana:9.1.5',
     labels:: {
       deployment: {},
       pod: {},
@@ -61,6 +61,9 @@ All Grafana config is stored under the **grafana** object in the config.
       },
     },
     storage:: {
+      class: {
+        name: 'observability-grafana',
+      },
       path: '/opt/observability/grafana',
       size: '10Gi',
     },
@@ -76,7 +79,7 @@ All Grafana config is stored under the **grafana** object in the config.
 | `dashboards` | Array of dashboard definitions that are provisioned. <br> See [Custom Dashboards](../advanced/custom-dashboards.md). <br> `[ /* various default dashboards */ ]` |
 | `env` | Environment variables that are added to the Grafana container. See [Customize Grafana](#customize-grafana) <br> `{}` |
 | `host` | Hostname where the UI is exposed. <br> `grafana.my-server.com` |
-| `image` | Docker image that gets deployed. <br> `grafana/grafana:9.0.5` |
+| `image` | Docker image that gets deployed. <br> `grafana/grafana:9.1.5` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
 | `labels.pod` | Labels added at the pod level. <br> `{}` |
 | `labels.selector` | Selector used for all Grafana k8s resources. <br> `{'app.kubernetes.io/name': 'grafana'}` |
@@ -92,6 +95,9 @@ All Grafana config is stored under the **grafana** object in the config.
 | `secrets.admin.password` | Admin password for Grafana. <br> `<fill with admin password>` |
 | `security.tls.enabled` | Enables TLS, creating a certificate to access Grafana over HTTPS. <br> `false` |
 | `security.tls.issuer` | Issuer or ClusterIssuer where the certificate is requested. See [cert-manager documentation](https://cert-manager.io/docs/concepts/issuer/) on how to set one up.  <br> `<fill with certificate issuer>` |
+| `storage.class.name` | Name of the storage class. <br> `observability-grafana` |
+| `storage.class.parameters` | Extra parameters of the storage class. <br> `undefined` |
+| `storage.class.provisioner` | Provisioner of the storage class. <br> `undefined` |
 | `storage.nfs.server` | Address to an NFS which is used instead of the host. <br> `undefined` |
 | `storage.path` | Path on the host or NFS where the data is stored. <br> `/opt/observability/grafana` |
 | `storage.size` | Amount of storage to allocate for Grafana. <br> `10Gi` |

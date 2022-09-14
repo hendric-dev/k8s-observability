@@ -18,7 +18,7 @@ All InfluxDB config is stored under the **influxDB** object in the config.
     },
     bucket:: 'metrics',
     host:: 'monitoring.db.my-server.com',
-    image:: 'influxdb:2.2.0-alpine',
+    image:: 'influxdb:2.4.0-alpine',
     labels:: {
       deployment: {},
       pod: {},
@@ -48,6 +48,9 @@ All InfluxDB config is stored under the **influxDB** object in the config.
       },
     },
     storage:: {
+      class: {
+        name: 'observability-influx-db',
+      },
       path: '/opt/observability/influx-db',
       size: '10Gi',
     },
@@ -62,7 +65,7 @@ All InfluxDB config is stored under the **influxDB** object in the config.
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
 | `bucket` | Bucket name used for the metrics. <br> `metrics` |
 | `host` | Hostname where the UI is exposed. <br> `monitoring.db.my-server.com` |
-| `image` | Docker image that gets deployed. <br> `influxdb:2.2.0-alpine` |
+| `image` | Docker image that gets deployed. <br> `influxdb:2.4.0-alpine` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
 | `labels.pod` | Labels added at the pod level. <br> `{}` |
 | `labels.selector` | Selector used for all InfluxDB k8s resources. <br> `{'app.kubernetes.io/name': 'influx-db'}` |
@@ -79,6 +82,9 @@ All InfluxDB config is stored under the **influxDB** object in the config.
 | `secrets.username` | Username for the InfluxDB. <br> `<fill with InfluxDB username>` |
 | `secrets.password` | Password for the InfluxDB. <br> `<fill with InfluxDB password>` |
 | `secrets.token` | Token that can be used to access the InfluxDB API. <br> `<fill with API token>` |
+| `storage.class.name` | Name of the storage class. <br> `observability-influx-db` |
+| `storage.class.parameters` | Extra parameters of the storage class. <br> `undefined` |
+| `storage.class.provisioner` | Provisioner of the storage class. <br> `undefined` |
 | `storage.nfs.server` | Address to an NFS which is used instead of the host. <br> `undefined` |
 | `storage.path` | Path on the host or NFS where the data is stored. <br> `/opt/observability/influx-db` |
 | `storage.size` | Amount of storage to allocate for the database. <br> `10Gi` |
