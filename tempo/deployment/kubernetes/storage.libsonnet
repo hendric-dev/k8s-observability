@@ -24,17 +24,17 @@
       + persistentVolumeClaim.spec.withAccessModes(['ReadWriteOnce'])
       + persistentVolumeClaim.spec.withStorageClassName('observability-' + this.name)
       + persistentVolumeClaim.spec.resources.withRequests({storage: this.storage.size}),
-    storageClass: storageClass.new(this.storage.class.name)
-      + (
-        if std.objectHasAll(this.storage.class, 'parameters')
-        then storageClass.withParameters(this.storage.class.parameters)
-        else {}
-      )
-      + (
-        if std.objectHasAll(this.storage.class, 'provisioner')
-        then storageClass.withProvisioner(this.storage.class.provisioner)
-        else {}
-      )
-      + storageClass.withReclaimPolicy('Retain'),
+    storageClass: (
+      if std.objectHasAll(this.storage.class, 'name') && std.objectHasAll(this.storage.class, 'provisioner')
+      then storageClass.new(this.storage.class.name)
+        + storageClass.withParameters(
+            if std.objectHasAll(this.storage.class, 'parameters')
+            then this.storage.class.parameters
+            else {}
+          )
+        + storageClass.withProvisioner(this.storage.class.provisioner)
+        + storageClass.withReclaimPolicy('Retain')
+      else {}
+    ),
   },
 }
