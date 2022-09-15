@@ -19,6 +19,7 @@ export default defineConfig({
       {
         text: 'Configuration Reference',
         items: [
+          {text: 'Shared', link: '/configuration-reference/shared'},
           {text: 'Grafana', link: '/configuration-reference/grafana'},
           {text: 'Influx DB', link: '/configuration-reference/influx-db'},
           {text: 'Loki', link: '/configuration-reference/loki'},
