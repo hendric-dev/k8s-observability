@@ -7,31 +7,33 @@
 
   influxDB+: {
     local this = self,
-    ingress: ingress.new(this.name)
-      + ingress.metadata.withAnnotations(
-        this.annotations.ingress
+    deployables+: {
+      ingress: ingress.new(this.name)
+        + ingress.metadata.withAnnotations(
+          this.annotations.ingress
+          + (
+            if this.security.tls.enabled
+            then {'cert-manager.io/issuer': this.security.tls.issuer}
+            else {}
+          ),
+        )
+        + ingress.metadata.withLabels(this.labels.selector)
+        + ingress.spec.withRules([
+            ingressRule.withHost(this.host)
+              + ingressRule.http.withPaths([
+                  httpIngressPath.withPath(this.path)
+                  + httpIngressPath.withPathType('Prefix')
+                  + httpIngressPath.backend.service.withName(this.name)
+                  + httpIngressPath.backend.service.port.withNumber(this.ports.external),
+                ])
+          ])
         + (
           if this.security.tls.enabled
-          then {'cert-manager.io/issuer': this.security.tls.issuer}
+          then ingress.spec.withTls(
+            ingressTLS.withHosts(this.host) + ingressTLS.withSecretName(this.name + '-certificate'),
+          )
           else {}
         ),
-      )
-      + ingress.metadata.withLabels(this.labels.selector)
-      + ingress.spec.withRules([
-          ingressRule.withHost(this.host)
-            + ingressRule.http.withPaths([
-                httpIngressPath.withPath(this.path)
-                + httpIngressPath.withPathType('Prefix')
-                + httpIngressPath.backend.service.withName(this.name)
-                + httpIngressPath.backend.service.port.withNumber(this.ports.external),
-              ])
-        ])
-      + (
-        if this.security.tls.enabled
-        then ingress.spec.withTls(
-          ingressTLS.withHosts(this.host) + ingressTLS.withSecretName(this.name + '-certificate'),
-        )
-        else {}
-      ),
+    },
   },
 }

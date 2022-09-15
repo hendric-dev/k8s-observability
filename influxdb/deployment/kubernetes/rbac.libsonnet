@@ -4,8 +4,10 @@
 
   influxDB+: {
     local this = self,
-    serviceAccount: serviceAccount.new(this.name)
-      + serviceAccount.metadata.withLabels(this.labels.selector)
-      + serviceAccount.withAutomountServiceAccountToken(true),
+    deployables+: {
+      serviceAccount: serviceAccount.new(this.name)
+        + serviceAccount.metadata.withLabels(this.labels.selector)
+        + serviceAccount.withAutomountServiceAccountToken(true),
+    },
   },
 }
