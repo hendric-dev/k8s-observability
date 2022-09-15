@@ -16,7 +16,7 @@
         ])
         + container.withVolumeMounts([
           volumeMount.new('config', '/etc/tempo', true),
-          volumeMount.new(this.name, '/tmp/tempo'),
+          volumeMount.new(this.name, '/tmp/tempo') + volumeMount.withSubPath('tempo'),
         ])
         + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
         + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
@@ -39,7 +39,7 @@
         + deployment.spec.template.spec.withTerminationGracePeriodSeconds(60)
         + deployment.spec.template.spec.withVolumes([
           volume.fromConfigMap('config', this.name),
-          volume.fromPersistentVolumeClaim(this.name, 'observability-' + this.name),
+          volume.fromPersistentVolumeClaim(this.name, $.shared.storage.name),
         ]),
     },
   },

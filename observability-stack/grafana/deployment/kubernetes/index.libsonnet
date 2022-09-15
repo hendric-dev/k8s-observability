@@ -4,5 +4,4 @@
 (import 'ingress.libsonnet') +
 (import 'rbac.libsonnet') +
 (import 'secret.libsonnet') +
-(import 'service.libsonnet') +
-(import 'storage.libsonnet')
+(import 'service.libsonnet')

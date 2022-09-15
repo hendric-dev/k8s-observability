@@ -26,7 +26,7 @@
           volumeMount.new('dashboards', '/etc/grafana/provisioning/dashboards/dashboards.yaml', true)
           + volumeMount.withSubPath('dashboards.yaml'),
           volumeMount.new('datasources', '/etc/grafana/provisioning/datasources', true),
-          volumeMount.new(this.name, '/var/lib/grafana'),
+          volumeMount.new(this.name, '/var/lib/grafana') + volumeMount.withSubPath('grafana'),
         ])
         + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
         + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
@@ -42,7 +42,7 @@
       initContainer:: container.new(this.name + '-setup-permissions', this.image)
         + container.withCommand(["chown", "-R", "grafana:root", "/grafana"])
         + container.withVolumeMounts([
-          volumeMount.new(this.name, '/grafana'),
+          volumeMount.new(this.name, '/grafana') + volumeMount.withSubPath('grafana'),
         ])
         + container.securityContext.withRunAsUser(0),
       deployment: deployment.new(name = this.name, containers = [this.deployables.container], replicas = 1)
@@ -57,7 +57,7 @@
           volume.fromConfigMap('config', this.name),
           volume.fromConfigMap('dashboards', this.name + '-dashboards'),
           volume.fromConfigMap('datasources', this.name + '-datasources'),
-          volume.fromPersistentVolumeClaim(this.name, 'observability-' + this.name),
+          volume.fromPersistentVolumeClaim(this.name, $.shared.storage.name),
         ]),
     },
   },

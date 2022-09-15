@@ -1,3 +1,4 @@
+(import '../../../shared/deployment/kubernetes/shared.libsonnet') +
 {
   tempo+: {
     local this = self,
@@ -37,13 +38,6 @@
     resources:: {
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '32Mi', limit: '256Mi'}
-    },
-    storage:: {
-      class: {
-        name: 'observability-' + this.name,
-      },
-      path: '/opt/observability/' + this.name,
-      size: '10Gi',
     },
   },
 }

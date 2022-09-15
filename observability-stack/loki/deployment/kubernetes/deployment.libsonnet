@@ -13,7 +13,7 @@
         + container.withPorts(containerPort.newNamed(this.ports.internal, 'http'))
         + container.withVolumeMounts([
           volumeMount.new('config', '/etc/loki', true),
-          volumeMount.new(this.name, '/loki'),
+          volumeMount.new(this.name, '/loki') + volumeMount.withSubPath('loki'),
         ])
         + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
         + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
@@ -29,7 +29,7 @@
       initContainer:: container.new(this.name + '-setup-permissions', this.image)
         + container.withCommand(["chown", "-R", "loki:loki", "/loki"])
         + container.withVolumeMounts([
-          volumeMount.new(this.name, '/loki'),
+          volumeMount.new(this.name, '/loki') + volumeMount.withSubPath('loki'),
         ])
         + container.securityContext.withRunAsUser(0),
       deployment: deployment.new(name = this.name, containers = [this.deployables.container], replicas = 1)
@@ -43,7 +43,7 @@
         + deployment.spec.template.spec.withTerminationGracePeriodSeconds(60)
         + deployment.spec.template.spec.withVolumes([
           volume.fromConfigMap('config', this.name),
-          volume.fromPersistentVolumeClaim(this.name, 'observability-' + this.name),
+          volume.fromPersistentVolumeClaim(this.name, $.shared.storage.name),
         ]),
     },
   },

@@ -22,7 +22,7 @@
           envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_PASSWORD', this.name, 'password'),
         ])
         + container.withVolumeMounts([
-          volumeMount.new(this.name, '/var/lib/influxdb2'),
+          volumeMount.new(this.name, '/var/lib/influxdb2') + volumeMount.withSubPath('influxdb'),
         ])
         + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
         + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
@@ -44,7 +44,7 @@
         + deployment.spec.template.spec.withServiceAccount(this.name)
         + deployment.spec.template.spec.withTerminationGracePeriodSeconds(60)
         + deployment.spec.template.spec.withVolumes([
-          volume.fromPersistentVolumeClaim(this.name, 'observability-' + this.name)
+          volume.fromPersistentVolumeClaim(this.name, $.shared.storage.name)
         ]),
     },
   },

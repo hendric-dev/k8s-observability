@@ -1,3 +1,4 @@
+(import '../../../shared/deployment/kubernetes/shared.libsonnet') +
 {
   grafana+: {
     local this = self,
@@ -49,13 +50,6 @@
         enabled: false,
         issuer: '<fill with certificate issuer>',
       },
-    },
-    storage:: {
-      class: {
-        name: 'observability-' + this.name,
-      },
-      path: '/opt/observability/' + this.name,
-      size: '10Gi',
     },
   }
 }

@@ -1,3 +1,4 @@
+(import '../../../shared/deployment/kubernetes/shared.libsonnet') +
 {
   loki+: {
     local this = self,
@@ -21,12 +22,5 @@
       memory: {request: '128Mi', limit: '512Mi'},
     },
     retention:: '672h',
-    storage:: {
-      class: {
-        name: 'observability-' + this.name,
-      },
-      path: '/opt/observability/' + this.name,
-      size: '10Gi',
-    },
   },
 }

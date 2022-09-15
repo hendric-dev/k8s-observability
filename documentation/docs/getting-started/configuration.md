@@ -46,6 +46,7 @@ All components, aswell as the k8s lib and the custom config need to be imported 
 (import 'observability-stack/grafana/deployment/kubernetes/index.libsonnet') +
 (import 'observability-stack/influxdb/deployment/kubernetes/index.libsonnet') +
 (import 'observability-stack/loki/deployment/kubernetes/index.libsonnet') +
+(import 'observability-stack/shared/deployment/kubernetes/index.libsonnet') +
 (import 'observability-stack/tempo/deployment/kubernetes/index.libsonnet') +
 (import 'observability-stack/vector/deployment/kubernetes/index.libsonnet') +
 (import 'config.jsonnet')

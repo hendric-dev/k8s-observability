@@ -1,13 +1,13 @@
-(import 'influxdb.libsonnet') +
+(import 'shared.libsonnet') +
 {
   local persistentVolume = $.core.v1.persistentVolume,
   local persistentVolumeClaim = $.core.v1.persistentVolumeClaim,
   local storageClass = $.storage.v1.storageClass,
 
-  influxDB+: {
+  shared+: {
     local this = self,
     deployables+: {
-      persistentVolume: persistentVolume.new('observability-' + this.name)
+      persistentVolume: persistentVolume.new(this.storage.name)
         + persistentVolume.metadata.withLabels(this.labels.selector)
         + persistentVolume.spec.withAccessModes(['ReadWriteOnce'])
         + persistentVolume.spec.withCapacity({storage: this.storage.size})
@@ -20,9 +20,9 @@
             + persistentVolume.spec.nfs.withReadOnly(false)
           else persistentVolume.spec.hostPath.withPath(this.storage.path)
         ),
-      persistentVolumeClaim: persistentVolumeClaim.new('observability-' + this.name)
+      persistentVolumeClaim: persistentVolumeClaim.new(this.storage.name)
         + persistentVolumeClaim.metadata.withLabels(this.labels.selector)
-        + persistentVolumeClaim.spec.withAccessModes(['ReadWriteOnce'])
+        + persistentVolumeClaim.spec.withAccessModes(['ReadWriteMany'])
         + persistentVolumeClaim.spec.withStorageClassName(this.storage.class.name)
         + persistentVolumeClaim.spec.resources.withRequests({storage: this.storage.size}),
       storageClass: (
