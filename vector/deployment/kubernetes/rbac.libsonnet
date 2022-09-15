@@ -10,25 +10,27 @@ local tk = import 'tk';
 
   vector+: {
     local this = self,
-    clusterRole: clusterRole.new(this.name)
-      + clusterRole.metadata.withLabels(this.labels.selector)
-      + clusterRole.withRules([
-        resourceRule.withApiGroups('')
-        + resourceRule.withResources(['pods', 'namespaces', 'nodes', 'nodes/proxy'])
-        + resourceRule.withVerbs(['get', 'list', 'watch']),
-      ]),
-    clusterRoleBinding: clusterRoleBinding.new(this.name)
-      + clusterRoleBinding.metadata.withLabels(this.labels.selector)
-      + clusterRoleBinding.roleRef.withName(this.name)
-      + clusterRoleBinding.roleRef.withKind('ClusterRole')
-      + clusterRoleBinding.roleRef.withApiGroup('rbac.authorization.k8s.io')
-      + clusterRoleBinding.withSubjects(
-        subject.withName(this.name)
-        + subject.withKind('ServiceAccount')
-        + subject.withNamespace(tk.env.spec.namespace),
-      ),
-    serviceAccount: serviceAccount.new(this.name)
-      + serviceAccount.metadata.withLabels(this.labels.selector)
-      + serviceAccount.withAutomountServiceAccountToken(false),
+    deployables+: {
+      clusterRole: clusterRole.new(this.name)
+        + clusterRole.metadata.withLabels(this.labels.selector)
+        + clusterRole.withRules([
+          resourceRule.withApiGroups('')
+          + resourceRule.withResources(['pods', 'namespaces', 'nodes', 'nodes/proxy'])
+          + resourceRule.withVerbs(['get', 'list', 'watch']),
+        ]),
+      clusterRoleBinding: clusterRoleBinding.new(this.name)
+        + clusterRoleBinding.metadata.withLabels(this.labels.selector)
+        + clusterRoleBinding.roleRef.withName(this.name)
+        + clusterRoleBinding.roleRef.withKind('ClusterRole')
+        + clusterRoleBinding.roleRef.withApiGroup('rbac.authorization.k8s.io')
+        + clusterRoleBinding.withSubjects(
+          subject.withName(this.name)
+          + subject.withKind('ServiceAccount')
+          + subject.withNamespace(tk.env.spec.namespace),
+        ),
+      serviceAccount: serviceAccount.new(this.name)
+        + serviceAccount.metadata.withLabels(this.labels.selector)
+        + serviceAccount.withAutomountServiceAccountToken(false),
+    },
   },
 }
