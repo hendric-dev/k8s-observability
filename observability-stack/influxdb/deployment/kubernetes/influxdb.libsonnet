@@ -10,6 +10,7 @@
     bucket:: 'metrics',
     host:: 'monitoring.db.my-server.com',
     image:: 'influxdb:2.4.0-alpine',
+    ingress:: $.shared.ingress,
     labels:: {
       deployment: {},
       pod: {},

@@ -33,6 +33,7 @@ All Grafana config is stored under the **grafana** object in the config.
     env:: {},
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.1.5',
+    ingress:: {},
     labels:: {
       deployment: {},
       pod: {},
@@ -73,6 +74,7 @@ All Grafana config is stored under the **grafana** object in the config.
 | `env` | Environment variables that are added to the Grafana container. See [Customize Grafana](#customize-grafana) <br> `{}` |
 | `host` | Hostname where the UI is exposed. <br> `grafana.my-server.com` |
 | `image` | Docker image that gets deployed. <br> `grafana/grafana:9.1.5` |
+| `ingress.className` | Class name added to the Grafana ingress. <br> `undefined` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
 | `labels.pod` | Labels added at the pod level. <br> `{}` |
 | `labels.selector` | Selector used for all Grafana k8s resources. <br> `{'app.kubernetes.io/name': 'grafana'}` |
