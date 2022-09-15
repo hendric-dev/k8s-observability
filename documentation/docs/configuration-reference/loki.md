@@ -31,13 +31,6 @@ All Loki config is stored under the **loki** object in the config.
       memory: {request: '128Mi', limit: '512Mi'},
     },
     retention:: '672h',
-    storage:: {
-      class: {
-        name: 'observability-loki',
-      },
-      path: '/opt/observability/loki',
-      size: '10Gi',
-    },
   },
 }
 ```
@@ -58,9 +51,3 @@ All Loki config is stored under the **loki** object in the config.
 | `resources.memory.request` | Min. requested amount of memory. <br> `128Mi` |
 | `resources.memory.limit` | Max. allowed amount of memory. <br> `512Mi` |
 | `retention` | Retention policy used for the log files (in hours). <br> `672h` |
-| `storage.class.name` | Name of the storage class. <br> `observability-loki` |
-| `storage.class.parameters` | Extra parameters of the storage class. <br> `undefined` |
-| `storage.class.provisioner` | Provisioner of the storage class. <br> `undefined` |
-| `storage.nfs.server` | Address to an NFS which is used instead of the host. <br> `undefined` |
-| `storage.path` | Path on the host or NFS where the data is stored. <br> `/opt/observability/loki` |
-| `storage.size` | Amount of storage to allocate for Loki. <br> `10Gi` |

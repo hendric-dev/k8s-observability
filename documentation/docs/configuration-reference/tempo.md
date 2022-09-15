@@ -48,13 +48,6 @@ All Tempo config is stored under the **tempo** object in the config.
       cpu: {request: '50m', limit: '200m'},
       memory: {request: '32Mi', limit: '256Mi'}
     },
-    storage:: {
-      class: {
-        name: 'observability-tempo',
-      },
-      path: '/opt/observability/tempo',
-      size: '10Gi',
-    },
   },
 }
 ```
@@ -82,9 +75,3 @@ All Tempo config is stored under the **tempo** object in the config.
 | `resources.cpu.limit` | Max. allowed amount of CPU time. <br> `200m` |
 | `resources.memory.request` | Min. requested amount of memory. <br> `32Mi` |
 | `resources.memory.limit` | Max. allowed amount of memory. <br> `256Mi` |
-| `storage.class.name` | Name of the storage class. <br> `observability-tempo` |
-| `storage.class.parameters` | Extra parameters of the storage class. <br> `undefined` |
-| `storage.class.provisioner` | Provisioner of the storage class. <br> `undefined` |
-| `storage.nfs.server` | Address to an NFS which is used instead of the host. <br> `undefined` |
-| `storage.path` | Path on the host or NFS where the data is stored. <br> `/opt/observability/tempo` |
-| `storage.size` | Amount of storage to allocate for Tempo. <br> `10Gi` |

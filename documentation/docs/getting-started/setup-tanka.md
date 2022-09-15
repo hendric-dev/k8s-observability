@@ -34,12 +34,8 @@ tk init
 
 ## Install Libraries
 
-Use `jb` to install the k8s-observability libs:
+Use `jb` to install the k8s-observability lib:
 
 ```sh
-jb install https://github.com/hendric-dev/k8s-observability.git/grafana@main &&
-jb install https://github.com/hendric-dev/k8s-observability.git/influxdb@main &&
-jb install https://github.com/hendric-dev/k8s-observability.git/loki@main &&
-jb install https://github.com/hendric-dev/k8s-observability.git/tempo@main &&
-jb install https://github.com/hendric-dev/k8s-observability.git/vector@main
+jb install https://github.com/hendric-dev/k8s-observability.git/observability-stack@main
 ```

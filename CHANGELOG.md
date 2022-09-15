@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Storage classes can now be configured and will be added to the deployment | [#33](https://github.com/hendric-dev/k8s-observability/issues/33)
 
+### Changed
+- Pods now share a volume with different subpaths | [#39](https://github.com/hendric-dev/k8s-observability/issues/39)
+
 ## [0.4.0] - 2022-09-13
 ### Added
 - [Tempo](https://github.com/grafana/tempo) is now part of the stack allowing to trace requests | [#24](https://github.com/hendric-dev/k8s-observability/issues/24)
