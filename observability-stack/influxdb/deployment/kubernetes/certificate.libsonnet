@@ -12,7 +12,7 @@
             labels: {
               'app.kubernetes.io/name': this.name,
             },
-            name: this.name,
+            name: this.name + '-certificate',
           },
           spec: {
             secretName: this.name + '-certificate',
