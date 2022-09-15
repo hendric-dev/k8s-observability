@@ -11,7 +11,7 @@
       + persistentVolume.spec.withAccessModes(['ReadWriteOnce'])
       + persistentVolume.spec.withCapacity({storage: this.storage.size})
       + persistentVolume.spec.withPersistentVolumeReclaimPolicy('Retain')
-      + persistentVolume.spec.withStorageClassName('observability-' + this.name)
+      + persistentVolume.spec.withStorageClassName(this.storage.class.name)
       + (
         if std.objectHasAll(this.storage, 'nfs') && std.objectHasAll(this.storage.nfs, 'server')
         then persistentVolume.spec.nfs.withServer(this.storage.nfs.server)
@@ -22,7 +22,7 @@
     persistentVolumeClaim: persistentVolumeClaim.new('observability-' + this.name)
       + persistentVolumeClaim.metadata.withLabels(this.labels.selector)
       + persistentVolumeClaim.spec.withAccessModes(['ReadWriteOnce'])
-      + persistentVolumeClaim.spec.withStorageClassName('observability-' + this.name)
+      + persistentVolumeClaim.spec.withStorageClassName(this.storage.class.name)
       + persistentVolumeClaim.spec.resources.withRequests({storage: this.storage.size}),
     storageClass: (
       if std.objectHasAll(this.storage.class, 'name') && std.objectHasAll(this.storage.class, 'provisioner')
