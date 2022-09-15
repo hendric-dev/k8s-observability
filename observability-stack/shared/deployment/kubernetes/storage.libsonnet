@@ -9,7 +9,7 @@
     deployables+: {
       persistentVolume: persistentVolume.new(this.storage.name)
         + persistentVolume.metadata.withLabels(this.labels.selector)
-        + persistentVolume.spec.withAccessModes(['ReadWriteOnce'])
+        + persistentVolume.spec.withAccessModes(['ReadWriteMany'])
         + persistentVolume.spec.withCapacity({storage: this.storage.size})
         + persistentVolume.spec.withPersistentVolumeReclaimPolicy('Retain')
         + persistentVolume.spec.withStorageClassName(this.storage.class.name)
