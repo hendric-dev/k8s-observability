@@ -28,6 +28,11 @@
                 ])
           ])
         + (
+          if std.objectHasAll(this.ingress, 'className')
+          then ingress.spec.withIngressClassName(this.ingress.className)
+          else {}
+        )
+        + (
           if this.security.tls.enabled
           then ingress.spec.withTls(
             ingressTLS.withHosts(this.host) + ingressTLS.withSecretName(this.name + '-certificate'),

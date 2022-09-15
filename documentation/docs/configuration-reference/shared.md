@@ -12,6 +12,7 @@ All shared config is stored under the **shared** object in the config.
 ```js
 {
   shared+: {
+    ingress:: {},
     labels:: {
       selector: {'app.kubernetes.io/name': 'observability'},
     },
@@ -30,6 +31,7 @@ All shared config is stored under the **shared** object in the config.
 
 | Field | Description / Default |
 | --- | --- |
+| `ingress.className` | Class name added to all ingress resources. <br> `undefined` |
 | `labels.selector` | Selector used for all shared k8s resources. <br> `{'app.kubernetes.io/name': 'observability'}` |
 | `name` | Name used for the k8s resources. <br> `observability` |
 | `storage.class.name` | Name of the storage class. <br> `observability` |

@@ -1,6 +1,7 @@
 {
   shared+: {
     local this = self,
+    ingress:: {},
     labels:: {
       selector: {'app.kubernetes.io/name': this.name},
     },
