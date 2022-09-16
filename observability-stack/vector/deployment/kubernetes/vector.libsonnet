@@ -30,7 +30,7 @@
       internal: 8686,
     },
     resources:: {
-      cpu: {request: '50m', limit: '200m'},
+      cpu: {request: '100m', limit: '500m'},
       memory: {request: '128Mi', limit: '256Mi'},
     },
   },
