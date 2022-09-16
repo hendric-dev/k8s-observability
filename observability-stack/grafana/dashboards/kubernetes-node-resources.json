@@ -91,7 +91,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -175,7 +175,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -268,7 +268,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -362,7 +362,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -456,7 +456,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -551,7 +551,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -646,7 +646,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -741,7 +741,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -836,7 +836,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.1.5",
       "targets": [
         {
           "datasource": {
@@ -880,6 +880,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -984,7 +986,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -998,7 +1001,7 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"load5\" or r._measurement == \"machine_cpu_cores\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> pivot(rowKey: [\"_time\", \"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: r.load5 / r.machine_cpu_cores }))\n  |> keep(columns: [\"_time\", \"_value\", \"load5\", \"machine_cpu_cores\", \"node\"])\n",
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"load5\" or r._measurement == \"machine_cpu_cores\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> group(columns: [\"_time\", \"node\"])\n  |> pivot(rowKey: [\"_time\", \"node\"], columnKey: [\"_measurement\"], valueColumn: \"_value\")\n  |> group(columns: [\"node\"])\n  |> map(fn: (r) => ({ r with _value: r.load5 / r.machine_cpu_cores }))\n  |> keep(columns: [\"_time\", \"_value\", \"load5\", \"machine_cpu_cores\", \"node\"])",
           "refId": "CPU Usage"
         }
       ],
@@ -1017,6 +1020,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1118,7 +1123,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1151,6 +1157,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1252,7 +1260,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1285,6 +1294,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1378,7 +1389,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1402,7 +1414,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 36,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [
     "linux"
@@ -1442,6 +1454,6 @@
   "timezone": "browser",
   "title": "Node Resources",
   "uid": "nesBbS77k",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
