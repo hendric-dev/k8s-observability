@@ -41,7 +41,7 @@ All Vector config is stored under the **vector** object in the config.
       internal: 8686,
     },
     resources:: {
-      cpu: {request: '50m', limit: '200m'},
+      cpu: {request: '100m', limit: '500m'},
       memory: {request: '128Mi', limit: '256Mi'},
     },
   },
@@ -63,7 +63,7 @@ All Vector config is stored under the **vector** object in the config.
 | `name` | Name used for the k8s resources. <br> `vector` |
 | `ports.external` | External port of the Vector API. <br> `8686` |
 | `ports.internal` | Internal port of the Vector API. <br> `8686` |
-| `resources.cpu.request` | Min. requested amount of CPU time. <br> `50m` |
-| `resources.cpu.limit` | Max. allowed amount of CPU time. <br> `200m` |
+| `resources.cpu.request` | Min. requested amount of CPU time. <br> `100m` |
+| `resources.cpu.limit` | Max. allowed amount of CPU time. <br> `500m` |
 | `resources.memory.request` | Min. requested amount of memory. <br> `128Mi` |
 | `resources.memory.limit` | Max. allowed amount of memory. <br> `256Mi` |
