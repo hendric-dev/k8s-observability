@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Pods now share a volume with different subpaths | [#39](https://github.com/hendric-dev/k8s-observability/issues/39)
 - Vector got a bit more CPU resources and less strict liveness probes | [#45](https://github.com/hendric-dev/k8s-observability/issues/45)
+- `mean` is now used instead of `max` to aggregate pod resource metrics | [#48](https://github.com/hendric-dev/k8s-observability/issues/48)
 
 ## [0.4.0] - 2022-09-13
 ### Added
