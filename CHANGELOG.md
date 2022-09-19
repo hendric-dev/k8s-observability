@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Storage classes can now be configured and will be added to the deployment | [#33](https://github.com/hendric-dev/k8s-observability/issues/33)
+- Reduce config duplications by using the new `shared` config | [#34](https://github.com/hendric-dev/k8s-observability/issues/34)
 - Added a config option for the ingress class name | [#43](https://github.com/hendric-dev/k8s-observability/issues/43)
 
 ### Changed

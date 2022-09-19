@@ -53,7 +53,7 @@ All shared config is stored under the **shared** object in the config.
 | `labels.deployment` | Labels added at the topmost level of all deployments. <br> `{}` |
 | `labels.pod` | Labels added to all pods. <br> `{}` |
 | `labels.selector` | Selector used for all shared k8s resources. <br> `{'app.kubernetes.io/name': 'observability'}` |
-| `name` | Name used for the k8s resources. <br> `observability` |
+| `name` | Name used for the shared k8s resources. <br> `observability` |
 | `security.tls.enabled` | Enables TLS, creating a certificate to access all endpoints over HTTPS. <br> `false` |
 | `security.tls.issuer` | Issuer or ClusterIssuer where the certificate is requested. See [cert-manager documentation](https://cert-manager.io/docs/concepts/issuer/) on how to set one up.  <br> `<fill with certificate issuer>` |
 | `storage.class.name` | Name of the storage class. <br> `observability` |
