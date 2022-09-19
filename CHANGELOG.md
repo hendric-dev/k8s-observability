@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.5.0] - 2022-09-19
 ### Added
 - Storage classes can now be configured and will be added to the deployment | [#33](https://github.com/hendric-dev/k8s-observability/issues/33)
 - Reduce config duplications by using the new `shared` config | [#34](https://github.com/hendric-dev/k8s-observability/issues/34)
@@ -52,7 +54,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.4.0...main
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.5.0...main
+[0.5.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.5.0
 [0.4.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.4.0
 [0.3.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.3.0
 [0.2.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.2.0
