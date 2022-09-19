@@ -2,14 +2,10 @@
 {
   tempo+: {
     local this = self,
-    annotations:: {
-      deployment: {},
-      pod: {},
-    },
+    annotations:: $.shared.annotations,
+    env:: $.shared.env,
     image:: 'grafana/tempo:1.5.0',
-    labels:: {
-      deployment: {},
-      pod: {},
+    labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },
     name:: 'tempo',

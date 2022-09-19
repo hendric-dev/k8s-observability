@@ -12,23 +12,26 @@
     local this = self,
     deployables+: {
       container:: container.new(this.name, this.image)
+        + container.withEnv(
+          [
+            envVar.fromFieldPath('VECTOR_SELF_NODE_NAME', 'spec.nodeName'),
+            envVar.fromFieldPath('VECTOR_SELF_POD_NAME', 'metadata.name'),
+            envVar.fromFieldPath('VECTOR_SELF_POD_NAMESPACE', 'metadata.namespace'),
+            envVar.fromSecretRef('INFLUXDB_TOKEN', 'vector-influx-db-token', 'token'),
+            envVar.fromSecretRef('KUBERNETES_API_TOKEN', 'vector-service-account-token', 'token'),
+            envVar.new('INFLUXDB_BUCKET', this.monitoring.influxDB.bucket),
+            envVar.new('INFLUXDB_ENDPOINT', this.monitoring.influxDB.endpoint),
+            envVar.new('INFLUXDB_ORG', this.monitoring.influxDB.org),
+            envVar.new('LOG', 'info'),
+            envVar.new('LOKI_ENDPOINT', 'http://' + $.loki.name + ':' + $.loki.ports.external),
+            envVar.new('PROCFS_ROOT', '/host/proc'),
+            envVar.new('SYSFS_ROOT', '/host/sys'),
+            envVar.new('VECTOR_CONFIG_DIR', '/etc/vector'),
+            envVar.new('VECTOR_INTERNAL_PORT', std.toString(this.ports.internal)),
+          ]
+          + [envVar.new(name, std.toString(this.env[name])) for name in std.objectFields(this.env)],
+        )
         + container.withPorts([containerPort.newNamed(this.ports.internal, 'http')])
-        + container.withEnv([
-          envVar.fromFieldPath('VECTOR_SELF_NODE_NAME', 'spec.nodeName'),
-          envVar.fromFieldPath('VECTOR_SELF_POD_NAME', 'metadata.name'),
-          envVar.fromFieldPath('VECTOR_SELF_POD_NAMESPACE', 'metadata.namespace'),
-          envVar.fromSecretRef('INFLUXDB_TOKEN', 'vector-influx-db-token', 'token'),
-          envVar.fromSecretRef('KUBERNETES_API_TOKEN', 'vector-service-account-token', 'token'),
-          envVar.new('INFLUXDB_BUCKET', this.monitoring.influxDB.bucket),
-          envVar.new('INFLUXDB_ENDPOINT', this.monitoring.influxDB.endpoint),
-          envVar.new('INFLUXDB_ORG', this.monitoring.influxDB.org),
-          envVar.new('LOG', 'info'),
-          envVar.new('LOKI_ENDPOINT', 'http://' + $.loki.name + ':' + $.loki.ports.external),
-          envVar.new('PROCFS_ROOT', '/host/proc'),
-          envVar.new('SYSFS_ROOT', '/host/sys'),
-          envVar.new('VECTOR_CONFIG_DIR', '/etc/vector'),
-          envVar.new('VECTOR_INTERNAL_PORT', std.toString(this.ports.internal)),
-        ])
         + container.withVolumeMounts([
           volumeMount.new('config', '/etc/vector', true),
           volumeMount.new('data-dir', '/vector-data-dir'),

@@ -2,11 +2,7 @@
 {
   grafana+: {
     local this = self,
-    annotations:: {
-      deployment: {},
-      ingress: {},
-      pod: {},
-    },
+    annotations:: $.shared.annotations,
     dashboards:: [
       {
         definition: importstr '../../dashboards/kubernetes-node-resources.json',
@@ -21,13 +17,11 @@
         title: 'Pod Resources',
       },
     ],
-    env:: {},
+    env:: $.shared.env,
     host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.1.5',
     ingress:: $.shared.ingress,
-    labels:: {
-      deployment: {},
-      pod: {},
+    labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },
     name:: 'grafana',
@@ -46,11 +40,6 @@
         password: '<fill with admin password>',
       },
     },
-    security:: {
-      tls: {
-        enabled: false,
-        issuer: '<fill with certificate issuer>',
-      },
-    },
+    security:: $.shared.security,
   }
 }

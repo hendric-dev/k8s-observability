@@ -2,14 +2,10 @@
 {
   loki+: {
     local this = self,
-    annotations:: {
-      deployment: {},
-      pod: {},
-    },
+    annotations:: $.shared.annotations,
+    env:: $.shared.env,
     image:: 'grafana/loki:2.6.1',
-    labels:: {
-      deployment: {},
-      pod: {},
+    labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },
     name:: 'loki',

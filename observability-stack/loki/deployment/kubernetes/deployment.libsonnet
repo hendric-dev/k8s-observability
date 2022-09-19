@@ -3,6 +3,7 @@
   local container = $.core.v1.container,
   local containerPort = $.core.v1.containerPort,
   local deployment = $.apps.v1.deployment,
+  local envVar = $.core.v1.envVar,
   local volume = $.core.v1.volume,
   local volumeMount = $.core.v1.volumeMount,
 
@@ -10,6 +11,10 @@
     local this = self,
     deployables+: {
       container:: container.new(this.name, this.image)
+        + container.withEnv([
+          envVar.new(name, std.toString(this.env[name]))
+          for name in std.objectFields(this.env)
+        ])
         + container.withPorts(containerPort.newNamed(this.ports.internal, 'http'))
         + container.withVolumeMounts([
           volumeMount.new('config', '/etc/loki', true),

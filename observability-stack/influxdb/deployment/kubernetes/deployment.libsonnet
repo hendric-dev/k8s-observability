@@ -11,16 +11,19 @@
     local this = self,
     deployables+: {
       container:: container.new(this.name, this.image)
+        + container.withEnv(
+          [
+            envVar.new('DOCKER_INFLUXDB_INIT_BUCKET', this.bucket),
+            envVar.new('DOCKER_INFLUXDB_INIT_MODE', 'setup'),
+            envVar.new('DOCKER_INFLUXDB_INIT_ORG', this.organisation),
+            envVar.new('DOCKER_INFLUXDB_INIT_RETENTION', this.retention),
+            envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_ADMIN_TOKEN', this.name, 'token'),
+            envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_USERNAME', this.name, 'username'),
+            envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_PASSWORD', this.name, 'password'),
+          ]
+          + [envVar.new(name, std.toString(this.env[name])) for name in std.objectFields(this.env)],
+        )
         + container.withPorts([containerPort.newNamed(this.ports.internal, 'http') + containerPort.withProtocol('TCP')])
-        + container.withEnv([
-          envVar.new('DOCKER_INFLUXDB_INIT_BUCKET', this.bucket),
-          envVar.new('DOCKER_INFLUXDB_INIT_MODE', 'setup'),
-          envVar.new('DOCKER_INFLUXDB_INIT_ORG', this.organisation),
-          envVar.new('DOCKER_INFLUXDB_INIT_RETENTION', this.retention),
-          envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_ADMIN_TOKEN', this.name, 'token'),
-          envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_USERNAME', this.name, 'username'),
-          envVar.fromSecretRef('DOCKER_INFLUXDB_INIT_PASSWORD', this.name, 'password'),
-        ])
         + container.withVolumeMounts([
           volumeMount.new(this.name, '/var/lib/influxdb2') + volumeMount.withSubPath('influxdb'),
         ])

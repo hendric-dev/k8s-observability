@@ -11,7 +11,6 @@
     local this = self,
     deployables+: {
       container:: container.new(this.name, this.image)
-        + container.withPorts([containerPort.newNamed(this.ports.internal, 'http')])
         + container.withEnv(
           [
             envVar.fromSecretRef('GF_SECURITY_ADMIN_USER', this.name, 'admin_username'),
@@ -20,6 +19,7 @@
           ]
           + [envVar.new(name, std.toString(this.env[name])) for name in std.objectFields(this.env)],
         )
+        + container.withPorts([containerPort.newNamed(this.ports.internal, 'http')])
         + container.withVolumeMounts([
           volumeMount.new('config', '/etc/grafana/grafana.ini', true) + volumeMount.withSubPath('grafana.ini'),
           volumeMount.new('dashboards', '/var/lib/grafana/dashboards', true),
