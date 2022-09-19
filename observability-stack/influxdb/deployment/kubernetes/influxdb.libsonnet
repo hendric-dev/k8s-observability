@@ -2,18 +2,13 @@
 {
   influxDB+: {
     local this = self,
-    annotations:: {
-      deployment: {},
-      ingress: {},
-      pod: {},
-    },
+    annotations:: $.shared.annotations,
     bucket:: 'metrics',
+    env:: $.shared.env,
     host:: 'monitoring.db.my-server.com',
     image:: 'influxdb:2.4.0-alpine',
     ingress:: $.shared.ingress,
-    labels:: {
-      deployment: {},
-      pod: {},
+    labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },
     name:: 'influx-db',
@@ -33,11 +28,6 @@
       password: '<fill with InfluxDB password>',
       token: '<fill with API token>',
     },
-    security:: {
-      tls: {
-        enabled: false,
-        issuer: '<fill with certificate issuer>',
-      },
-    },
+    security:: $.shared.security,
   },
 }

@@ -15,6 +15,7 @@ All Loki config is stored under the **loki** object in the config.
       deployment: {},
       pod: {},
     },
+    env:: {},
     image:: 'grafana/loki:2.6.1',
     labels:: {
       deployment: {},
@@ -39,6 +40,7 @@ All Loki config is stored under the **loki** object in the config.
 | --- | --- |
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
+| `env` | Environment variables that are added to the Loki container. <br> `{}` |
 | `image` | Docker image that gets deployed. <br> `grafana/loki:2.6.1` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
 | `labels.pod` | Labels added at the pod level. <br> `{}` |

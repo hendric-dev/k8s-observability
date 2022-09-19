@@ -2,14 +2,10 @@
 {
   vector+: {
     local this = self,
-    annotations:: {
-      deployment: {},
-      pod: {},
-    },
+    annotations:: $.shared.annotations,
+    env:: $.shared.env,
     image:: 'timberio/vector:0.24.1-alpine',
-    labels:: {
-      deployment: {},
-      pod: {},
+    labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },
     logging:: {

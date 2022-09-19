@@ -15,6 +15,7 @@ All Vector config is stored under the **vector** object in the config.
       deployment: {},
       pod: {},
     },
+    env:: {},
     image:: 'timberio/vector:0.24.1-alpine',
     labels:: {
       deployment: {},
@@ -52,6 +53,7 @@ All Vector config is stored under the **vector** object in the config.
 | --- | --- |
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
+| `env` | Environment variables that are added to the Vector container. <br> `{}` |
 | `image` | Docker image that gets deployed. <br> `timberio/vector:0.24.1-alpine` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
 | `labels.pod` | Labels added at the pod level. <br> `{}` |

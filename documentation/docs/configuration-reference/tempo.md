@@ -15,6 +15,7 @@ All Tempo config is stored under the **tempo** object in the config.
       deployment: {},
       pod: {},
     },
+    env:: {},
     image:: 'grafana/tempo:1.5.0',
     labels:: {
       deployment: {},
@@ -56,6 +57,7 @@ All Tempo config is stored under the **tempo** object in the config.
 | --- | --- |
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
+| `env` | Environment variables that are added to the Tempo container. <br> `{}` |
 | `image` | Docker image that gets deployed. <br> `grafana/tempo:1.5.0` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
 | `labels.pod` | Labels added at the pod level. <br> `{}` |
