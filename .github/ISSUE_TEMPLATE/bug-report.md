@@ -1,13 +1,12 @@
 ---
 name: Bug Report
-about: Create a report to help us improve
-title: ''
+about: Something isn't working? Create a report to help us improve.
+title: "[Bug] "
 labels: bug
 assignees: ''
-
 ---
 
-## Describe the Bug
+# Bug Report
 Describe the problem and which part of the project is affected.
 
 ## Steps to Reproduce
@@ -24,9 +23,9 @@ What should happen instead?
 If you have any screenshots that might help to track down the problem, add it here.
 
 ## Version
- - Observability Stack Version
- - Kubernetes Version
- - Browser
+ - Observability Stack Version:
+ - Kubernetes Version:
+ - Browser:
 
 ## Additional Context
 Any other helpful information?
