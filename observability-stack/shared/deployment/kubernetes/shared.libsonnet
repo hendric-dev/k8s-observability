@@ -14,6 +14,12 @@
       selector: {'app.kubernetes.io/name': this.name},
     },
     name:: 'observability',
+    security:: {
+      tls: {
+        enabled: false,
+        issuer: '<fill with certificate issuer>',
+      },
+    },
     storage:: {
       class: {
         name: this.name,
