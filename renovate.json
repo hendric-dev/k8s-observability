@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "commitMessagePrefix": "[Renovate]",
+  "kubernetes": {
+    "fileMatch": [".+/deployment/kubernetes/image.yaml$"]
+  },
+  "labels": ["dependency update"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "major and minor updates",
+      "groupSlug": "major-and-minor-updates"
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "groupName": "patches",
+      "groupSlug": "patches"
+    }
+  ]
+}

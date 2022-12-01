@@ -6,7 +6,7 @@
     bucket:: 'metrics',
     env:: $.shared.env,
     host:: 'monitoring.db.my-server.com',
-    image:: 'influxdb:2.4.0-alpine',
+    image:: std.parseYaml(importstr 'image.yaml').image,
     ingress:: $.shared.ingress,
     labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},

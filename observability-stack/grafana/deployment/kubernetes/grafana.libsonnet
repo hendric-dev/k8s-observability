@@ -19,7 +19,7 @@
     ],
     env:: $.shared.env,
     host:: 'grafana.my-server.com',
-    image:: 'grafana/grafana:9.1.5',
+    image:: std.parseYaml(importstr 'image.yaml').image,
     ingress:: $.shared.ingress,
     labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
