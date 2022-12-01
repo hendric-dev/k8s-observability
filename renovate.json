@@ -10,14 +10,9 @@
   "labels": ["dependency update"],
   "packageRules": [
     {
-      "matchUpdateTypes": ["major", "minor"],
-      "groupName": "major and minor updates",
-      "groupSlug": "major-and-minor-updates"
-    },
-    {
       "matchUpdateTypes": ["patch"],
-      "groupName": "patches",
-      "groupSlug": "patches"
+      "groupName": "Patch Versions",
+      "groupSlug": "patch-versions"
     }
   ]
 }
