@@ -4,7 +4,7 @@
     local this = self,
     annotations:: $.shared.annotations,
     env:: $.shared.env,
-    image:: 'grafana/loki:2.6.1',
+    image:: std.parseYaml(importstr 'image.yaml').image,
     labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },

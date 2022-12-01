@@ -4,7 +4,7 @@
     local this = self,
     annotations:: $.shared.annotations,
     env:: $.shared.env,
-    image:: 'timberio/vector:0.24.1-alpine',
+    image:: std.parseYaml(importstr 'image.yaml').image,
     labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },

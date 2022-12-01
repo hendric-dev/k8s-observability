@@ -1,0 +1,2 @@
+# Image is defined here, because it is tracked by Renovate's Kubernetes Updater
+image: grafana/tempo:1.5.0
