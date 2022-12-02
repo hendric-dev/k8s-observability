@@ -19,10 +19,10 @@ export:
   SAVE ARTIFACT k8s AS LOCAL k8s
 
 validate-kubernetes-deployment:
-  COPY +export/k8s ./k8s
+  COPY +export/k8s .
   ARG VERSION=0.5.0
   RUN wget https://github.com/yannh/kubeconform/releases/download/v${VERSION}/kubeconform-linux-amd64.tar.gz -O kubeconform.tar.gz && \
     tar -xf kubeconform.tar.gz -C /usr/bin && \
     rm kubeconform.tar.gz
   RUN kubeconform -v
-  RUN kubeconform -output json -strict -summary k8s/*.yaml
+  RUN kubeconform -output json -strict -summary *.yaml
