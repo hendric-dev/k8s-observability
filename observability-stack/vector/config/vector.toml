@@ -19,6 +19,7 @@ out_of_order_action = "accept"
 [sinks.monitoring_db]
 type = "influxdb_metrics"
 inputs = [
+  "filter_unwanted_vector_metrics",
   "remove_cpu_container_metrics_fields",
   "remove_filesystem_host_metrics_fields",
   "remove_host_metrics_fields",

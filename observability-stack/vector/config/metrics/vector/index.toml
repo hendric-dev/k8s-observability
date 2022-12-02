@@ -1,0 +1,18 @@
+[sources.vector_metrics]
+type = "internal_metrics"
+scrape_interval_secs = 15
+
+[transforms.filter_unwanted_vector_metrics]
+type = "filter"
+inputs = ["vector_metrics"]
+  [transforms.filter_unwanted_vector_metrics.condition]
+  type = "vrl"
+  source = '''
+    includes(
+      [
+        "component_errors_total",
+        "parse_errors_total",
+      ],
+      .name,
+    )
+  '''

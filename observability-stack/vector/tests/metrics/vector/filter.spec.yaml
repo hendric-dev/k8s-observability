@@ -1,0 +1,54 @@
+tests:
+  - name: Metrics > Vector > Filter > should keep specific metrics
+    inputs:
+      - insert_at: filter_unwanted_vector_metrics
+        type: metric
+        metric:
+          name: parse_errors_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 5
+          tags:
+            container: vector
+            pod: vector-abcxy
+      - insert_at: filter_unwanted_vector_metrics
+        type: metric
+        metric:
+          name: component_errors_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 10
+    outputs:
+      - extract_from: filter_unwanted_vector_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "parse_errors_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+              assert_eq!(.tags.container, "vector")
+              assert_eq!(.tags.pod, "vector-abcxy")
+      - extract_from: filter_unwanted_vector_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "component_errors_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
+  - name: Metrics > Vector > Filter > should filter out undesired metrics
+    inputs:
+      - insert_at: filter_unwanted_vector_metrics
+        type: metric
+        metric:
+          name: useless_vector_metric
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 6515618
+          tags:
+            container: vector
+            pod: vector-abcxy
+    no_outputs_from:
+      - filter_unwanted_vector_metrics
