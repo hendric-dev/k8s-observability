@@ -1,18 +1,28 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
+    "schedule:daily"
   ],
   "commitMessagePrefix": "[Renovate]",
-  "kubernetes": {
-    "fileMatch": [".+/deployment/kubernetes/image.yaml$"]
-  },
   "labels": ["dependency update"],
   "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "pin", "digest"],
+      "groupName": "Minor Versions",
+      "groupSlug": "minor-versions"
+    },
     {
       "matchUpdateTypes": ["patch"],
       "groupName": "Patch Versions",
       "groupSlug": "patch-versions"
+    },
+    {
+      "matchPaths": ["observability-stack/**"],
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "Docker Patch Versions",
+      "groupSlug": "docker-patch-versions"
     }
   ]
 }
