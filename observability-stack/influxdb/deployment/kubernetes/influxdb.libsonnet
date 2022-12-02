@@ -1,5 +1,4 @@
 (import '../../../shared/deployment/kubernetes/shared.libsonnet') +
-(import '../../../shared/lib/index.libsonnet') +
 {
   influxDB+: {
     local this = self,
