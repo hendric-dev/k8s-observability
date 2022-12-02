@@ -23,9 +23,12 @@ jobs:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3
 
+      - name: 🌎 Install Earthly
+        run: |
+          sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'
+          earthly --version
+
       - name: 🧪 Test
         working-directory: ./observability-stack/vector
         run: |
-          sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.21/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'
-          earthly --version
           earthly +test

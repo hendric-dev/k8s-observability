@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Improve stability by validating the Kubernetes deployment using [kubeconform](https://github.com/yannh/kubeconform) | [#56](https://github.com/hendric-dev/k8s-observability/issues/56)
+
 ### Fixed
 - Fixed a missing default config for security (TLS) | [#54](https://github.com/hendric-dev/k8s-observability/issues/54)
 
