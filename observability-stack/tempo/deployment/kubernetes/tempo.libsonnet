@@ -1,10 +1,12 @@
 (import '../../../shared/deployment/kubernetes/shared.libsonnet') +
+(import '../../../shared/lib/index.libsonnet') +
 {
   tempo+: {
     local this = self,
+    local utils = $.shared.lib.utils,
     annotations:: $.shared.annotations,
     env:: $.shared.env,
-    image:: std.parseYaml(importstr 'image.yaml').image,
+    image:: utils.extractImageFromDockerfile(importstr 'image.Dockerfile'),
     labels:: $.shared.labels + {
       selector: {'app.kubernetes.io/name': this.name},
     },

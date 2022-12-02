@@ -1,2 +1,0 @@
-# Image is defined here, because it is tracked by Renovate's Kubernetes Updater
-image: timberio/vector:0.24.1-alpine

@@ -4,9 +4,6 @@
     "config:base"
   ],
   "commitMessagePrefix": "[Renovate]",
-  "kubernetes": {
-    "fileMatch": [".+/deployment/kubernetes/image.yaml$"]
-  },
   "labels": ["dependency update"],
   "packageRules": [
     {
