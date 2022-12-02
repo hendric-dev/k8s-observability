@@ -1,5 +1,4 @@
 (import '../../../shared/deployment/kubernetes/shared.libsonnet') +
-(import '../../../shared/lib/index.libsonnet') +
 {
   vector+: {
     local this = self,

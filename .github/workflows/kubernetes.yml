@@ -1,18 +1,19 @@
-name: 📚 Documentation
+name: 🖧 Kubernetes
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'observability-stack/**/deployment/kubernetes/**/*'
   push:
     branches:
       - main
     paths:
-      - 'documentation/**/*'
-
-permissions:
-  contents: write
+      - 'observability-stack/**/deployment/kubernetes/**/*'
 
 jobs:
-  documentation:
-    concurrency: ci-${{ github.ref }}
+  validate:
     runs-on: ubuntu-22.04
     env:
       FORCE_COLOR: 'true'
@@ -25,12 +26,6 @@ jobs:
           sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'
           earthly --version
 
-      - name: 🔧 Build
-        working-directory: ./documentation
+      - name: 🕵️ Validate Kubernetes Deployment
         run: |
-          earthly +build
-
-      - name: 🚀 Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/dist
+          earthly +validate-kubernetes-deployment
