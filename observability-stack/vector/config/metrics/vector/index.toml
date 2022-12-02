@@ -10,9 +10,15 @@ inputs = ["vector_metrics"]
   source = '''
     includes(
       [
-        "component_errors_total",
-        "parse_errors_total",
+        "events_discarded_total",
       ],
       .name,
     )
   '''
+
+[transforms.add_vector_metrics_prefix]
+type = "remap"
+inputs = ["filter_unwanted_vector_metrics"]
+source = """
+  .name = "vector_" + string!(.name)
+"""
