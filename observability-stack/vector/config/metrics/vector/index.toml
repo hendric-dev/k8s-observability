@@ -10,7 +10,15 @@ inputs = ["vector_metrics"]
   source = '''
     includes(
       [
-        "events_discarded_total",
+        "component_discarded_events_total",
+        "component_errors_total",
+        "component_received_event_bytes_total",
+        "component_received_events_total",
+        "component_sent_event_bytes_total",
+        "component_sent_events_total",
+        "http_bad_requests_total",
+        "k8s_docker_format_parse_failures_total",
+        "quit_total",
       ],
       .name,
     )

@@ -4,24 +4,39 @@ tests:
       - insert_at: filter_unwanted_vector_metrics
         type: metric
         metric:
-          name: events_discarded_total
+          name: component_discarded_events_total
           timestamp: '2022-05-12T17:18:12.678580956Z'
           kind: absolute
           counter:
-            value: 5
+            value: 50
           tags:
             container: vector
             pod: vector-abcxy
+      - insert_at: filter_unwanted_vector_metrics
+        type: metric
+        metric:
+          name: http_bad_requests_total
+          timestamp: '2022-05-12T17:18:12.678580956Z'
+          kind: absolute
+          counter:
+            value: 2
     outputs:
       - extract_from: filter_unwanted_vector_metrics
         conditions:
           - type: vrl
             source: |
-              assert_eq!(.name, "events_discarded_total")
+              assert_eq!(.name, "component_discarded_events_total")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
               assert_eq!(.tags.container, "vector")
               assert_eq!(.tags.pod, "vector-abcxy")
+      - extract_from: filter_unwanted_vector_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "http_bad_requests_total")
+              assert_eq!(.kind, "absolute")
+              assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
   - name: Metrics > Vector > Filter > should filter out undesired metrics
     inputs:
       - insert_at: filter_unwanted_vector_metrics
