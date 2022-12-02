@@ -15,10 +15,3 @@ inputs = ["vector_metrics"]
       .name,
     )
   '''
-
-[transforms.add_vector_metrics_prefix]
-type = "remap"
-inputs = ["filter_unwanted_vector_metrics"]
-source = """
-  .name = "vector_" + string!(.name)
-"""
