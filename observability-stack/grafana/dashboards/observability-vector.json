@@ -21,7 +21,7 @@
       }
     ]
   },
-  "description": "Resource usage of each pod in the Kubernetes cluster",
+  "description": "Telemetry data of the running Vector instances",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -33,173 +33,7 @@
         "type": "influxdb",
         "uid": "PA58DA793C7250F1B"
       },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "semi-dark-green",
-            "mode": "fixed"
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 4,
-        "y": 0
-      },
-      "id": 5,
-      "options": {
-        "displayMode": "lcd",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true
-      },
-      "pluginVersion": "9.1.5",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "PA58DA793C7250F1B"
-          },
-          "query": "from(bucket: \"metrics\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\" and r.namespace =~ /${namespace}/)\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> last()\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\r\n  ",
-          "refId": "A"
-        }
-      ],
-      "title": "CPU Top 3",
-      "transformations": [
-        {
-          "id": "rowsToFields",
-          "options": {
-            "mappings": [
-              {
-                "fieldName": "pod",
-                "handlerKey": "field.name"
-              },
-              {
-                "fieldName": "_value",
-                "handlerKey": "field.value"
-              },
-              {
-                "fieldName": "_time",
-                "handlerKey": "__ignore"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "PA58DA793C7250F1B"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "semi-dark-green",
-            "mode": "fixed"
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 12,
-        "y": 0
-      },
-      "id": 6,
-      "options": {
-        "displayMode": "lcd",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true
-      },
-      "pluginVersion": "9.1.5",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "PA58DA793C7250F1B"
-          },
-          "query": "from(bucket: \"metrics\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r._measurement == \"container_memory_usage_bytes\" and r.namespace =~ /${namespace}/)\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> last()\r\n  |> group()\r\n  |> sort(columns: [\"_value\"], desc: true)\r\n  |> limit(n: 3)\r\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])",
-          "refId": "A"
-        }
-      ],
-      "title": "Memory Top 3",
-      "transformations": [
-        {
-          "id": "rowsToFields",
-          "options": {
-            "mappings": [
-              {
-                "fieldName": "pod",
-                "handlerKey": "field.name"
-              },
-              {
-                "fieldName": "_value",
-                "handlerKey": "field.value"
-              },
-              {
-                "fieldName": "_time",
-                "handlerKey": "__ignore"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "PA58DA793C7250F1B"
-      },
-      "description": "",
+      "description": "Events received by Vector every 15s",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -220,9 +54,6 @@
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -239,7 +70,6 @@
             }
           },
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -248,31 +78,26 @@
                 "value": null
               }
             ]
-          },
-          "unit": "s"
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 24,
+        "h": 8,
+        "w": 12,
         "x": 0,
-        "y": 6
+        "y": 0
       },
       "id": 2,
       "options": {
         "legend": {
-          "calcs": [
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "right",
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -282,11 +107,11 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\" and r.namespace =~ /${namespace}/)\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\n",
-          "refId": "CPU Usage"
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"vector.component_received_events_total\" and r.component_kind == \"source\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> group(columns: [\"_time\", \"node\"])\n  |> sum()\n  |> group(columns: [\"node\"])\n",
+          "refId": "A"
         }
       ],
-      "title": "CPU",
+      "title": "Received Events",
       "type": "timeseries"
     },
     {
@@ -294,7 +119,7 @@
         "type": "influxdb",
         "uid": "PA58DA793C7250F1B"
       },
-      "description": "",
+      "description": "Events sent to a sink by Vector every 15s",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -315,9 +140,6 @@
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -334,7 +156,93 @@
             }
           },
           "mappings": [],
-          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"vector.component_sent_events_total\" and r.component_kind == \"sink\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> group(columns: [\"_time\", \"node\"])\n  |> sum()\n  |> group(columns: [\"node\"])\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Sent Events",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "Event bytes received by Vector every 15s",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd",
+            "seriesBy": "max"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -349,25 +257,21 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 24,
+        "h": 8,
+        "w": 12,
         "x": 0,
-        "y": 13
+        "y": 8
       },
-      "id": 3,
+      "id": 4,
       "options": {
         "legend": {
-          "calcs": [
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "right",
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -377,11 +281,99 @@
             "type": "influxdb",
             "uid": "PA58DA793C7250F1B"
           },
-          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"container_memory_usage_bytes\" and r.namespace =~ /${namespace}/)\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"pod\"])\n",
-          "refId": "Memory Usage"
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"vector.component_received_event_bytes_total\" and r.component_kind == \"sink\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> group(columns: [\"_time\", \"node\"])\n  |> sum()\n  |> group(columns: [\"node\"])\n",
+          "refId": "A"
         }
       ],
-      "title": "Memory",
+      "title": "Received Event Bytes",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PA58DA793C7250F1B"
+      },
+      "description": "Event bytes sent to a sink by Vector every 15s",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd",
+            "seriesBy": "max"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PA58DA793C7250F1B"
+          },
+          "query": "from(bucket: \"metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"vector.component_sent_event_bytes_total\" and r.component_kind == \"sink\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> group(columns: [\"_time\", \"node\"])\n  |> sum()\n  |> group(columns: [\"node\"])\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Sent Event Bytes",
       "type": "timeseries"
     }
   ],
@@ -390,33 +382,7 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "PA58DA793C7250F1B"
-        },
-        "definition": "from(bucket: \"metrics\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ r with _value: r.namespace }))\r\n  |> keep(columns: [\"_value\"])\r\n  |> distinct()\r\n",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Namespace",
-        "multi": false,
-        "name": "namespace",
-        "options": [],
-        "query": "from(bucket: \"metrics\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r._measurement == \"container_cpu_usage_seconds_total\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ r with _value: r.namespace }))\r\n  |> keep(columns: [\"_value\"])\r\n  |> distinct()\r\n",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-1h",
@@ -424,8 +390,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Pod Resources",
+  "title": "Vector",
   "uid": "gZ_LCZWVk",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
