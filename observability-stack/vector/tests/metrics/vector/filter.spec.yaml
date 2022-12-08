@@ -15,7 +15,7 @@ tests:
       - insert_at: filter_unwanted_vector_metrics
         type: metric
         metric:
-          name: http_bad_requests_total
+          name: http_request_errors_total
           timestamp: '2022-05-12T17:18:12.678580956Z'
           kind: absolute
           counter:
@@ -34,7 +34,7 @@ tests:
         conditions:
           - type: vrl
             source: |
-              assert_eq!(.name, "http_bad_requests_total")
+              assert_eq!(.name, "http_request_errors_total")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
   - name: Metrics > Vector > Filter > should filter out undesired metrics
