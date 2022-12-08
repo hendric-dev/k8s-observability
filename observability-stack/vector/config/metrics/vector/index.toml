@@ -18,7 +18,6 @@ inputs = ["vector_metrics"]
         "component_sent_events_total",
         "http_bad_requests_total",
         "k8s_docker_format_parse_failures_total",
-        "quit_total",
       ],
       .name,
     )
