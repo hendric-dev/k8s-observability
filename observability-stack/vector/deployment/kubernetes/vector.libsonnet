@@ -15,7 +15,7 @@
       }
     },
     metrics:: {
-      custom: [importstr '../../config/metrics/custom-metrics-aggregator.toml'],
+      custom: [importstr '../../config/metrics/custom-aggregator.toml'],
     },
     monitoring:: {
       influxDB: {

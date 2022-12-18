@@ -9,7 +9,7 @@
         {
           'vector.toml': (importstr '../../config/vector.toml')
             + (importstr '../../config/logs/kubernetes/index.toml')
-            + (importstr '../../config/metrics/default-metrics-aggregator.toml')
+            + (importstr '../../config/metrics/default-aggregator.toml')
             + (importstr '../../config/metrics/resources/container/cpu.toml')
             + (importstr '../../config/metrics/resources/container/index.toml')
             + (importstr '../../config/metrics/resources/container/memory.toml')

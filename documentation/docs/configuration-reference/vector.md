@@ -29,6 +29,9 @@ All Vector config is stored under the **vector** object in the config.
         ],
       }
     },
+    metrics:: {
+      custom: [importstr '../../config/metrics/custom-aggregator.toml'],
+    },
     monitoring:: {
       influxDB: {
         bucket: "metrics",
@@ -59,6 +62,7 @@ All Vector config is stored under the **vector** object in the config.
 | `labels.pod` | Labels added at the pod level. <br> `{}` |
 | `labels.selector` | Selector used for all Vector k8s resources. <br> `{'app.kubernetes.io/name': 'vector'}` |
 | `logging.kubernetes.transformations` | Array of Vector configs to [customize Kubernetes logs](/advanced/custom-log-transformations). <br> `[importstr 'aggregator.toml']` |
+| `metrics.custom` | Array of Vector config to add [custom metrics](/advanced/custom-metrics). <br> `[importstr 'custom-aggregator.toml']` |
 | `monitoring.influxDB.bucket` | Bucket name of the Influx DB. <br> `metrics` |
 | `monitoring.influxDB.endpoint` | Endpoint of the Influx DB. <br> `http://influx-db/` |
 | `monitoring.influxDB.org` | Organisation name of the Influx DB. <br> `observability` |

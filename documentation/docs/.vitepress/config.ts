@@ -32,6 +32,7 @@ export default defineConfig({
         items: [
           {text: 'Custom Dashboards', link: '/advanced/custom-dashboards'},
           {text: 'Custom Log Transformations', link: '/advanced/custom-log-transformations'},
+          {text: 'Custom Metrics', link: '/advanced/custom-metrics'},
         ]
       },
     ],
