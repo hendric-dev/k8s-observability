@@ -18,6 +18,7 @@
             + (importstr '../../config/metrics/resources/host/load.toml')
             + (importstr '../../config/metrics/resources/host/memory.toml')
             + (importstr '../../config/metrics/resources/host/network.toml')
+            + (importstr '../../config/metrics/vector/index.toml')
             + std.join('\n', this.logging.kubernetes.transformations),
         })
         + configMap.metadata.withLabels(this.labels.selector),
