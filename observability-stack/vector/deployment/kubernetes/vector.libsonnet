@@ -14,6 +14,9 @@
         transformations: [importstr '../../config/logs/kubernetes/aggregator.toml'],
       }
     },
+    metrics:: {
+      custom: [importstr '../../config/metrics/custom-metrics-aggregator.toml'],
+    },
     monitoring:: {
       influxDB: {
         bucket: "metrics",
