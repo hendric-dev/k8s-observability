@@ -9,6 +9,7 @@
         {
           'vector.toml': (importstr '../../config/vector.toml')
             + (importstr '../../config/logs/kubernetes/index.toml')
+            + (importstr '../../config/metrics/default-aggregator.toml')
             + (importstr '../../config/metrics/resources/container/cpu.toml')
             + (importstr '../../config/metrics/resources/container/index.toml')
             + (importstr '../../config/metrics/resources/container/memory.toml')
@@ -19,7 +20,8 @@
             + (importstr '../../config/metrics/resources/host/memory.toml')
             + (importstr '../../config/metrics/resources/host/network.toml')
             + (importstr '../../config/metrics/vector/index.toml')
-            + std.join('\n', this.logging.kubernetes.transformations),
+            + std.join('\n', this.logging.kubernetes.transformations)
+            + std.join('\n', this.metrics.custom),
         })
         + configMap.metadata.withLabels(this.labels.selector),
     },

@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Improve stability by validating the Kubernetes deployment using [kubeconform](https://github.com/yannh/kubeconform) | [#56](https://github.com/hendric-dev/k8s-observability/issues/56)
 - A brand new dashboard to monitor Vector telemetry data | [#60](https://github.com/hendric-dev/k8s-observability/issues/60)
+- It is now possible to add [custom metrics](https://hendric-dev.github.io/k8s-observability/advanced/custom-metrics.html)
+| [#53](https://github.com/hendric-dev/k8s-observability/issues/53)
 
 ### Changed
 - Updates ([Renovate #68](https://github.com/hendric-dev/k8s-observability/pull/68))

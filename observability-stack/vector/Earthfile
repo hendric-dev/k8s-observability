@@ -8,4 +8,4 @@ ENV VECTOR_INTERNAL_PORT=8686
 
 test:
   COPY . .
-  RUN vector test config/**/*.toml tests/**/*.yaml
+  RUN vector test 'config/**/*.toml' 'tests/**/*.yaml'

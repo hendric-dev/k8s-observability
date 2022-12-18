@@ -1,0 +1,15 @@
+# Dummy file to add custom metrics, intended to be overwritten by the user
+
+[transforms.custom_metrics_output]
+type = "filter"
+inputs = [
+  "filter_unwanted_vector_metrics",
+  "remove_cpu_container_metrics_fields",
+  "remove_filesystem_host_metrics_fields",
+  "remove_host_metrics_fields",
+  "remove_load_host_metrics_fields",
+  "remove_memory_container_metrics_fields",
+  "remove_memory_host_metrics_fields",
+  "remove_network_host_metrics_fields",
+]
+condition = "false"
