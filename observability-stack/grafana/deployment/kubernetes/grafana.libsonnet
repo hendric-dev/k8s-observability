@@ -17,6 +17,12 @@
         folder: 'Kubernetes',
         title: 'Pod Resources',
       },
+      {
+        definition: importstr '../../dashboards/observability-vector.json',
+        file: 'observability-vector.json',
+        folder: 'Observability',
+        title: 'Vector',
+      },
     ],
     env:: $.shared.env,
     host:: 'grafana.my-server.com',

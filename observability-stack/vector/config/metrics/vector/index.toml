@@ -1,0 +1,24 @@
+[sources.vector_metrics]
+type = "internal_metrics"
+scrape_interval_secs = 15
+
+[transforms.filter_unwanted_vector_metrics]
+type = "filter"
+inputs = ["vector_metrics"]
+  [transforms.filter_unwanted_vector_metrics.condition]
+  type = "vrl"
+  source = '''
+    includes(
+      [
+        "component_discarded_events_total",
+        "component_errors_total",
+        "component_received_event_bytes_total",
+        "component_received_events_total",
+        "component_sent_event_bytes_total",
+        "component_sent_events_total",
+        "http_request_errors_total",
+        "k8s_docker_format_parse_failures_total",
+      ],
+      .name,
+    )
+  '''
