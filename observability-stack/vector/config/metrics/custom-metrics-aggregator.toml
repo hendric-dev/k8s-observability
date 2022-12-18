@@ -1,0 +1,4 @@
+[transforms.custom_metrics_output]
+type = "filter"
+inputs = []
+condition = "true"
