@@ -5,14 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'observability-stack/vector/config/**/*'
-      - 'observability-stack/vector/tests/**/*'
+      - 'observability-stack/vector/**/*'
   push:
     branches:
       - main
     paths:
-      - 'observability-stack/vector/config/**/*'
-      - 'observability-stack/vector/tests/**/*'
+      - 'observability-stack/vector/**/*'
 
 jobs:
   test:
