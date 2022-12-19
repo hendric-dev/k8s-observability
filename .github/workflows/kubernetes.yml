@@ -4,11 +4,13 @@ on:
   pull_request:
     branches:
       - main
+      - next
     paths:
       - 'observability-stack/**/deployment/kubernetes/**/*'
   push:
     branches:
       - main
+      - next
     paths:
       - 'observability-stack/**/deployment/kubernetes/**/*'
 

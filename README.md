@@ -9,3 +9,10 @@ Check out the [📚 Documentation](https://hendric-dev.github.io/k8s-observabili
 
 Pull requests are welcome. \
 For major changes, please open an issue first to discuss what you would like to change.
+
+### Branches
+
+There are two notable branches:
+
+- `main` - stable version based on the latest release + security updates and hotfixes
+- `next` - working branch for the next release
