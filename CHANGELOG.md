@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.6.0] - 2022-12-19
 ### Added
 - Improve stability by validating the Kubernetes deployment using [kubeconform](https://github.com/yannh/kubeconform) | [#56](https://github.com/hendric-dev/k8s-observability/issues/56)
 - A brand new dashboard to monitor Vector telemetry data | [#60](https://github.com/hendric-dev/k8s-observability/issues/60)
@@ -69,7 +71,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.5.0...main
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.0...next
+[0.6.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.0
 [0.5.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.5.0
 [0.4.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.4.0
 [0.3.0]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.3.0
