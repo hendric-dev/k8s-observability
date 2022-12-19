@@ -4,11 +4,11 @@ tests:
       - insert_at: filter_unwanted_vector_metrics
         type: metric
         metric:
-          name: component_discarded_events_total
+          name: component_received_events_total
           timestamp: '2022-05-12T17:18:12.678580956Z'
           kind: absolute
           counter:
-            value: 50
+            value: 3000
           tags:
             container: vector
             pod: vector-abcxy
@@ -25,7 +25,7 @@ tests:
         conditions:
           - type: vrl
             source: |
-              assert_eq!(.name, "component_discarded_events_total")
+              assert_eq!(.name, "component_received_events_total")
               assert_eq!(.kind, "absolute")
               assert_eq!(.timestamp, t'2022-05-12T17:18:12.678580956Z')
               assert_eq!(.tags.container, "vector")
