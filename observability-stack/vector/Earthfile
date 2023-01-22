@@ -18,4 +18,4 @@ test:
 
 validate:
   COPY . .
-  RUN vector validate --deny-warnings 'config/**/*.toml'
+  RUN vector validate --deny-warnings --no-environment 'config/**/*.toml'
