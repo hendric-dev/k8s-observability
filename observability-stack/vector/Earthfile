@@ -3,9 +3,19 @@ VERSION 0.6
 FROM DOCKERFILE -f deployment/kubernetes/image.Dockerfile .
 WORKDIR /vector
 
+ENV INFLUXDB_BUCKET=metrics
+ENV INFLUXDB_ENDPOINT=https://influx-db
+ENV INFLUXDB_ORG=observability
+ENV INFLUXDB_TOKEN=<token>
+ENV KUBERNETES_API_TOKEN=<token>
 ENV LOKI_ENDPOINT=https://loki
 ENV VECTOR_INTERNAL_PORT=8686
+ENV VECTOR_SELF_NODE_NAME=vector-node
 
 test:
   COPY . .
   RUN vector test 'config/**/*.toml' 'tests/**/*.yaml'
+
+validate:
+  COPY . .
+  RUN vector validate --deny-warnings --no-environment 'config/**/*.toml'
