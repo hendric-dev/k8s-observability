@@ -17,3 +17,7 @@ inputs = ["host_metrics"]
   load = '.tags.collector == "load"'
   memory = '.tags.collector == "memory"'
   network = '.tags.collector == "network"'
+
+[sinks.host_metrics_blackhole]
+type = "blackhole"
+inputs = ["host_metrics_routing._unmatched"]
