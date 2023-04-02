@@ -3,4 +3,10 @@ cache
 dist
 node_modules
 
-# Files
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
