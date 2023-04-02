@@ -1,11 +1,12 @@
-VERSION 0.6
+VERSION 0.7
 
-FROM node:18-alpine
+FROM node:19-alpine
 WORKDIR /documentation
 
 build:
-  COPY package.json yarn.lock ./
-  RUN yarn install --frozen-lockfile
+  COPY --dir .yarn .yarnrc.yml package.json yarn.lock .
+  ARG FORCE_COLOR=true
+  RUN yarn install --immutable
   COPY . .
   RUN yarn build
   SAVE ARTIFACT docs/.vitepress/dist /dist AS LOCAL ./dist
