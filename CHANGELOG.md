@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.6.2] - 2023-04-02
+### Changed
+- Updates
+  - Grafana to `9.4.7`
+  - Loki to `2.7.5`
+  - Vector to `0.28.1-alpine`
+
 ## [0.6.1] - 2023-02-12
 ### Changed
 - Updates
