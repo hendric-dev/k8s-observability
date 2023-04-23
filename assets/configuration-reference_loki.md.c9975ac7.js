@@ -5,7 +5,7 @@ import{_ as s,c as n,o,O as a}from"./chunks/framework.fb514131.js";const m=JSON.
 <span class="line"><span style="color:#F07178;">      pod</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> </span><span style="color:#89DDFF;">{},</span></span>
 <span class="line"><span style="color:#F07178;">    </span><span style="color:#89DDFF;">},</span></span>
 <span class="line"><span style="color:#F07178;">    env</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;">: </span><span style="color:#89DDFF;">{},</span></span>
-<span class="line"><span style="color:#F07178;">    image</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;">: </span><span style="color:#89DDFF;">&#39;</span><span style="color:#C3E88D;">grafana/loki:2.6.1</span><span style="color:#89DDFF;">&#39;</span><span style="color:#89DDFF;">,</span></span>
+<span class="line"><span style="color:#F07178;">    image</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;">: </span><span style="color:#89DDFF;">&#39;</span><span style="color:#C3E88D;">grafana/loki:2.8.0</span><span style="color:#89DDFF;">&#39;</span><span style="color:#89DDFF;">,</span></span>
 <span class="line"><span style="color:#F07178;">    labels</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;">: </span><span style="color:#89DDFF;">{</span></span>
 <span class="line"><span style="color:#F07178;">      deployment</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> </span><span style="color:#89DDFF;">{},</span></span>
 <span class="line"><span style="color:#F07178;">      pod</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> </span><span style="color:#89DDFF;">{},</span></span>
