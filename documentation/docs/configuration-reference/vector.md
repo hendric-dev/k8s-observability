@@ -16,7 +16,7 @@ All Vector config is stored under the **vector** object in the config.
       pod: {},
     },
     env:: {},
-    image:: 'timberio/vector:0.24.1-alpine',
+    image:: 'timberio/vector:0.29.1-alpine',
     labels:: {
       deployment: {},
       pod: {},

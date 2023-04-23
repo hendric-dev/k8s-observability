@@ -16,7 +16,7 @@ All Loki config is stored under the **loki** object in the config.
       pod: {},
     },
     env:: {},
-    image:: 'grafana/loki:2.6.1',
+    image:: 'grafana/loki:2.8.0',
     labels:: {
       deployment: {},
       pod: {},

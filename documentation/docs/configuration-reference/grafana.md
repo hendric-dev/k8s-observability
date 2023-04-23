@@ -32,7 +32,7 @@ All Grafana config is stored under the **grafana** object in the config.
     ],
     env:: {},
     host:: 'grafana.my-server.com',
-    image:: 'grafana/grafana:9.1.5',
+    image:: 'grafana/grafana:9.4.7',
     ingress:: {},
     labels:: {
       deployment: {},

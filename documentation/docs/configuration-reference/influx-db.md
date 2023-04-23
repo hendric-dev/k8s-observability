@@ -19,7 +19,7 @@ All InfluxDB config is stored under the **influxDB** object in the config.
     bucket:: 'metrics',
     env:: {},
     host:: 'monitoring.db.my-server.com',
-    image:: 'influxdb:2.4.0-alpine',
+    image:: 'influxdb:2.7.0-alpine',
     ingress:: {},
     labels:: {
       deployment: {},
