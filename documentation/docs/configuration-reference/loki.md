@@ -16,7 +16,7 @@ All Loki config is stored under the **loki** object in the config.
       pod: {},
     },
     env:: {},
-    image:: 'grafana/loki:2.8.0',
+    image:: 'grafana/loki:2.8.1',
     labels:: {
       deployment: {},
       pod: {},
@@ -41,7 +41,7 @@ All Loki config is stored under the **loki** object in the config.
 | `annotations.deployment` | Annotations added at the deployment (topmost) level. <br> `{}` |
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
 | `env` | Environment variables that are added to the Loki container. <br> `{}` |
-| `image` | Docker image that gets deployed. <br> `grafana/loki:2.6.1` |
+| `image` | Docker image that gets deployed. <br> `grafana/loki:2.8.1` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |
 | `labels.pod` | Labels added at the pod level. <br> `{}` |
 | `labels.selector` | Selector used for all Loki k8s resources. <br> `{'app.kubernetes.io/name': 'loki'}` |
