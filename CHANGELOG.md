@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.6.4] - 2023-06-19
+### Changed
+- Updates
+  - Grafana to `10.0.0`
+  - Loki to `2.8.2`
+  - Vector to `0.30.0-alpine`
+
 ## [0.6.3] - 2023-05-02
 ### Changed
 - Updates
@@ -94,7 +101,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.3...next
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.4...next
+[0.6.4]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.4
 [0.6.3]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.3
 [0.6.2]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.2
 [0.6.1]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.1
