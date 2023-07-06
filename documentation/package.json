@@ -12,7 +12,7 @@
     "vue": "3.3.4"
   },
   "volta": {
-    "node": "19.8.1"
+    "node": "19.9.0"
   },
   "packageManager": "yarn@3.6.0"
 }
