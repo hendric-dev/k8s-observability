@@ -8,11 +8,11 @@
     "serve": "vitepress serve docs"
   },
   "devDependencies": {
-    "vitepress": "1.0.0-rc.4",
+    "vitepress": "1.0.0-rc.10",
     "vue": "3.3.4"
   },
   "volta": {
     "node": "19.9.0"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.3"
 }
