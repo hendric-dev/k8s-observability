@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Improve stability by validating the Vector config before merges | [#72](https://github.com/hendric-dev/k8s-observability/issues/72)
 
+## [0.6.5] - 2023-09-02
+- Updates
+  - Grafana to `10.1.1`
+  - Loki to `2.8.4`
+  - Vector to `0.32.1-alpine`
+
 ## [0.6.4] - 2023-06-19
 ### Changed
 - Updates
@@ -103,7 +109,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.4...next
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.5...next
+[0.6.5]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.4
 [0.6.4]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.4
 [0.6.3]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.3
 [0.6.2]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.2
