@@ -2,17 +2,18 @@
   "name": "observability-documentation",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "vitepress build docs",
     "dev": "vitepress dev docs",
     "serve": "vitepress serve docs"
   },
   "devDependencies": {
-    "vitepress": "1.0.0-beta.2",
+    "vitepress": "1.0.0-rc.10",
     "vue": "3.3.4"
   },
   "volta": {
-    "node": "19.8.1"
+    "node": "20.5.1"
   },
-  "packageManager": "yarn@3.6.0"
+  "packageManager": "yarn@3.6.3"
 }
