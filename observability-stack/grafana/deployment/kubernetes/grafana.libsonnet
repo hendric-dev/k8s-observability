@@ -28,8 +28,8 @@
     host:: 'grafana.my-server.com',
     image:: utils.extractImageFromDockerfile(importstr 'image.Dockerfile'),
     ingress:: $.shared.ingress,
-    labels:: $.shared.labels + {
-      selector: {'app.kubernetes.io/name': this.name},
+    labels:: $.shared.labels {
+      selector: { 'app.kubernetes.io/name': this.name },
     },
     name:: 'grafana',
     path:: '/',
@@ -38,8 +38,8 @@
       internal: 3000,
     },
     resources:: {
-      cpu: {request: '50m', limit: '200m'},
-      memory: {request: '32Mi', limit: '128Mi'},
+      cpu: { request: '50m', limit: '200m' },
+      memory: { request: '32Mi', limit: '128Mi' },
     },
     secrets:: {
       admin: {
@@ -48,5 +48,5 @@
       },
     },
     security:: $.shared.security,
-  }
+  },
 }

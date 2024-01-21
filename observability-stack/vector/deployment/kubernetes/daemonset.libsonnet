@@ -11,7 +11,8 @@
   vector+: {
     local this = self,
     deployables+: {
-      container:: container.new(this.name, this.image)
+      container::
+        container.new(this.name, this.image)
         + container.withEnv(
           [
             envVar.fromFieldPath('VECTOR_SELF_NODE_NAME', 'spec.nodeName'),
@@ -38,11 +39,11 @@
           volumeMount.new('procfs', '/host/proc', true),
           volumeMount.new('service-account-token', '/var/run/secrets/kubernetes.io/serviceaccount/', true),
           volumeMount.new('sysfs', '/host/sys', true),
-          volumeMount.new('var-lib', '/var/lib', true),
+          volumeMount.new('var-lib', '/var/lib'),
           volumeMount.new('var-log', '/var/log', true),
         ])
-        + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-        + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+        + container.resources.withRequests({ cpu: this.resources.cpu.request, memory: this.resources.memory.request })
+        + container.resources.withLimits({ cpu: this.resources.cpu.limit, memory: this.resources.memory.limit })
         + container.livenessProbe.withPeriodSeconds(60)
         + container.livenessProbe.withTimeoutSeconds(5)
         + container.livenessProbe.httpGet.withPath('/health')
@@ -55,7 +56,8 @@
         + container.startupProbe.withTimeoutSeconds(5)
         + container.startupProbe.httpGet.withPath('/health')
         + container.startupProbe.httpGet.withPort(this.ports.internal),
-      daemonSet: daemonSet.new(name = this.name, containers = [this.deployables.container])
+      daemonSet:
+        daemonSet.new(name=this.name, containers=[this.deployables.container])
         + daemonSet.metadata.withAnnotations(this.annotations.deployment)
         + daemonSet.metadata.withLabels(this.labels.deployment)
         + daemonSet.spec.selector.withMatchLabels(this.labels.selector)

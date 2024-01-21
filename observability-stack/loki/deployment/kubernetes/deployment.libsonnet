@@ -10,7 +10,8 @@
   loki+: {
     local this = self,
     deployables+: {
-      container:: container.new(this.name, this.image)
+      container::
+        container.new(this.name, this.image)
         + container.withEnv([
           envVar.new(name, std.toString(this.env[name]))
           for name in std.objectFields(this.env)
@@ -20,8 +21,8 @@
           volumeMount.new('config', '/etc/loki', true),
           volumeMount.new(this.name, '/loki') + volumeMount.withSubPath('loki'),
         ])
-        + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-        + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+        + container.resources.withRequests({ cpu: this.resources.cpu.request, memory: this.resources.memory.request })
+        + container.resources.withLimits({ cpu: this.resources.cpu.limit, memory: this.resources.memory.limit })
         + container.livenessProbe.withPeriodSeconds(60)
         + container.livenessProbe.httpGet.withPath('/ready')
         + container.livenessProbe.httpGet.withPort(this.ports.internal)
@@ -31,13 +32,15 @@
         + container.startupProbe.httpGet.withPort(this.ports.internal)
         + container.startupProbe.withFailureThreshold(30)
         + container.startupProbe.withPeriodSeconds(10),
-      initContainer:: container.new(this.name + '-setup-permissions', this.image)
-        + container.withCommand(["chown", "-R", "loki:loki", "/loki"])
+      initContainer::
+        container.new(this.name + '-setup-permissions', this.image)
+        + container.withCommand(['chown', '-R', 'loki:loki', '/loki'])
         + container.withVolumeMounts([
           volumeMount.new(this.name, '/loki') + volumeMount.withSubPath('loki'),
         ])
         + container.securityContext.withRunAsUser(0),
-      deployment: deployment.new(name = this.name, containers = [this.deployables.container], replicas = 1)
+      deployment:
+        deployment.new(name=this.name, containers=[this.deployables.container], replicas=1)
         + deployment.metadata.withAnnotations(this.annotations.deployment)
         + deployment.metadata.withLabels(this.labels.deployment)
         + deployment.spec.selector.withMatchLabels(this.labels.selector)
