@@ -31,7 +31,6 @@ All Grafana config is stored under the **grafana** object in the config.
       },
     ],
     env:: {},
-    host:: 'grafana.my-server.com',
     image:: 'grafana/grafana:9.5.1',
     ingress:: {},
     labels:: {
@@ -72,7 +71,7 @@ All Grafana config is stored under the **grafana** object in the config.
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
 | `dashboards` | Array of dashboard definitions that are provisioned. <br> See [Custom Dashboards](../advanced/custom-dashboards.md). <br> `[ /* various default dashboards */ ]` |
 | `env` | Environment variables that are added to the Grafana container. See [Customize Grafana](#customize-grafana) <br> `{}` |
-| `host` | Hostname where the UI is exposed. <br> `grafana.my-server.com` |
+| `host` | Hostname where the UI is exposed. <br> `undefined` |
 | `image` | Docker image that gets deployed. <br> `grafana/grafana:9.5.1` |
 | `ingress.className` | Class name added to the Grafana ingress. <br> `undefined` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |

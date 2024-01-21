@@ -6,7 +6,6 @@
     annotations:: $.shared.annotations,
     bucket:: 'metrics',
     env:: $.shared.env,
-    host:: 'monitoring.db.my-server.com',
     image:: utils.extractImageFromDockerfile(importstr 'image.Dockerfile'),
     ingress:: $.shared.ingress,
     labels:: $.shared.labels {

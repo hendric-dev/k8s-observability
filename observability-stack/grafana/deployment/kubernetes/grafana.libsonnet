@@ -25,7 +25,6 @@
       },
     ],
     env:: $.shared.env,
-    host:: 'grafana.my-server.com',
     image:: utils.extractImageFromDockerfile(importstr 'image.Dockerfile'),
     ingress:: $.shared.ingress,
     labels:: $.shared.labels {

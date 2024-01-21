@@ -18,7 +18,6 @@ All InfluxDB config is stored under the **influxDB** object in the config.
     },
     bucket:: 'metrics',
     env:: {},
-    host:: 'monitoring.db.my-server.com',
     image:: 'influxdb:2.7.1-alpine',
     ingress:: {},
     labels:: {
@@ -60,7 +59,7 @@ All InfluxDB config is stored under the **influxDB** object in the config.
 | `annotations.pod` | Annotations added at the pod level. <br> `{}` |
 | `bucket` | Bucket name used for the metrics. <br> `metrics` |
 | `env` | Environment variables that are added to the Influx DB container. <br> `{}` |
-| `host` | Hostname where the UI is exposed. <br> `monitoring.db.my-server.com` |
+| `host` | Hostname where the UI is exposed. <br> `undefined` |
 | `image` | Docker image that gets deployed. <br> `influxdb:2.7.1-alpine` |
 | `ingress.className` | Class name added to the Influx DB ingress. <br> `undefined` |
 | `labels.deployment` | Labels added at the deployment (topmost) level. <br> `{}` |

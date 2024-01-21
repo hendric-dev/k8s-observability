@@ -4,7 +4,6 @@
       GF_SERVER_ROOT_URL: 'http://' + $.minikube + '/grafana',
       GF_SERVER_SERVE_FROM_SUB_PATH: true,
     },
-    host: null,
     path: '/grafana',
     secrets:: {
       admin: {
@@ -14,7 +13,6 @@
     },
   },
   influxDB+: {
-    host: null,
     path: '/',
     secrets+:: {
       username: 'admin',

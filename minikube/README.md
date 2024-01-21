@@ -4,8 +4,3 @@
 - minikube addons enable ingress
 - jb install
 - tk apply environments/default --tla-str minikube=$(minikube ip)
-
-
-Changes:
-- Host nullable
-- Storage ReclaimPolicy

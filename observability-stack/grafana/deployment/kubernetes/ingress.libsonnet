@@ -27,7 +27,7 @@
             + httpIngressPath.backend.service.port.withNumber(this.ports.external),
           ])
           + (
-            if std.objectHasAll(this, 'host') && this.host != null
+            if std.objectHasAll(this, 'host')
             then ingressRule.withHost(this.host)
             else {}
           ),
