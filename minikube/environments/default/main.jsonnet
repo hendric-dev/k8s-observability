@@ -7,14 +7,20 @@ function(minikube, namespace='default') {
   spec: {
     apiServer: 'https://' + minikube + ':8443',
     namespace: namespace,
+    resourceDefaults: {},
+    expectVersions: {},
   },
-  data: { minikube: minikube, namespace: namespace } +
-        (import 'k.libsonnet') +
-        (import '../../../observability-stack/grafana/deployment/kubernetes/index.libsonnet') +
-        (import '../../../observability-stack/influxdb/deployment/kubernetes/index.libsonnet') +
-        (import '../../../observability-stack/loki/deployment/kubernetes/index.libsonnet') +
-        (import '../../../observability-stack/shared/deployment/kubernetes/index.libsonnet') +
-        (import '../../../observability-stack/tempo/deployment/kubernetes/index.libsonnet') +
-        (import '../../../observability-stack/vector/deployment/kubernetes/index.libsonnet') +
-        (import 'config.jsonnet'),
+  data:
+    {
+      minikube:: minikube,
+      namespace:: namespace,
+    } +
+    (import 'k.libsonnet') +
+    (import '../../../observability-stack/grafana/deployment/kubernetes/index.libsonnet') +
+    (import '../../../observability-stack/influxdb/deployment/kubernetes/index.libsonnet') +
+    (import '../../../observability-stack/loki/deployment/kubernetes/index.libsonnet') +
+    (import '../../../observability-stack/shared/deployment/kubernetes/index.libsonnet') +
+    (import '../../../observability-stack/tempo/deployment/kubernetes/index.libsonnet') +
+    (import '../../../observability-stack/vector/deployment/kubernetes/index.libsonnet') +
+    (import 'config.jsonnet'),
 }
