@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.6.6] - 2024-01-24
 ### Added
 - Improve stability by validating the Vector config before merges | [#72](https://github.com/hendric-dev/k8s-observability/issues/72)
 - Add a local setup using Minikube | [#4](https://github.com/hendric-dev/k8s-observability/issues/4)
@@ -118,8 +120,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.5...next
-[0.6.5]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.4
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.6...next
+[0.6.6]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.6
+[0.6.5]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.5
 [0.6.4]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.4
 [0.6.3]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.3
 [0.6.2]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.2
