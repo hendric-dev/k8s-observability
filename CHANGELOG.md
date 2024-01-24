@@ -4,13 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.6.6] - 2024-01-24
 ### Added
 - Improve stability by validating the Vector config before merges | [#72](https://github.com/hendric-dev/k8s-observability/issues/72)
 - Add a local setup using Minikube | [#4](https://github.com/hendric-dev/k8s-observability/issues/4)
 
 ### Changed
 - Updates
-  - Grafana to `10.3.0`
+  - Grafana to `10.3.1`
+  - InfluxDB to `2.7.5-alpine`
+  - Loki to `2.9.4`
+  - Vector to `0.35.0-alpine`
 
 ## [0.6.5] - 2023-09-02
 ### Changed
@@ -115,8 +120,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Grafana username/password was moved to secrets in the config
 
-[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.5...next
-[0.6.5]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.4
+[Unreleased]: https://github.com/hendric-dev/k8s-observability/compare/0.6.6...next
+[0.6.6]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.6
+[0.6.5]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.5
 [0.6.4]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.4
 [0.6.3]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.3
 [0.6.2]: https://github.com/hendric-dev/k8s-observability/releases/tag/0.6.2
