@@ -38,7 +38,7 @@
         + container.readinessProbe.httpGet.withPort(this.ports.internal)
         + container.startupProbe.httpGet.withPath('/api/health')
         + container.startupProbe.httpGet.withPort(this.ports.internal)
-        + container.startupProbe.withInitialDelaySeconds(180)
+        + container.startupProbe.withInitialDelaySeconds(60)
         + container.startupProbe.withPeriodSeconds(10),
       initContainer::
         container.new(this.name + '-setup-permissions', this.image)

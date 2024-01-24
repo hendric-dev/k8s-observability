@@ -65,5 +65,5 @@ After everything is up and running, the two dashboards are reachable at:
 
 ### Grafana is restarting
 
-Depending on your machine Grafana may take too long to initialize. The startup probe that kicks in after 3min restarts the pod if it is not ready by then. \
+Depending on your machine Grafana may take too long to initialize. The startup probe that kicks in after 60s restarts the pod if it is not ready by then. \
 Temporarily disable the startup, readiness and liveness probes may solve the issue.
