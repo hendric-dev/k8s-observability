@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Updates
   - Grafana to `10.3.1`
+  - InfluxDB to `2.7.5-alpine`
   - Loki to `2.9.4`
   - Vector to `0.35.0-alpine`
 
