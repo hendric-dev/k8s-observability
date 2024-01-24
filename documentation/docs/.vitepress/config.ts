@@ -1,4 +1,4 @@
-import {defineConfig} from 'vitepress'
+import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   base: '/k8s-observability/',
@@ -6,35 +6,41 @@ export default defineConfig({
   srcExclude: ['README.md'],
   themeConfig: {
     sidebar: [
-      {items: [{text: 'Introduction', link: '/introduction'}]},
+      { items: [{ text: 'Introduction', link: '/introduction' }] },
       {
         text: 'Getting Started',
         items: [
-          {text: '1. Prerequisites', link: '/getting-started/prerequisites'},
-          {text: '2. Setup Tanka', link: '/getting-started/setup-tanka'},
-          {text: '3. Configuration', link: '/getting-started/configuration'},
-          {text: '4. Deployment', link: '/getting-started/deployment'},
+          { text: '1. Prerequisites', link: '/getting-started/prerequisites' },
+          { text: '2. Setup Tanka', link: '/getting-started/setup-tanka' },
+          { text: '3. Configuration', link: '/getting-started/configuration' },
+          { text: '4. Deployment', link: '/getting-started/deployment' },
         ],
       },
       {
         text: 'Configuration Reference',
         items: [
-          {text: 'Shared', link: '/configuration-reference/shared'},
-          {text: 'Grafana', link: '/configuration-reference/grafana'},
-          {text: 'Influx DB', link: '/configuration-reference/influx-db'},
-          {text: 'Loki', link: '/configuration-reference/loki'},
-          {text: 'Tempo', link: '/configuration-reference/tempo'},
-          {text: 'Vector', link: '/configuration-reference/vector'},
+          { text: 'Shared', link: '/configuration-reference/shared' },
+          { text: 'Grafana', link: '/configuration-reference/grafana' },
+          { text: 'Influx DB', link: '/configuration-reference/influx-db' },
+          { text: 'Loki', link: '/configuration-reference/loki' },
+          { text: 'Tempo', link: '/configuration-reference/tempo' },
+          { text: 'Vector', link: '/configuration-reference/vector' },
         ]
       },
       {
         text: 'Advanced',
         items: [
-          {text: 'Custom Dashboards', link: '/advanced/custom-dashboards'},
-          {text: 'Custom Log Transformations', link: '/advanced/custom-log-transformations'},
-          {text: 'Custom Metrics', link: '/advanced/custom-metrics'},
+          { text: 'Custom Dashboards', link: '/advanced/custom-dashboards' },
+          { text: 'Custom Log Transformations', link: '/advanced/custom-log-transformations' },
+          { text: 'Custom Metrics', link: '/advanced/custom-metrics' },
         ]
       },
+      {
+        text: 'Development',
+        items: [
+          { text: 'Local Setup', link: '/development/local-setup' },
+        ]
+      }
     ],
   },
   title: 'K8S Observability',

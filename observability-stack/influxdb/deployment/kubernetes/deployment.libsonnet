@@ -10,7 +10,8 @@
   influxDB+: {
     local this = self,
     deployables+: {
-      container:: container.new(this.name, this.image)
+      container::
+        container.new(this.name, this.image)
         + container.withEnv(
           [
             envVar.new('DOCKER_INFLUXDB_INIT_BUCKET', this.bucket),
@@ -27,8 +28,8 @@
         + container.withVolumeMounts([
           volumeMount.new(this.name, '/var/lib/influxdb2') + volumeMount.withSubPath('influxdb'),
         ])
-        + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-        + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+        + container.resources.withRequests({ cpu: this.resources.cpu.request, memory: this.resources.memory.request })
+        + container.resources.withLimits({ cpu: this.resources.cpu.limit, memory: this.resources.memory.limit })
         + container.livenessProbe.withPeriodSeconds(60)
         + container.livenessProbe.httpGet.withPath('/health')
         + container.livenessProbe.httpGet.withPort(this.ports.internal)
@@ -36,9 +37,10 @@
         + container.readinessProbe.httpGet.withPort(this.ports.internal)
         + container.startupProbe.httpGet.withPath('/health')
         + container.startupProbe.httpGet.withPort(this.ports.internal)
-        + container.startupProbe.withFailureThreshold(30)
+        + container.startupProbe.withInitialDelaySeconds(60)
         + container.startupProbe.withPeriodSeconds(10),
-      deployment: deployment.new(name = this.name, containers = [this.deployables.container], replicas = 1)
+      deployment:
+        deployment.new(name=this.name, containers=[this.deployables.container], replicas=1)
         + deployment.metadata.withAnnotations(this.annotations.deployment)
         + deployment.metadata.withLabels(this.labels.deployment)
         + deployment.spec.selector.withMatchLabels(this.labels.selector)
@@ -47,7 +49,7 @@
         + deployment.spec.template.spec.withServiceAccount(this.name)
         + deployment.spec.template.spec.withTerminationGracePeriodSeconds(60)
         + deployment.spec.template.spec.withVolumes([
-          volume.fromPersistentVolumeClaim(this.name, $.shared.storage.name)
+          volume.fromPersistentVolumeClaim(this.name, $.shared.storage.name),
         ]),
     },
   },

@@ -1,5 +1,3 @@
-local tk = import 'tk';
-
 (import 'vector.libsonnet') +
 {
   local clusterRole = $.rbac.v1.clusterRole,
@@ -11,14 +9,16 @@ local tk = import 'tk';
   vector+: {
     local this = self,
     deployables+: {
-      clusterRole: clusterRole.new(this.name)
+      clusterRole:
+        clusterRole.new(this.name)
         + clusterRole.metadata.withLabels(this.labels.selector)
         + clusterRole.withRules([
           resourceRule.withApiGroups('')
           + resourceRule.withResources(['pods', 'namespaces', 'nodes', 'nodes/proxy'])
           + resourceRule.withVerbs(['get', 'list', 'watch']),
         ]),
-      clusterRoleBinding: clusterRoleBinding.new(this.name)
+      clusterRoleBinding:
+        clusterRoleBinding.new(this.name)
         + clusterRoleBinding.metadata.withLabels(this.labels.selector)
         + clusterRoleBinding.roleRef.withName(this.name)
         + clusterRoleBinding.roleRef.withKind('ClusterRole')
@@ -26,9 +26,10 @@ local tk = import 'tk';
         + clusterRoleBinding.withSubjects(
           subject.withName(this.name)
           + subject.withKind('ServiceAccount')
-          + subject.withNamespace(tk.env.spec.namespace),
+          + subject.withNamespace(this.namespace),
         ),
-      serviceAccount: serviceAccount.new(this.name)
+      serviceAccount:
+        serviceAccount.new(this.name)
         + serviceAccount.metadata.withLabels(this.labels.selector)
         + serviceAccount.withAutomountServiceAccountToken(false),
     },

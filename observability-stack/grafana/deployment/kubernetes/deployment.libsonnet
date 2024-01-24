@@ -10,7 +10,8 @@
   grafana+: {
     local this = self,
     deployables+: {
-      container:: container.new(this.name, this.image)
+      container::
+        container.new(this.name, this.image)
         + container.withEnv(
           [
             envVar.fromSecretRef('GF_SECURITY_ADMIN_USER', this.name, 'admin_username'),
@@ -28,8 +29,8 @@
           volumeMount.new('datasources', '/etc/grafana/provisioning/datasources', true),
           volumeMount.new(this.name, '/var/lib/grafana') + volumeMount.withSubPath('grafana'),
         ])
-        + container.resources.withRequests({cpu: this.resources.cpu.request, memory: this.resources.memory.request})
-        + container.resources.withLimits({cpu: this.resources.cpu.limit, memory: this.resources.memory.limit})
+        + container.resources.withRequests({ cpu: this.resources.cpu.request, memory: this.resources.memory.request })
+        + container.resources.withLimits({ cpu: this.resources.cpu.limit, memory: this.resources.memory.limit })
         + container.livenessProbe.withPeriodSeconds(60)
         + container.livenessProbe.httpGet.withPath('/api/health')
         + container.livenessProbe.httpGet.withPort(this.ports.internal)
@@ -37,15 +38,17 @@
         + container.readinessProbe.httpGet.withPort(this.ports.internal)
         + container.startupProbe.httpGet.withPath('/api/health')
         + container.startupProbe.httpGet.withPort(this.ports.internal)
-        + container.startupProbe.withFailureThreshold(30)
+        + container.startupProbe.withInitialDelaySeconds(60)
         + container.startupProbe.withPeriodSeconds(10),
-      initContainer:: container.new(this.name + '-setup-permissions', this.image)
-        + container.withCommand(["chown", "-R", "grafana:root", "/grafana"])
+      initContainer::
+        container.new(this.name + '-setup-permissions', this.image)
+        + container.withCommand(['chown', '-R', 'grafana:root', '/grafana'])
         + container.withVolumeMounts([
           volumeMount.new(this.name, '/grafana') + volumeMount.withSubPath('grafana'),
         ])
         + container.securityContext.withRunAsUser(0),
-      deployment: deployment.new(name = this.name, containers = [this.deployables.container], replicas = 1)
+      deployment:
+        deployment.new(name=this.name, containers=[this.deployables.container], replicas=1)
         + deployment.metadata.withAnnotations(this.annotations.deployment)
         + deployment.metadata.withLabels(this.labels.deployment)
         + deployment.spec.selector.withMatchLabels(this.labels.selector)

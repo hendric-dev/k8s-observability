@@ -37,6 +37,7 @@ All shared config is stored under the **shared** object in the config.
       },
       name: 'observability',
       path: '/opt/observability',
+      reclaimPolicy: 'Retain',
       size: '50Gi',
     },
   },
@@ -62,4 +63,5 @@ All shared config is stored under the **shared** object in the config.
 | `storage.name` | Name used for the PV and PVC k8s resources. <br> `observability` |
 | `storage.nfs.server` | Address to an NFS which is used instead of the host. <br> `undefined` |
 | `storage.path` | Path on the host or NFS where the data is stored. <br> `/opt/observability` |
+| `storage.reclaimPolicy` | The reclaim policy of the volume, which defines what happens when the volume is deleted. <br> `Retain` |
 | `storage.size` | Amount of storage to allocate for the Observability stack. <br> `50Gi` |

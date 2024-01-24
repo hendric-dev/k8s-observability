@@ -40,9 +40,10 @@
             datasources: [datasource for datasource in std.objectValues(datasources)],
           }),
         }) + configMap.metadata.withLabels($.grafana.labels.selector),
-        dashboards: configMap.new(this.name + '-dashboards',
-          {'dashboards.yaml': std.manifestYamlDoc({apiVersion: 1, providers: dashboards})}
-          + {[dashboard.file]: dashboard.definition for dashboard in this.dashboards}
+        dashboards: configMap.new(
+          this.name + '-dashboards',
+          { 'dashboards.yaml': std.manifestYamlDoc({ apiVersion: 1, providers: dashboards }) }
+          + { [dashboard.file]: dashboard.definition for dashboard in this.dashboards }
         ) + configMap.metadata.withLabels(this.labels.selector),
         grafana: configMap.new(this.name, {
           'grafana.ini': (importstr '../../config/grafana.ini'),

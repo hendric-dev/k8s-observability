@@ -6,11 +6,10 @@
     annotations:: $.shared.annotations,
     bucket:: 'metrics',
     env:: $.shared.env,
-    host:: 'monitoring.db.my-server.com',
     image:: utils.extractImageFromDockerfile(importstr 'image.Dockerfile'),
     ingress:: $.shared.ingress,
-    labels:: $.shared.labels + {
-      selector: {'app.kubernetes.io/name': this.name},
+    labels:: $.shared.labels {
+      selector: { 'app.kubernetes.io/name': this.name },
     },
     name:: 'influx-db',
     organisation:: 'observability',
@@ -20,8 +19,8 @@
       internal: 8086,
     },
     resources:: {
-      cpu: {request: '100m', limit: '4'},
-      memory: {request: '128Mi', limit: '512Mi'},
+      cpu: { request: '100m', limit: '4' },
+      memory: { request: '128Mi', limit: '512Mi' },
     },
     retention:: '1w',
     secrets:: {

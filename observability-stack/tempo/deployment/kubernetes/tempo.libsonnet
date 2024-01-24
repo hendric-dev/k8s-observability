@@ -6,8 +6,8 @@
     annotations:: $.shared.annotations,
     env:: $.shared.env,
     image:: utils.extractImageFromDockerfile(importstr 'image.Dockerfile'),
-    labels:: $.shared.labels + {
-      selector: {'app.kubernetes.io/name': this.name},
+    labels:: $.shared.labels {
+      selector: { 'app.kubernetes.io/name': this.name },
     },
     name:: 'tempo',
     ports:: {
@@ -33,8 +33,8 @@
       },
     },
     resources:: {
-      cpu: {request: '50m', limit: '200m'},
-      memory: {request: '32Mi', limit: '256Mi'}
+      cpu: { request: '50m', limit: '200m' },
+      memory: { request: '32Mi', limit: '256Mi' },
     },
   },
 }

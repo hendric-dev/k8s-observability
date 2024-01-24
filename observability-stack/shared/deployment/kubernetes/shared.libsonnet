@@ -11,7 +11,7 @@
     labels:: {
       deployment: {},
       pod: {},
-      selector: {'app.kubernetes.io/name': this.name},
+      selector: { 'app.kubernetes.io/name': this.name },
     },
     name:: 'observability',
     security:: {
@@ -26,6 +26,7 @@
       },
       name: this.name,
       path: '/opt/observability',
+      reclaimPolicy: 'Retain',
       size: '50Gi',
     },
   },
