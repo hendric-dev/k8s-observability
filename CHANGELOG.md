@@ -10,7 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Updates
-  - Grafana to `10.3.0`
+  - Grafana to `10.3.1`
+  - Loki to `2.9.4`
+  - Vector to `0.35.0-alpine`
 
 ## [0.6.5] - 2023-09-02
 ### Changed
