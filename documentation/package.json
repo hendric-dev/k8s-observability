@@ -9,11 +9,11 @@
     "serve": "vitepress serve docs"
   },
   "devDependencies": {
-    "vitepress": "1.0.0-rc.40",
-    "vue": "3.4.15"
+    "vitepress": "1.0.1",
+    "vue": "3.4.21"
   },
   "volta": {
-    "node": "20.11.0"
+    "node": "20.11.1"
   },
   "packageManager": "yarn@4.0.2"
 }
