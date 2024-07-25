@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "vitepress": "1.0.0-rc.40",
-    "vue": "3.4.33"
+    "vue": "3.4.34"
   },
   "volta": {
     "node": "20.11.0"
