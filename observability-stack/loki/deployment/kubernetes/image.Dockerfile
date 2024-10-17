@@ -1,2 +1,2 @@
 # Image is defined here, so Renovate can track and update it
-FROM grafana/loki:2.9.9
+FROM grafana/loki:3.2.1
